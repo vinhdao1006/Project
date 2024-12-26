@@ -6,26 +6,26 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 
 function SignUp() {
-    const [firstname, setFName] = useState()
-    const [lastname, setLName] = useState()
-    const [email, setEmail] = useState()
-    const [phone, setPhone] = useState()
-    const [password, setPassworld] = useState()
-    const [confirmpassword, setConfirmPassword] = useState()
+    const [firstname, setFName] = useState('')
+    const [lastname, setLName] = useState('')
+    const [email, setEmail] = useState('')
+    const [phone, setPhone] = useState('')
+    const [password, setPassworld] = useState('')
+    const [confirmpassword, setConfirmPassword] = useState('')
     const navigate = useNavigate()
 
     const handleSubmit = (e) => {
-        e.preventDafault()
-        axios.post('http://localhost3001/register', {firstname, lastname, phone, email, password, confirmpassword})
-        .then(result => {console.log(result)
-        navigate('./login')
+        e.preventDefault()
+        axios.post('http://localhost:3001/register', {firstname, lastname, phone, email, password, confirmpassword})
+            .then(result => {console.log(result)
+            navigate('/login')
         })
         .catch(err => console.log(err))
     }
 
     return(
         <div className='container mx-auto'>
-            <div className='mt-6 flex justify-start'>
+            <div className='mt-6 flex justify-end'>
                 <img src={Bimec_logo} alt='Bimec Logo' className='mr-4'/>
                 <p className='font-bold text-3xl'>BIMEC</p>
             </div>

@@ -2,17 +2,24 @@ import { useState } from 'react'
 import Bimec_logo from '../assets/image/Bimec_logo.png' 
 import Login_img from '../assets/image/Login.png'
 import Google_icon from '../assets/image/icon_google.png'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 function SignIn() {
     const [email, setEmail] = useState()
     const [password, setPassword] = useState()
     const navigate = useNavigate()
 
+    axios.defaults.withCredentials = true;
+
     const handleSubmit = (e) => {
-        e.preventDafault()
-        axios.post('http://localhost3001/register', {firstname, lastname, phone, email, password, confirmpassword})
-        .then(result => {console.log(result)
-        navigate('./login')
+        e.preventDefault()
+        axios.post('http://localhost:3001/login', {email, password})
+        .then(result => {
+            console.log(result)
+            if(result.data === "Success") {
+                navigate('/home')
+            }
         })
         .catch(err => console.log(err))
     }
@@ -40,6 +47,7 @@ function SignIn() {
                                         type="email"
                                         id="email"
                                         placeholder="Email"
+                                        onChange={(e) => setEmail(e.target.value)}
                                         className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring focus:border-blue-300"
                                     />
                                 </div>
@@ -54,6 +62,7 @@ function SignIn() {
                                         type="password"
                                         id="password"
                                         placeholder="Password"
+                                        onChange={(e) => setPassword(e.target.value)}
                                         className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring focus:border-blue-300"
                                     />
                                     <span className="absolute inset-y-0 right-3 flex items-center cursor-pointer text-gray-500">
