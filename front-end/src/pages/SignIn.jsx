@@ -4,7 +4,7 @@ import Login_img from '../assets/image/Login.png'
 import Google_icon from '../assets/image/icon_google.png'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
-
+import BimecHeader from '../components/BimecHeader'
 function SignIn() {
     const [email, setEmail] = useState()
     const [password, setPassword] = useState()
@@ -26,10 +26,7 @@ function SignIn() {
 
     return(
         <div className='container mx-auto'>
-            <div className='mt-6 flex justify-start'>
-                <img src={Bimec_logo} alt='Bimec Logo' className='mr-4'/>
-                <p className='font-bold text-3xl'>BIMEC</p>
-            </div>
+            <BimecHeader />
             
             <div className='flex items-center justify-center min-h-screen'>
                 <div className="mr-8">

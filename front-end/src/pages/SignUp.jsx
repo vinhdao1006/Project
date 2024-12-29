@@ -4,7 +4,7 @@ import Signup from '../assets/image/Signup.png'
 import Google_icon from '../assets/image/icon_google.png'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
-
+import BimecHeader from '../components/BimecHeader'
 function SignUp() {
     const [firstname, setFName] = useState('')
     const [lastname, setLName] = useState('')
@@ -25,11 +25,8 @@ function SignUp() {
 
     return(
         <div className='container mx-auto'>
-            <div className='mt-6 flex justify-end'>
-                <img src={Bimec_logo} alt='Bimec Logo' className='mr-4'/>
-                <p className='font-bold text-3xl'>BIMEC</p>
-            </div>
-            
+            <BimecHeader />
+            +
             <div className='flex items-center justify-center min-h-screen'>
                 <img className='w-1/4' src={Signup} alt='Sign up image'/>
                 
