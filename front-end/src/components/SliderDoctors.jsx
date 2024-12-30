@@ -7,8 +7,8 @@ import img_doctor3 from "../assets/image/sliderDoctor3.png";
 const doctors = [
   {
     id: 1,
-    name: "Doctor's Name",
-    specialty: "NEUROLOGY",
+    name: "Dr. Marques",
+    specialty: "NEUROLOGIST",
     image: img_doctor1,
     social: {
       linkedin: "#",
@@ -18,8 +18,8 @@ const doctors = [
   },
   {
     id: 2,
-    name: "Doctor's Name",
-    specialty: "NEUROLOGY",
+    name: "Dr. Shaun",
+    specialty: "DERMATOLOGIST",
     image: img_doctor2,
     social: {
       linkedin: "#",
@@ -29,8 +29,8 @@ const doctors = [
   },
   {
     id: 3,
-    name: "Doctor's Name",
-    specialty: "NEUROLOGY",
+    name: "Dr. Michelle",
+    specialty: "PSYCHIATRIST",
     image: img_doctor3,
     social: {
       linkedin: "#",
@@ -92,7 +92,7 @@ const DoctorsSlider = () => {
                 <h4 className="text-lg font-semibold text-gray-800 mb-2">
                   {doctor.name}
                 </h4>
-                <p className="text-green-700 font-medium mb-4">
+                <p className="text-bimec-green font-medium mb-4">
                   {doctor.specialty}
                 </p>
                 <div className="flex justify-center space-x-4 mb-4">
@@ -118,7 +118,7 @@ const DoctorsSlider = () => {
                     <i className="fab fa-facebook text-green-700 text-lg"></i>
                   </a>
                 </div>
-                <button className="bg-green-700 text-white py-2 px-4 rounded-lg w-full">
+                <button className="bg-bimec-heavy-green text-white py-2 px-4 rounded-lg w-full">
                   View Profile
                 </button>
               </div>

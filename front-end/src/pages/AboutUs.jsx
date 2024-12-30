@@ -2,8 +2,10 @@ import React, { useEffect } from 'react'
 import Navbar from '../components/Navbar'
 import FloatButtonGroup from '../components/FloatButtonGroup'
 import Footer from '../components/BimecFooter'
+import TestimonalSection from '../components/AboutUs/Testimonial'
 import img_blackGirls_aboutus from '../assets/image/img_blackGirls_aboutus.png'
 import img_SubHead_aboutus from '../assets/image/img_SubHead_aboutus.png'
+import img_Testimonial from '../assets/image/img_Testimonial.png'
 const AboutUs = () => {
     return (
         <div>
@@ -16,6 +18,8 @@ const AboutUs = () => {
             </div>
 
             <Navbar />
+            
+            <FloatButtonGroup></FloatButtonGroup>
             
             <div>
                 <img
@@ -80,10 +84,11 @@ const AboutUs = () => {
                 </div>
             </section>
 
+            <div>
+                <TestimonalSection></TestimonalSection>
+            </div>
 
-            <FloatButtonGroup></FloatButtonGroup>
-
-            <div className="mt-[2rem] mx-auto w-full">
+            <div className="mt-[4rem] mx-auto w-full">
                 <Footer></Footer>
             </div>
         </div>
