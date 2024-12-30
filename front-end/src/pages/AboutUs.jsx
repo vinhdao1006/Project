@@ -3,9 +3,9 @@ import Navbar from '../components/Navbar'
 import FloatButtonGroup from '../components/FloatButtonGroup'
 import Footer from '../components/BimecFooter'
 import TestimonalSection from '../components/AboutUs/Testimonial'
+import Contact from '../components/Contact'
 import img_blackGirls_aboutus from '../assets/image/img_blackGirls_aboutus.png'
 import img_SubHead_aboutus from '../assets/image/img_SubHead_aboutus.png'
-import img_Testimonial from '../assets/image/img_Testimonial.png'
 const AboutUs = () => {
     return (
         <div>
@@ -24,10 +24,10 @@ const AboutUs = () => {
             <div>
                 <img
                     src={img_SubHead_aboutus}
-                    
+                    className="w-full"    
                 ></img>
             </div>
-            <section className="w-full bg-white py-16">
+            <section className="w-full bg-white py-16 mt-[2rem]">
                 <div className="container mx-auto flex flex-wrap items-center">
                     {/* Left Side: Image */}
                     <div className="w-full md:w-1/2 px-4">
@@ -84,8 +84,12 @@ const AboutUs = () => {
                 </div>
             </section>
 
-            <div>
+            <div className="mt-[4rem] w-full mx-auto">
                 <TestimonalSection></TestimonalSection>
+            </div>
+
+            <div className="mt-[2rem] w-full mx-auto">
+                <Contact></Contact>
             </div>
 
             <div className="mt-[4rem] mx-auto w-full">

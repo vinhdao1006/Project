@@ -12,7 +12,7 @@ const Navbar = () => {
       <header className="w-full h-16 bg-bimec-green flex items-center">
         <a
           href="/home"
-          className={`relative ml-5 pl-44 font-bold ${
+          className={`relative ml-5 pl-44 ${
             isActive("/home") ? "text-bimec-heavy-green" : "text-white"
           }`}
         >

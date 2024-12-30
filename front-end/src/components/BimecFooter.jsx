@@ -2,11 +2,11 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <footer className="bg-green-800 text-white py-10">
+    <footer className="bg-bimec-heavy-green text-white py-10">
       <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8">
         {/* Logo and Motto */}
         <div>
-          <h1 className="text-3xl font-bold text-green-200">BIMEC</h1>
+          <h1 className="text-3xl font-bold text-bimec-green">BIMEC</h1>
           <p className="mt-4 text-sm">
             Leading the Way in Medical Excellence, Trusted Care.
           </p>
@@ -14,8 +14,8 @@ const Footer = () => {
 
         {/* Important Links */}
         <div>
-          <h2 className="text-lg font-semibold mb-4">Important Links</h2>
-          <ul className="space-y-2">
+          <h2 className="text-lg font-semibold mb-4 ml-[10rem]">Important Links</h2>
+          <ul className="space-y-2 ml-[10rem]">
             <li><a href="#" className="hover:underline">Appointment</a></li>
             <li><a href="#" className="hover:underline">Doctors</a></li>
             <li><a href="#" className="hover:underline">Services</a></li>
@@ -42,7 +42,7 @@ const Footer = () => {
               placeholder="Enter your email address"
               className="px-4 py-2 w-full text-gray-700 focus:outline-none"
             />
-            <button className="px-4 py-2 bg-green-600 text-white hover:bg-green-700">
+            <button className="px-4 py-2 bg-bimec-green text-white hover:bg-bimec-heavy-green">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -63,7 +63,7 @@ const Footer = () => {
       </div>
 
       {/* Bottom Section */}
-      <div className="border-t border-green-700 mt-8 pt-6 flex flex-col md:flex-row items-center justify-between text-sm">
+      <div className="border-t border-white mt-8 pt-6 flex flex-col md:flex-row items-center justify-between text-sm ml-6">
         <p>&copy; 2024 BIMEC All Rights Reserved</p>
         <div className="flex space-x-4 mt-4 md:mt-0">
           <a href="#" className="hover:text-gray-300">
