@@ -6,12 +6,12 @@ const Navbar = () => {
   return (
     <div className="w-screen h-16">
         <header className='w-full h-16 bg-bimec-green flex items-center'>
-            <a href="/" className="relative ml-5 pl-44 text-home-button font-bold">Home</a>
-            <a href="/" className="relative ml-5 text-white">About us</a>
-            <a href="/" className="relative ml-5 text-white">Services</a>
-            <a href="/" className="relative ml-5 text-white">Doctors</a>
-            <a href="/" className="relative ml-5 text-white">News</a>
-            <a href="/" className="relative ml-5 text-white">Contact</a>
+            <a href="/home" className="relative ml-5 pl-44 text-home-button font-bold">Home</a>
+            <a href="/about-us" className="relative ml-5 text-white">About us</a>
+            <a href="/services" className="relative ml-5 text-white">Services</a>
+            <a href="/doctors" className="relative ml-5 text-white">Doctors</a>
+            <a href="/news" className="relative ml-5 text-white">News</a>
+            <a href="/contact" className="relative ml-5 text-white">Contact</a>
 
             <div className="ml-auto flex mr-32 items-center">
                 <button className="ml-5 submit">

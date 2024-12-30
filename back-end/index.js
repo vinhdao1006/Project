@@ -18,9 +18,9 @@ app.use(cookieParser())
 mongoose.connect("mongodb+srv://vinhdao1006:VinhDao1006@cluster0.yfwoj.mongodb.net/patient");
 
 const verifyUser = (req, res, next) => {
-    const token = req.cookie.token;
+    const token = req.cookies.token;
     if(!token) {
-        return res.json("The token is not available")
+        return res.json("The token was not available")
     }
     else {
         jwt.verify(token, "jwt-secret-key", (err, decoded) => {

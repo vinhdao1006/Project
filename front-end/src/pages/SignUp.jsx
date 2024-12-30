@@ -26,7 +26,7 @@ function SignUp() {
     return(
         <div className='container mx-auto'>
             <BimecHeader />
-            +
+            
             <div className='flex items-center justify-center min-h-screen'>
                 <img className='w-1/4' src={Signup} alt='Sign up image'/>
                 
