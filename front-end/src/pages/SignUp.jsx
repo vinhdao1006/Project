@@ -1,7 +1,6 @@
-import { useState } from 'react'   
-import Bimec_logo from '../assets/image/Bimec_logo.png' 
+import { useState } from 'react'
 import Signup from '../assets/image/Signup.png'
-import Google_icon from '../assets/image/icon_google.png'
+import Google_icon from '../assets/icon/icon_google.png'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import BimecHeader from '../components/BimecHeader'
@@ -16,20 +15,21 @@ function SignUp() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.post('http://localhost:3001/register', {firstname, lastname, phone, email, password, confirmpassword})
-            .then(result => {console.log(result)
-            navigate('/login')
-        })
-        .catch(err => console.log(err))
+        axios.post('http://localhost:3001/register', { firstname, lastname, phone, email, password, confirmpassword })
+            .then(result => {
+                console.log(result)
+                navigate('/login')
+            })
+            .catch(err => console.log(err))
     }
 
-    return(
+    return (
         <div className='container mx-auto'>
             <BimecHeader />
-            
+
             <div className='flex items-center justify-center min-h-screen'>
-                <img className='w-1/4' src={Signup} alt='Sign up image'/>
-                
+                <img className='w-1/4' src={Signup} alt='Sign up image' />
+
                 <div className="ml-8">
                     <div className="flex flex-col items-center justify-center min-h-screen">
                         <p className="font-bold text-5xl mb-4">Sign Up</p>
@@ -39,7 +39,7 @@ function SignUp() {
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700" htmlFor="firstName">
-                                    First Name
+                                        First Name
                                     </label>
                                     <input
                                         type="text"
@@ -51,7 +51,7 @@ function SignUp() {
                                 </div>
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700" htmlFor="lastName">
-                                    Last Name
+                                        Last Name
                                     </label>
                                     <input
                                         type="text"
@@ -67,7 +67,7 @@ function SignUp() {
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700" htmlFor="email">
-                                    Email
+                                        Email
                                     </label>
                                     <input
                                         type="email"
@@ -79,7 +79,7 @@ function SignUp() {
                                 </div>
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700" htmlFor="phoneNumber">
-                                    Phone Number
+                                        Phone Number
                                     </label>
                                     <input
                                         type="tel"
@@ -105,7 +105,7 @@ function SignUp() {
                                         className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring focus:border-blue-300"
                                     />
                                     <span className="absolute inset-y-0 right-3 flex items-center cursor-pointer text-gray-500">
-                                    🔒 {/* Replace with an icon */}
+                                        🔒 {/* Replace with an icon */}
                                     </span>
                                 </div>
                             </div>
@@ -122,7 +122,7 @@ function SignUp() {
                                         className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring focus:border-blue-300"
                                     />
                                     <span className="absolute inset-y-0 right-3 flex items-center cursor-pointer text-gray-500">
-                                    🔒 {/* Replace with an icon */}
+                                        🔒 {/* Replace with an icon */}
                                     </span>
                                 </div>
                             </div>
@@ -143,7 +143,7 @@ function SignUp() {
                             <button
                                 type="submit"
                                 className="w-full bg-[#285430] text-white py-2 rounded-lg font-medium hover:bg-[#5F8D4E] focus:outline-none focus:ring focus:ring-green-300"
-                                >
+                            >
                                 Create Account
                             </button>
 
@@ -164,11 +164,11 @@ function SignUp() {
                             <button
                                 type="button"
                                 className="w-full flex items-center justify-center border border-gray-300 py-2 rounded-lg hover:bg-gray-100"
-                                >
-                                <img src={Google_icon}/>
+                            >
+                                <img src={Google_icon} />
                             </button>
                         </form>
-                        </div>
+                    </div>
                 </div>
             </div>
         </div>

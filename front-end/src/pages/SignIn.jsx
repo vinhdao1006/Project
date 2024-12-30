@@ -1,7 +1,6 @@
-import { useState } from 'react'   
-import Bimec_logo from '../assets/image/Bimec_logo.png' 
+import { useState } from 'react'
 import Login_img from '../assets/image/Login.png'
-import Google_icon from '../assets/image/icon_google.png'
+import Google_icon from '../assets/icon/icon_google.png'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import BimecHeader from '../components/BimecHeader'
@@ -15,20 +14,20 @@ function SignIn() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.post('http://localhost:3001/login', {email, password})
-        .then(result => {
-            console.log(result)
-            if(result.data === "Success") {
-                navigate('/home')
-            }
-        })
-        .catch(err => console.log(err))
+        axios.post('http://localhost:3001/login', { email, password })
+            .then(result => {
+                console.log(result)
+                if (result.data === "Success") {
+                    navigate('/home')
+                }
+            })
+            .catch(err => console.log(err))
     }
 
-    return(
+    return (
         <div className='container mx-auto'>
             <BimecHeader />
-            
+
             <div className='flex items-center justify-center min-h-screen'>
                 <div className="mr-8">
                     <div className="flex flex-col items-center justify-center min-h-screen">
@@ -39,7 +38,7 @@ function SignIn() {
                             <div>
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700" htmlFor="email">
-                                    Email
+                                        Email
                                     </label>
                                     <input
                                         type="email"
@@ -64,7 +63,7 @@ function SignIn() {
                                         className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring focus:border-blue-300"
                                     />
                                     <span className="absolute inset-y-0 right-3 flex items-center cursor-pointer text-gray-500">
-                                    🔒 {/* Replace with an icon */}
+                                        🔒 {/* Replace with an icon */}
                                     </span>
                                 </div>
                             </div>
@@ -76,7 +75,7 @@ function SignIn() {
                                     className="h-4 w-4 border-gray-300 rounded"
                                 />
                                 <label htmlFor="terms" className="ml-2 text-sm text-gray-700">
-                                    Remember me 
+                                    Remember me
                                 </label>
                                 <a className='text-sm ml-56 text-[#FF8682]' href='#'>Forgot password</a>
                             </div>
@@ -85,7 +84,7 @@ function SignIn() {
                             <button
                                 type="submit"
                                 className="w-full bg-[#285430] text-white py-2 rounded-lg font-medium hover:bg-[#5F8D4E] focus:outline-none focus:ring focus:ring-green-300"
-                                >
+                            >
                                 Login
                             </button>
 
@@ -106,14 +105,14 @@ function SignIn() {
                             <button
                                 type="button"
                                 className="w-full flex items-center justify-center border border-gray-300 py-2 rounded-lg hover:bg-gray-100"
-                                >
-                                <img src={Google_icon}/>
+                            >
+                                <img src={Google_icon} />
                             </button>
                         </form>
-                        </div>
+                    </div>
                 </div>
-                
-                <img className='w-1/3' src={Login_img} alt='Sign up image'/>
+
+                <img className='w-1/3' src={Login_img} alt='Sign up image' />
             </div>
         </div>
     )
