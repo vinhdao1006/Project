@@ -4,18 +4,13 @@ import FloatButtonGroup from '../components/FloatButtonGroup'
 import Footer from '../components/BimecFooter'
 import TestimonalSection from '../components/AboutUs/Testimonial'
 import Contact from '../components/Contact'
+import BimecLogo from '../components/BimecLogo'
 import img_blackGirls_aboutus from '../assets/image/img_blackGirls_aboutus.png'
 import img_SubHead_aboutus from '../assets/image/img_SubHead_aboutus.png'
 const AboutUs = () => {
     return (
         <div>
-            <div className='max-w-xl mx-auto pt-4 pb-4 ml-48'>
-                <div className="flex-shrink-0">
-                    <a href="/home" className="text-[#181C32] font-bold text-2xl">
-                        BIMEC
-                    </a>
-                </div>
-            </div>
+            <BimecLogo/>
 
             <Navbar />
             

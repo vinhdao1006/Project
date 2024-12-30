@@ -5,18 +5,13 @@ import Footer from '../components/BimecFooter'
 import TestimonalSection from '../components/AboutUs/Testimonial'
 import ServiceGrid from '../components/Services/ServiceGrid'
 import Contact from '../components/Contact'
+import BimecLogo from '../components/BimecLogo'
 import img_SubHead_services from '../assets/image/img_SubHead_services.png'
 const AboutUs = () => {
     return (
         <div class="overflow-x-hidden overflow-y-auto">
         <div>
-            <div className='max-w-xl mx-auto pt-4 pb-4 ml-48'>
-                <div className="flex-shrink-0">
-                    <a href="/home" className="text-[#181C32] font-bold text-2xl">
-                        BIMEC
-                    </a>
-                </div>
-            </div>
+            <BimecLogo></BimecLogo>
 
             <Navbar />
             

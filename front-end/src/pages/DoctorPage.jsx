@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import Contact from '../components/Contact'
 import BimecFooter from '../components/BimecFooter'
+import BimecLogo from '../components/BimecLogo'
 import img_SubHead_doctorPage from '../assets/image/img_SubHead_aboutus.png'
 import img_doctor1 from "../assets/image/sliderDoctor1.png";
 import img_doctor2 from "../assets/image/sliderDoctor2.png";
@@ -83,13 +84,7 @@ function DoctorPage() {
 
     return (
         <div>
-            <div className='max-w-xl mx-auto pt-4 pb-4 ml-48'>
-                <div className="flex-shrink-0">
-                    <a href="/home" className="text-bimec-black font-bold text-2xl">
-                        BIMEC
-                    </a>
-                </div>
-            </div>
+            <BimecLogo></BimecLogo>
 
             <Navbar />
 
