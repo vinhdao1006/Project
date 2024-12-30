@@ -3,7 +3,7 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import slider_booking from '../assets/image/slider_booking.png'
-import phone_icon from '../assets/icon/phone_icon.png'
+import icon_phone from '../assets/icon/icon_phone.png'
 import Contact from '../components/Contact'
 import BimecFooter from '../components/BimecFooter'
 
@@ -162,7 +162,7 @@ function BookingPage() {
                     <div className="text-center font-yeseva text-bimec-red">
                         <h3 className="text-xl font-bold mb-2">Emergency</h3>
                         <div className="flex items-center justify-center space-x-2">
-                            <img src={phone_icon} alt="Phone Icon" className="w-6 h-6" />
+                            <img src={icon_phone} alt="Phone Icon" className="w-6 h-6" />
                             <p className="text-2xl font-semibold">(237) 681-912-255</p>
                         </div>
                     </div>

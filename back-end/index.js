@@ -32,9 +32,9 @@ mongoose.connect("mongodb+srv://vinhdao1006:VinhDao1006@cluster0.yfwoj.mongodb.n
 //     }
 // }
 
-app.get('/home', verifyUser, (req, res) => {
-    return res.json("Success")
-})
+// app.get('/home', verifyUser, (req, res) => {
+//     return res.json("Success")
+// })
 
 
 app.post('/login', (req, res) => {
