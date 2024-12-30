@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import Navbar from '../components/Navbar'
@@ -9,7 +9,7 @@ import NewsSlider from '../components/NewsSlider'
 import Contact from '../components/Contact'
 import Footer from '../components/BimecFooter'
 import FloatButtonGroup from '../components/FloatButtonGroup'
-import Home_physician from '../assets/image/Home_physician.png' 
+import Home_physician from '../assets/image/Home_physician.png'
 import BlackDoctors1 from '../assets/image/Blackdoctors 1.png'
 import { ReactTyped } from 'react-typed'
 
@@ -19,15 +19,15 @@ function Home() {
 
     useEffect(() => {
         axios.get('http://localhost:3001/home')
-        .then(result => {
-            console.log(result)
-            if(result.data !== "Success") {
-                navigate('/login')
-            }
-        })
-        .catch(err => console.log(err))
+            .then(result => {
+                console.log(result)
+                if (result.data !== "Success") {
+                    navigate('/login')
+                }
+            })
+            .catch(err => console.log(err))
     }, [])
-    
+
     return (
         <div>
             <div className='max-w-xl mx-auto pt-4 pb-4 ml-48'>
@@ -37,9 +37,9 @@ function Home() {
                     </a>
                 </div>
             </div>
-            
+
             <Navbar />
-            
+
             <div className="w-full relative">
                 <img src={Home_physician} className="w-full h-[40rem]"></img>
                 <div className='absolute top-0 left-0 w-full h-full flex flex-col ml-[12rem] mt-44'>
@@ -57,7 +57,7 @@ function Home() {
                     <div className='absolute bg-bimec-green w-[16rem] h-28 mt-[36rem] ml-[38rem] rounded-lg flex justify-between items-center'>
                         <p className="ml-8 text-lg text-white font-sans">Find doctors</p>
                         <svg className="size-20 text-white mr-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M4.5 17H4a1 1 0 0 1-1-1 3 3 0 0 1 3-3h1m0-3.05A2.5 2.5 0 1 1 9 5.5M19.5 17h.5a1 1 0 0 0 1-1 3 3 0 0 0-3-3h-1m0-3.05a2.5 2.5 0 1 0-2-4.45m.5 13.5h-7a1 1 0 0 1-1-1 3 3 0 0 1 3-3h3a3 3 0 0 1 3 3 1 1 0 0 1-1 1Zm-1-9.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z"/>
+                            <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M4.5 17H4a1 1 0 0 1-1-1 3 3 0 0 1 3-3h1m0-3.05A2.5 2.5 0 1 1 9 5.5M19.5 17h.5a1 1 0 0 0 1-1 3 3 0 0 0-3-3h-1m0-3.05a2.5 2.5 0 1 0-2-4.45m.5 13.5h-7a1 1 0 0 1-1-1 3 3 0 0 1 3-3h3a3 3 0 0 1 3 3 1 1 0 0 1-1 1Zm-1-9.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z" />
                         </svg>
                     </div>
                 </div>
@@ -74,10 +74,10 @@ function Home() {
                     loop
                 />
                 <p className="w-[50rem] indent-10">
-                "At BIMEC, we are dedicated to providing compassionate, high-quality care to every patient. 
-                With a team of experienced doctors, nurses, and healthcare professionals, we focus on your health and well-being every step of the way. 
-                Whether you're seeking preventive care, specialized treatment, or emergency services, we prioritize your comfort and trust. 
-                Our commitment is to treat you like family, ensuring that your health is in the best hands possible."
+                    "At BIMEC, we are dedicated to providing compassionate, high-quality care to every patient.
+                    With a team of experienced doctors, nurses, and healthcare professionals, we focus on your health and well-being every step of the way.
+                    Whether you're seeking preventive care, specialized treatment, or emergency services, we prioritize your comfort and trust.
+                    Our commitment is to treat you like family, ensuring that your health is in the best hands possible."
                 </p>
                 <a className="w-[10rem] flex text-bimec-green hover:underline" href="/about-us">
                     Learn More
@@ -92,15 +92,15 @@ function Home() {
             </div>
 
             <div className="mt-[44rem] w-[66rem] mx-auto">
-                <ServicesHeader/>   
+                <ServicesHeader />
             </div>
 
             <div className="mt-[1rem] mx-auto">
-                <Specialties/>
+                <Specialties />
             </div>
 
             <div className="mt-[1rem] mx-auto w-[64rem]">
-                <SliderDoctors/>
+                <SliderDoctors />
             </div>
 
             <div className="mt-[2rem] mx-auto w-[64rem]">

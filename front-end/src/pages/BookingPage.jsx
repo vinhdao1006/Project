@@ -25,7 +25,7 @@ function BookingPage() {
                 <img src={slider_booking} className="w-full h-max"></img>
             </div>
 
-            <div className="flex flex-col lg:flex-row items-start lg:items-center justify-center min-h-screen p-6 bg-gray-100">
+            <div className="flex flex-col lg:flex-row items-start lg:items-center justify-center min-h-screen p-6 bg-gray-100 mt-[2rem] mx-auto w-[64rem]">
                 {/* Left Form Section  */}
                 <div className="w-full lg:w-2/3 bg-white p-8 rounded-lg shadow-md">
                     <h1 className="text-2xl font-bold font-yeseva text-bimec-heavy-green mb-4">Make an Appointment</h1>
@@ -76,7 +76,7 @@ function BookingPage() {
                                 <label className="block text-sm font-bold text-bimec-black font-yeseva">Name<span className='text-bimec-red'>*</span></label>
                                 <input
                                     type="text"
-                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm h-10 bg-bimec-gray"
+                                    className="mt-1 pl-2 py-2 block w-full rounded-md border-gray-300 shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm h-10 bg-bimec-gray"
                                     placeholder="Enter your name"
                                 />
                             </div>
@@ -84,7 +84,7 @@ function BookingPage() {
                                 <label className="block text-sm font-bold text-bimec-black font-yeseva">Date of birth<span className='text-bimec-red'>*</span></label>
                                 <input
                                     type="date"
-                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm h-10 bg-bimec-gray"
+                                    className="mt-1 block w-full pl-2 py-2 rounded-md border-gray-300 shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm h-10 bg-bimec-gray"
                                 />
                                 <div className="mt-2">
                                     <label className="mb-1 block text-sm font-bold text-bimec-black font-yeseva">Gender<span className='text-bimec-red'>*</span></label>
@@ -103,7 +103,7 @@ function BookingPage() {
                                 <label className="block text-sm font-bold text-bimec-black font-yeseva">Phone number<span className='text-bimec-red'>*</span></label>
                                 <input
                                     type="tel"
-                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm h-10 bg-bimec-gray"
+                                    className="mt-1 block pl-2 py-2 w-full rounded-md border-gray-300 shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm h-10 bg-bimec-gray"
                                     placeholder="Enter phone number"
                                 />
                             </div>
@@ -111,7 +111,7 @@ function BookingPage() {
                                 <label className="block text-sm font-bold text-bimec-black">Email<span className='text-bimec-red'>*</span></label>
                                 <input
                                     type="email"
-                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm h-10 bg-bimec-gray"
+                                    className="mt-1 block w-full pl-2 py-2 rounded-md border-gray-300 shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm h-10 bg-bimec-gray"
                                     placeholder="Enter email"
                                 />
                             </div>
@@ -120,7 +120,7 @@ function BookingPage() {
                         <div className="mb-4">
                             <label className="block text-sm font-bold text-gray-700 font-yeseva">Reason for checkup<span className='text-bimec-red'>*</span></label>
                             <textarea
-                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm bg-bimec-gray"
+                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm bg-bimec-gray pl-2 py-2"
                                 placeholder="Enter reason for checkup"
                                 rows="10"
                             ></textarea>
@@ -169,9 +169,13 @@ function BookingPage() {
                 </div>
             </div>
 
-            <Contact />
+            <div className="mt-[2rem] mx-auto w-[64rem]">
+                <Contact />
+            </div>
 
-            <BimecFooter />
+            <div className="mt-[2rem] mx-auto w-full">
+                <BimecFooter />
+            </div>
 
         </div>
     )
