@@ -33,6 +33,7 @@ function Home() {
         <div className="overflow-x-hidden overflow-y-auto">
             <BimecLogo />
 
+
             <Navbar />
 
             <div className="w-full relative">
