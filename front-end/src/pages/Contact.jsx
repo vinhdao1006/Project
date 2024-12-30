@@ -6,14 +6,23 @@ import icon_location from '../assets/icon/icon_location.png'
 import icon_mail from '../assets/icon/icon_mail.png'
 import icon_clock from '../assets/icon/icon_clock.png'
 import Footer from '../components/BimecFooter'
+import img_SubHead_contact from '../assets/image/subhead_contact.png'
+
+
 const ContactSection = () => {
     return (
 
         <div>
             <BimecLogo></BimecLogo>
+
             <div>
                 <Navbar></Navbar>
             </div>
+
+            <div>
+                <img src={img_SubHead_contact} className="w-full h-fit"></img>
+            </div>
+
             <div className="w-full mt-16">
                 {/* Map Section */}
                 <div className="w-3/4 mx-auto h-[400px]">
@@ -98,7 +107,7 @@ const ContactSection = () => {
 
                         {/* Working Hours */}
                         <div className="bg-bimec-green p-6 rounded-lg shadow-md">
-                        <img
+                            <img
                                 src={icon_clock}
                             ></img>
                             <h4 className="font-bold text-lg text-white">Working Hours</h4>

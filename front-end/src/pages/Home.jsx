@@ -37,7 +37,7 @@ function Home() {
             <Navbar />
 
             <div className="w-full relative">
-                <img src={Home_physician} className="w-full h-[40rem]"></img>
+                <img src={Home_physician} className="w-full h-fit"></img>
                 <div className='absolute top-0 left-0 w-full h-full flex flex-col ml-[12rem] mt-44'>
                     <h4 className="font-bold text-xl font-yeseva text-bimec-green">CARING FOR LIFE</h4>
                     <h1 className="font-semibold text-6xl font-yeseva text-bimec-heavy-green">Leading The Way <br /> in Medical Excellence</h1>
