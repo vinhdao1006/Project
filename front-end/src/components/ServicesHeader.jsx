@@ -1,6 +1,10 @@
 import React from 'react';
 import img_PatientDoctor from '../assets/image/Patient-Doctor.png'
 import img_BlackDoctors2 from '../assets/image/BlackDoctors2.png'
+import icon_bandage from '../assets/icon/icon_bandage.png'
+import icon_cardiologram from '../assets/icon/icon_cardiologram.png'
+import icon_dnaTesting from '../assets/icon/icon_dnaTesting.png'
+import icon_bloodBank from '../assets/icon/icon_bloodBank.png'
 function ServicesSection() {
     return (
         <section className="py-10 px-8">
@@ -11,92 +15,54 @@ function ServicesSection() {
 
             <div className="flex max-w-7xl mx-auto">
                 {/* Left Sidebar */}
-                <div className="w-1/5 bg-white shadow-lg rounded-md overflow-hidden">
+                <div className="w-1/5 h-[17rem] bg-white shadow-lg rounded-md overflow-hidden">
                     <ul>
                         <li className="px-4 py-4 border-b border-gray-200 hover:bg-bimec-green hover:text-white cursor-pointer group">
                             <span className="flex items-center group-hover:text-white">
-                                <svg
-                                    className="w-6 h-6 text-bimec-green mr-2 group-hover:text-white"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    strokeWidth="1.5"
-                                    stroke="currentColor"
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        d="M12 9.75v4.5m-4.5-2.25h9m3.75 1.5c0 7.5-7.5 12-7.5 12s-7.5-4.5-7.5-12a7.5 7.5 0 1 1 15 0Z"
-                                    />
-                                </svg>
+                                <img
+                                    src={icon_bandage}
+                                    className="w-6 h-6 mr-2 filter group-hover:invert group-hover:brightness-0 group-hover:contrast-100"
+                                />
                                 Free Checkup
                             </span>
                         </li>
-                        <li className="px-4 py-4 bg-bimec-green text-white border-b border-gray-200 cursor-pointer">
+
+                        <li className="px-4 py-4 border-b border-gray-200 bg-bimec-green text-white cursor-pointer group hover:bg-bimec-heavy-green">
                             <span className="flex items-center">
-                                <svg
-                                    className="w-6 h-6 text-white mr-2"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    strokeWidth="1.5"
-                                    stroke="currentColor"
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        d="M12 9.75v4.5m-4.5-2.25h9m3.75 1.5c0 7.5-7.5 12-7.5 12s-7.5-4.5-7.5-12a7.5 7.5 0 1 1 15 0Z"
-                                    />
-                                </svg>
+                                <img
+                                    src={icon_cardiologram}
+                                    className="w-6 h-6 mr-2 filter group-hover:bg-bimec-heavy-green"
+                                />
                                 Cardiogram
                             </span>
                         </li>
-                        <li className="px-4 py-4 border-b border-gray-200 hover:bg-bimec-green hover:text-white cursor-pointer">
+
+                        <li className="px-4 py-4 border-b border-gray-200 hover:bg-bimec-green hover:text-white cursor-pointer group">
                             <span className="flex items-center">
-                                <svg
-                                    className="w-6 h-6 text-bimec-green mr-2"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    strokeWidth="1.5"
-                                    stroke="currentColor"
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        d="M12 9.75v4.5m-4.5-2.25h9m3.75 1.5c0 7.5-7.5 12-7.5 12s-7.5-4.5-7.5-12a7.5 7.5 0 1 1 15 0Z"
-                                    />
-                                </svg>
+                                <img
+                                    src={icon_dnaTesting}
+                                    className="w-6 h-6 mr-2 filter group-hover:invert group-hover:brightness-0 group-hover:contrast-100"
+                                ></img>
                                 Dna Testing
                             </span>
                         </li>
-                        <li className="px-4 py-4 border-b border-gray-200 hover:bg-bimec-green hover:text-white cursor-pointer">
+                        <li className="px-4 py-4 border-b border-gray-200 hover:bg-bimec-green hover:text-white cursor-pointer group">
                             <span className="flex items-center">
-                                <svg
-                                    className="w-6 h-6 text-bimec-green mr-2"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    strokeWidth="1.5"
-                                    stroke="currentColor"
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        d="M12 9.75v4.5m-4.5-2.25h9m3.75 1.5c0 7.5-7.5 12-7.5-12a7.5 7.5 0 1 1 15 0Z"
-                                    />
-                                </svg>
+                                <img
+                                    src={icon_bloodBank}
+                                    className="w-6 h-6 mr-2 filter group-hover:invert group-hover:brightness-0 group-hover:contrast-100"
+                                ></img>
                                 Blood Bank
                             </span>
                         </li>
-                        <li className="px-4 py-4 bg-gray-200 hover:bg-bimec-green hover:text-white cursor-pointer">
-                            <span className="text-center block text-bimec-green">View All</span>
+                        <li className="px-4 py-4 bg-gray-200 hover:bg-bimec-green hover:text-white cursor-pointer group">
+                            <span className="text-center block text-bimec-green group-hover:text-white">View All</span>
                         </li>
                     </ul>
                 </div>
 
                 {/* Right Content */}
-                <div className="w-3/5 pl-8">
+                <div className="w-3/5 pl-[3rem]">
                     <h2 className="text-2xl font-sans mb-4">A passion for putting patients first.</h2>
                     <div className="grid grid-cols-2 gap-4">
                         <ul className="list-none">

@@ -7,6 +7,8 @@ import Specialties from '../components/Specialties'
 import SliderDoctors from '../components/SliderDoctors'
 import NewsSlider from '../components/NewsSlider'
 import Contact from '../components/Contact'
+import Footer from '../components/BimecFooter'
+import FloatButtonGroup from '../components/FloatButtonGroup'
 import Home_physician from '../assets/image/Home_physician.png' 
 import BlackDoctors1 from '../assets/image/Blackdoctors 1.png'
 import { ReactTyped } from 'react-typed'
@@ -108,6 +110,12 @@ function Home() {
             <div className="mt-[2rem] mx-auto w-[64rem]">
                 <Contact />
             </div>
+
+            <div className="mt-[2rem] mx-auto w-full">
+                <Footer />
+            </div>
+
+            <FloatButtonGroup></FloatButtonGroup>
         </div>
     )
 }

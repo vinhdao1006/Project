@@ -1,32 +1,36 @@
 import React from "react";
+import icon_phone from '../assets/icon/icon_phone.png'
+import icon_location from '../assets/icon/icon_location.png'
+import icon_mail from '../assets/icon/icon_mail.png'
+import icon_clock from '../assets/icon/icon_clock.png'
 
 const Contact = () => {
   const contactDetails = [
     {
       id: 1,
       title: "EMERGENCY",
-      icon: "fas fa-phone",
+      icon: icon_phone,
       details: ["(237) 681-812-255", "(237) 666-331-894"],
       link: "tel:+237681812255",
     },
     {
       id: 2,
       title: "LOCATION",
-      icon: "fas fa-map-marker-alt",
+      icon: icon_location,
       details: ["0123 Some place", "9876 Some country"],
       link: "https://maps.google.com", // Replace with actual map link
     },
     {
       id: 3,
       title: "EMAIL",
-      icon: "fas fa-envelope",
+      icon: icon_mail,
       details: ["fildineeesoe@gmail.com", "myebstudios@gmail.com"],
       link: "mailto:fildineeesoe@gmail.com",
     },
     {
       id: 4,
       title: "WORKING HOURS",
-      icon: "fas fa-clock",
+      icon: icon_clock,
       details: ["Mon-Sat 09:00-20:00", "Sunday Emergency only"],
       link: "#", // No link, but still clickable
     },
@@ -50,7 +54,7 @@ const Contact = () => {
             className="flex flex-col items-center text-center text-white bg-bimec-green rounded-lg p-6 shadow-md transition transform hover:bg-bimec-heavy-green hover:scale-105"
           >
             <div className="mb-4 w-12 h-12 flex items-center justify-center bg-bimec-heavy-green text-white rounded-full">
-              <i className={`${item.icon} text-lg`}></i>
+              <img src={item.icon} className={`${item.icon} text-lg`}></img>
             </div>
             <h4 className="text-lg font-semibold mb-2">{item.title}</h4>
             <div className="space-y-1">

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import icon_specialties from '../assets/icon/icon_specialties.png';
 
 const specialties = [
   { name: "Neurology", id: 1 },
@@ -30,30 +31,18 @@ const SpecialtiesGrid = () => {
         {specialties.map((specialty) => (
           <div
             key={specialty.id}
-            className={`flex flex-col items-center justify-center p-6 border rounded-lg cursor-pointer ${
+            className={`flex flex-col items-center justify-center p-6 border rounded-lg cursor-pointer transition-colors ${
               activeSpecialty === specialty.id
-                ? "bg-green-700 text-white"
-                : "bg-white text-green-700 border-green-700 hover:bg-green-100"
+                ? "bg-bimec-heavy-green text-white"
+                : "bg-white text-bimec-green border-bimec-green hover:bg-bimec-green hover:text-white"
             }`}
             onClick={() => setActiveSpecialty(specialty.id)}
           >
             <div className="mb-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={2}
-                stroke="currentColor"
-                className={`w-6 h-6 ${
-                  activeSpecialty === specialty.id ? "text-white" : "text-green-700"
-                }`}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M3 3h18M3 21h18M3 12h18"
-                />
-              </svg>
+              <img 
+                src={icon_specialties}
+                alt={`${specialty.name} Icon`}
+              />
             </div>
             <span className="font-medium">{specialty.name}</span>
           </div>
