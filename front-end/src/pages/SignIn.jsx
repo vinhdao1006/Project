@@ -18,7 +18,9 @@ function SignIn() {
             .then(result => {
                 console.log(result)
                 if (result.data === "Success") {
-                    navigate('/home')
+                    setTimeout(() => {
+                        navigate('/home');
+                    }, 3000);
                 }
             })
             .catch(err => console.log(err))

@@ -54,7 +54,7 @@ app.post('/login', (req, res) => {
                 })
             }
             else {
-                res.json("No patient found")
+                res.json("No user found")
             }
         })
 })
