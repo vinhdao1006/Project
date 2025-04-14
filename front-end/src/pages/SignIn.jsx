@@ -4,6 +4,7 @@ import Google_icon from '../assets/icon/icon_google.png'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import BimecHeader from '../components/BimecHeader'
+import { GoogleLogin } from '@react-oauth/google'
 
 function SignIn() {
     const [email, setEmail] = useState()
@@ -24,6 +25,28 @@ function SignIn() {
                 }
             })
             .catch(err => console.log(err))
+    }
+
+    // login with google
+    const handleGoogleSuccess = (credentialResponse) => {
+        const { credential } = credentialResponse
+
+        axios.post('http://localhost:3001/google-login', { token: credential })
+        .then((response) => {
+            console.log(response.data)
+            if (response.data === "Success") {
+                setTimeout(() => {
+                    navigate('/home');
+                }, 3000);
+            }
+        })
+        .catch((error) => {
+            console.error('Error Google login:', error);
+        });
+    }
+
+    const handleGoogleError = () => {
+        console.error('Login Google Failed:');
     }
 
     return (
@@ -104,12 +127,21 @@ function SignIn() {
                             </div>
 
                             {/* Google Button */}
-                            <button
+                            {/* <button
                                 type="button"
                                 className="w-full flex items-center justify-center border border-gray-300 py-2 rounded-lg hover:bg-gray-100"
+                                onSuccess={handleGoogleSuccess}
+                                onError={handleGoogleError}
                             >
                                 <img src={Google_icon} />
-                            </button>
+                            </button> */}
+                            <div className='w-full flex items-center justify-center' >
+                                <GoogleLogin 
+                                    onSuccess={handleGoogleSuccess}
+                                    onError={handleGoogleError}
+                                />
+                            </div>
+                            
                         </form>
                     </div>
                 </div>
