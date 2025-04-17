@@ -1,27 +1,31 @@
 import { useState } from 'react'
 import Login_img from '../assets/image/Login.png'
-import Google_icon from '../assets/icon/icon_google.png'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import BimecHeader from '../components/BimecHeader'
 import { GoogleLogin } from '@react-oauth/google'
+import { jwtDecode } from 'jwt-decode'
 
 function SignIn() {
     const [email, setEmail] = useState()
     const [password, setPassword] = useState()
+    const [role, setRole] = useState()
     const navigate = useNavigate()
 
     axios.defaults.withCredentials = true;
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.post('http://localhost:3001/login', { email, password })
+        axios.post('http://localhost:3001/login', { email, password, role })
             .then(result => {
                 console.log(result)
-                if (result.data === "Success") {
-                    setTimeout(() => {
-                        navigate('/home');
-                    }, 3000);
+                if (result.data.message === "Success") {
+                    const token = result.data.token;
+                    if (token) {
+                        handleRoleRedirect(token); 
+                    } else {
+                        console.error("Token is missing in the response");
+                    }
                 }
             })
             .catch(err => console.log(err))
@@ -35,9 +39,12 @@ function SignIn() {
         .then((response) => {
             console.log(response.data)
             if (response.data === "Success") {
-                setTimeout(() => {
-                    navigate('/home');
-                }, 3000);
+                const token = response.data.token;
+                if (token) {
+                    handleRoleRedirect(token); 
+                } else {
+                    console.error("Token is missing in the response");
+                }
             }
         })
         .catch((error) => {
@@ -47,6 +54,24 @@ function SignIn() {
 
     const handleGoogleError = () => {
         console.error('Login Google Failed:');
+    }
+
+    const handleRoleRedirect = (token) => {
+        if (!token || typeof token !== 'string') {
+            console.error("Invalid token:", token);
+            return;
+        }
+
+        const decodedToken = jwtDecode(token);
+        const role = decodedToken.role; 
+
+        if (role === 'Admin') {
+            navigate('/admin-dashboard'); 
+        } else if (role === 'Doctor') {
+            navigate('/doctor-dashboard');
+        } else {
+            navigate('/home');
+        }
     }
 
     return (

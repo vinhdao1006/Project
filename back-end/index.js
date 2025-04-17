@@ -1,7 +1,7 @@
 const express = require("express")
 const mongoose = require("mongoose")
 const cors = require("cors")
-const PatientModel = require('./models/patient')
+const UserModel = require('./models/user')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
 const cookieParser = require('cookie-parser')
@@ -18,37 +18,56 @@ app.use(cors({
 }))
 app.use(cookieParser())
 
-mongoose.connect("mongodb+srv://vinhdao1006:VinhDao1006@cluster0.yfwoj.mongodb.net/patient");
+mongoose.connect("mongodb+srv://vinhdao1006:VinhDao1006@cluster0.yfwoj.mongodb.net/user");
 
-// const verifyUser = (req, res, next) => {
-//     const token = req.cookies.token;
-//     if (!token) {
-//         return res.json("The token was not available")
-//     }
-//     else {
-//         jwt.verify(token, "jwt-secret-key", (err, decoded) => {
-//             if (err) {
-//                 return res.json("Token is wrong")
-//                 next();
-//             }
-//         })
-//     }
-// }
+const verifyRole = (roles) => (req, res, next) => {
+    const token = req.cookies.token;
+    if (!token) {
+        return res.status(401).json("Unauthorized");
+    }
 
-// app.get('/home', verifyUser, (req, res) => {
-//     return res.json("Success")
-// })
+    jwt.verify(token, "jwt-secret-key", (err, decoded) => {
+        if (err) {
+            return res.status(403).json("Forbidden");
+        }
+
+        if (!roles.includes(decoded.role)) {
+            return res.status(403).json("Access Denied");
+        }
+
+        req.user = decoded; 
+        next();
+    });
+};
+
+// Admin route
+app.get('/admin', verifyRole(['admin']), (req, res) => {
+    res.json("Welcome, Admin! You have access to this route.");
+});
+
+// Doctor route
+app.get('/doctor', verifyRole(['doctor']), (req, res) => {
+    res.json("Welcome, Doctor! You have access to this route.");
+});
+
+// Patient route
+app.get('/patient', verifyRole(['patient']), (req, res) => {
+    res.json("Welcome, Patient! You have access to this route.");
+});
 
 app.post('/login', (req, res) => {
     const { email, password } = req.body;
-    PatientModel.findOne({ email: email })
+    UserModel.findOne({ email: email })
         .then(user => {
             if (user) {
                 bcrypt.compare(password, user.password, (err, response) => {
                     if (response) {
-                        const token = jwt.sign({ email: user.email }, "jwt-secret-key", { expiresIn: "1d" })
+                        const token = jwt.sign(
+                            { email: user.email, role: user.role }, 
+                            "jwt-secret-key", { expiresIn: "1d" }
+                        );
                         res.cookie("token", token);
-                        res.json("Success")
+                        res.json({token, message: "Success"});
                     }
                     else {
                         res.json("Password is incorrect")
@@ -59,9 +78,13 @@ app.post('/login', (req, res) => {
                 res.json("No user found")
             }
         })
+        .catch(err => {
+            console.error(err);
+            res.status(500).json({ error: "Internal server error" });
+        });
 })
 
-// google login
+// google login 
 app.post('/google-login', async (req, res) => {
     const { token } = req.body;
     try {
@@ -72,8 +95,8 @@ app.post('/google-login', async (req, res) => {
         const payload = ticket.getPayload();
         // console.log('Google User Info:', payload);
 
-        const user = await PatientModel.findOne({ email: payload.email });
-        console.log('user:', user)
+        const user = await UserModel.findOne({ email: payload.email });
+        // console.log('user:', user)
 
         if(user)
         {
@@ -81,7 +104,7 @@ app.post('/google-login', async (req, res) => {
             res.cookie("token", jwtToken);
         }
         else {
-            const newUser = await PatientModel.create({ email: payload.email, firstname: "", lastname: "", password: "" });
+            const newUser = await UserModel.create({ email: payload.email, firstname: "", lastname: "", password: "" });
             res.json(newUser)
         }
         res.json("Success");
@@ -92,7 +115,8 @@ app.post('/google-login', async (req, res) => {
 })
 
 app.post('/register', (req, res) => {
-    const { firstname, lastname, email, phone, password } = req.body;
+    const { firstname, lastname, email, phone, password, role } = req.body;
+
     // password confirmation
     if (req.body.password !== req.body.confirmpassword) {
         return res.status(400).json({ error: "Passwords do not match" });
@@ -100,18 +124,23 @@ app.post('/register', (req, res) => {
 
     bcrypt.hash(password, 10)
         .then(async hash => {
-            // create new patient account
+            // create new account
             try {
-                const newPatient = await PatientModel.create({ firstname, lastname, email, phone, password: hash });
-                res.json(newPatient);
+                const newUser = await UserModel.create({ 
+                    firstname, 
+                    lastname, 
+                    email, 
+                    phone, 
+                    password: hash,
+                    role 
+                })
+                res.json(newUser);
             } catch (err) {
                 console.error(err);
                 res.status(500).json({ error: "Failed to register patient" });
             }
         })
         .catch(err => console.log(err.message))
-
-
 })
 
 app.listen(3001, () => {

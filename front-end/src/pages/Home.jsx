@@ -13,38 +13,26 @@ import FloatButtonGroup from '../components/FloatButtonGroup'
 import Home_physician from '../assets/image/Home_physician.png'
 import BlackDoctors1 from '../assets/image/Blackdoctors 1.png'
 import { ReactTyped } from 'react-typed'
-// import { GoogleLogin } from '@react-oauth/google';
 
 function Home() {
     const navigate = useNavigate()
     axios.defaults.withCredentials = true;
 
-    useEffect(() => {
-        axios.get('http://localhost:3001/home')
-            .then(result => {
-                console.log(result)
-                if (result.data !== "Success") {
-                    navigate('/login')
-                }
-            })
-            .catch(err => console.log(err))
-    }, [])
-
-    // const responseMessage = (response) => {
-    //     console.log(response);
-    // };
-    // const errorMessage = (error) => {
-    //     console.log(error);
-    // };
+    // useEffect(() => {
+    //     axios.get('http://localhost:3001/home')
+    //         .then(result => {
+    //             console.log(result)
+    //             if (result.data.message !== "Success") {
+    //                 navigate('/login')
+    //             }
+    //         })
+    //         .catch(err => console.log(err))
+    // }, [])
 
     return (
         <div className="overflow-x-hidden overflow-y-auto">
-            
-            {/* <GoogleLogin onSuccess={responseMessage} onError={errorMessage} /> */}
-            
 
             <BimecLogo />
-
 
             <Navbar />
 

@@ -4,6 +4,9 @@ import Google_icon from '../assets/icon/icon_google.png'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import BimecHeader from '../components/BimecHeader'
+import {Menu, MenuButton, MenuItems, MenuItem} from '@headlessui/react'
+import { ChevronDownIcon } from '@heroicons/react/20/solid';
+
 function SignUp() {
     const [firstname, setFName] = useState('')
     const [lastname, setLName] = useState('')
@@ -11,11 +14,20 @@ function SignUp() {
     const [phone, setPhone] = useState('')
     const [password, setPassworld] = useState('')
     const [confirmpassword, setConfirmPassword] = useState('')
+    const [role, setRole] = useState('Patient') // default role is Patient
     const navigate = useNavigate()
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.post('http://localhost:3001/register', { firstname, lastname, phone, email, password, confirmpassword })
+        axios.post('http://localhost:3001/register', { 
+            firstname, 
+            lastname, 
+            phone, 
+            email, 
+            password, 
+            confirmpassword, 
+            role
+        })
             .then(result => {
                 console.log(result)
                 navigate('/login')
@@ -62,6 +74,64 @@ function SignUp() {
                                     />
                                 </div>
                             </div>
+
+                            {/* Role Dropdown */}
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700" htmlFor="role">
+                                        Register as
+                                    </label>
+                                    <Menu as="div" className="relative inline-block text-left w-full">
+                                        <div>
+                                            <MenuButton className="inline-flex w-full justify-between items-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset hover:bg-gray-50">
+                                                {role} {/* Display the selected role */}
+                                                <ChevronDownIcon aria-hidden="true" className="-mr-1 size-5 text-gray-400" />
+                                            </MenuButton>
+                                        </div>
+
+                                        <MenuItems
+                                            className="absolute right-0 z-10 mt-2 w-full origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none"
+                                        >
+                                            <div className="py-1">
+                                                <MenuItem>
+                                                    {({ active }) => (
+                                                        <button
+                                                            onClick={() => setRole('Doctor')}
+                                                            className={`block w-full px-4 py-2 text-left text-sm ${
+                                                                active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
+                                                            }`}
+                                                        >
+                                                            Doctor
+                                                        </button>
+                                                    )}
+                                                </MenuItem>
+                                                <MenuItem>
+                                                    {({ active }) => (
+                                                        <button
+                                                            onClick={() => setRole('Admin')}
+                                                            className={`block w-full px-4 py-2 text-left text-sm ${
+                                                                active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
+                                                            }`}
+                                                        >
+                                                            Admin
+                                                        </button>
+                                                    )}
+                                                </MenuItem>
+                                                <MenuItem>
+                                                    {({ active }) => (
+                                                        <button
+                                                            onClick={() => setRole('Patient')}
+                                                            className={`block w-full px-4 py-2 text-left text-sm ${
+                                                                active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
+                                                            }`}
+                                                        >
+                                                            Patient
+                                                        </button>
+                                                    )}
+                                                </MenuItem>
+                                            </div>
+                                        </MenuItems>
+                                    </Menu>
+                                </div>
 
                             {/* Email and Phone Fields */}
                             <div className="grid grid-cols-2 gap-4">
