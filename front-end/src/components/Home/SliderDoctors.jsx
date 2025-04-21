@@ -1,8 +1,8 @@
 import React from "react";
 import Slider from "react-slick";
-import img_doctor1 from "../assets/image/sliderDoctor1.png";
-import img_doctor2 from "../assets/image/sliderDoctor2.png";
-import img_doctor3 from "../assets/image/sliderDoctor3.png";
+import img_doctor1 from "../../assets/image/sliderDoctor1.png";
+import img_doctor2 from "../../assets/image/sliderDoctor2.png";
+import img_doctor3 from "../../assets/image/sliderDoctor3.png";
 
 const doctors = [
   {

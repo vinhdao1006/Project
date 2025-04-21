@@ -1,5 +1,5 @@
 import React from 'react'
-import Bimec_logo from '../assets/icon/Bimec_logo.png'
+import Bimec_logo from '../../assets/icon/Bimec_logo.png'
 
 const BimecHeader = () => {
     return (

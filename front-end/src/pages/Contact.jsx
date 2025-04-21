@@ -1,12 +1,13 @@
 import React from 'react';
-import BimecLogo from '../components/BimecLogo'
-import Navbar from '../components/Navbar'
+import BimecLogo from '../components/utils/BimecLogo'
+import Navbar from '../components/Navbar/Navbar'
 import icon_phone from '../assets/icon/icon_phone.png'
 import icon_location from '../assets/icon/icon_location.png'
 import icon_mail from '../assets/icon/icon_mail.png'
 import icon_clock from '../assets/icon/icon_clock.png'
-import Footer from '../components/BimecFooter'
+import Footer from '../components/Footer/BimecFooter'
 import img_SubHead_contact from '../assets/image/subhead_contact.png'
+import FloatButtonGroup from '../components/utils/FloatButtonGroup'
 
 
 const ContactSection = () => {
@@ -18,7 +19,7 @@ const ContactSection = () => {
             <div>
                 <Navbar></Navbar>
             </div>
-
+            
             <div>
                 <img src={img_SubHead_contact} className="w-full h-fit"></img>
             </div>
@@ -26,13 +27,13 @@ const ContactSection = () => {
             <div className="w-full mt-16">
                 {/* Map Section */}
                 <div className="w-3/4 mx-auto h-[400px]">
-                    <iframe
-                        className="w-full h-full"
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d24176.46435895738!2d-74.0137960540258!3d40.73061003775432!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjTCsDQzJzQ5LjkiTiA3NMKwMDAnMTQuOSJX!5e0!3m2!1sen!2sus!4v1234567890"
-                        allowFullScreen=""
-                        loading="lazy"
-                        title="Google Maps"
-                    ></iframe>
+                    <iframe 
+                        className='w-full h-full'
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.504638894077!2d106.65512307573604!3d10.772608259262775!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752ec17709146b%3A0x54a1658a0639d341!2zxJDhuqFpIEjhu41jIELDoWNoIEtob2EgLSAyNjggTMO9IFRoxrDhu51uZyBLaeG7h3Q!5e0!3m2!1svi!2s!4v1745205601313!5m2!1svi!2s" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
                 </div>
 
                 {/* Contact Section */}
@@ -74,9 +75,9 @@ const ContactSection = () => {
                     </div>
 
                     {/* Info Section */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 ">
                         {/* Emergency Contact */}
-                        <div className="bg-bimec-green p-6 rounded-lg shadow-md">
+                        <div className="bg-bimec-green p-6 rounded-lg shadow-md transition-transform duration-300 hover:scale-105 hover:bg-bimec-heavy-green">
                             <img
                                 src={icon_phone}
                             ></img>
@@ -86,7 +87,7 @@ const ContactSection = () => {
                         </div>
 
                         {/* Location */}
-                        <div className="bg-bimec-green p-6 rounded-lg shadow-md">
+                        <div className="bg-bimec-green p-6 rounded-lg shadow-md transition-transform duration-300 hover:scale-105 hover:bg-bimec-heavy-green">
                             <img
                                 src={icon_location}
                             ></img>
@@ -96,9 +97,10 @@ const ContactSection = () => {
                         </div>
 
                         {/* Email */}
-                        <div className="bg-bimec-green p-6 rounded-lg shadow-md">
+                        <div className="bg-bimec-green p-6 rounded-lg shadow-md transition-transform duration-300 hover:scale-105 hover:bg-bimec-heavy-green">
                             <img
                                 src={icon_mail}
+                                className="transition-colors duration-300 group-hover:filter group-hover:brightness-150"
                             ></img>
                             <h4 className="font-bold text-lg text-white">Email</h4>
                             <p className="mt-2 text-white">filidineeoseo@gmail.com</p>
@@ -106,7 +108,7 @@ const ContactSection = () => {
                         </div>
 
                         {/* Working Hours */}
-                        <div className="bg-bimec-green p-6 rounded-lg shadow-md">
+                        <div className="bg-bimec-green p-6 rounded-lg shadow-md transition-transform duration-300 hover:scale-105 hover:bg-bimec-heavy-green">
                             <img
                                 src={icon_clock}
                             ></img>
@@ -121,6 +123,8 @@ const ContactSection = () => {
             <div className="mt-[4rem]">
                 <Footer></Footer>
             </div>
+
+            <FloatButtonGroup></FloatButtonGroup>
         </div>
 
 

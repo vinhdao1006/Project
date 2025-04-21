@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import icon_specialties from '../assets/icon/icon_specialties.png';
+import icon_specialties from '../../assets/icon/icon_specialties.png';
 
 const specialties = [
   { name: "Neurology", id: 1 },

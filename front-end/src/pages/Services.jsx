@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react'
-import Navbar from '../components/Navbar'
-import FloatButtonGroup from '../components/FloatButtonGroup'
-import Footer from '../components/BimecFooter'
-import TestimonalSection from '../components/AboutUs/Testimonial'
+import Navbar from '../components/Navbar/Navbar'
+import FloatButtonGroup from '../components/utils/FloatButtonGroup'
+import Footer from '../components/Footer/BimecFooter'
+import TestimonalSection from '../components/utils/Testimonial'
 import ServiceGrid from '../components/Services/ServiceGrid'
-import Contact from '../components/Contact'
-import BimecLogo from '../components/BimecLogo'
+import Contact from '../components/utils/Contact'
+import BimecLogo from '../components/utils/BimecLogo'
 import img_SubHead_services from '../assets/image/img_SubHead_services.png'
-const AboutUs = () => {
+
+const Services = () => {
     return (
         <div class="overflow-x-hidden overflow-y-auto">
         <div>
@@ -46,4 +47,4 @@ const AboutUs = () => {
     )
 }
 
-export default AboutUs
+export default Services

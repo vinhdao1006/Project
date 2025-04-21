@@ -1,11 +1,11 @@
 import react from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
-import Navbar from '../components/Navbar'
+import Navbar from '../components/Navbar/Navbar'
 import slider_booking from '../assets/image/slider_booking.png'
 import icon_phone from '../assets/icon/icon_phone.png'
-import Contact from '../components/Contact'
-import BimecFooter from '../components/BimecFooter'
+import Contact from '../components/utils/Contact'
+import BimecFooter from '../components/Footer/BimecFooter'
 
 function BookingPage() {
 

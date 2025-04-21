@@ -1,6 +1,6 @@
 import React from "react";
 import Slider from "react-slick";
-import img_article from "../assets/image/newSliderDoctor.png"; // Replace with your image path
+import img_article from "../../assets/image/newSliderDoctor.png"; 
 
 const articles = [
   {

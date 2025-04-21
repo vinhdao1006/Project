@@ -1,10 +1,10 @@
 import React from 'react';
-import img_PatientDoctor from '../assets/image/Patient-Doctor.png'
-import img_BlackDoctors2 from '../assets/image/BlackDoctors2.png'
-import icon_bandage from '../assets/icon/icon_bandage.png'
-import icon_cardiologram from '../assets/icon/icon_cardiologram.png'
-import icon_dnaTesting from '../assets/icon/icon_dnaTesting.png'
-import icon_bloodBank from '../assets/icon/icon_bloodBank.png'
+import img_PatientDoctor from '../../assets/image/Patient-Doctor.png'
+import img_BlackDoctors2 from '../../assets/image/BlackDoctors2.png'
+import icon_bandage from '../../assets/icon/icon_bandage.png'
+import icon_cardiologram from '../../assets/icon/icon_cardiologram.png'
+import icon_dnaTesting from '../../assets/icon/icon_dnaTesting.png'
+import icon_bloodBank from '../../assets/icon/icon_bloodBank.png'
 function ServicesSection() {
     return (
         <section className="py-10 px-8">

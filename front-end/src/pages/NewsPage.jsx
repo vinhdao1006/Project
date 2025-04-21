@@ -1,13 +1,24 @@
 import react from 'react'
 import {Link} from 'react-router-dom'
-import Navbar from '../components/Navbar';
-import BimecLogo from '../components/BimecLogo';
+import Navbar from '../components/Navbar/Navbar';
+import BimecLogo from '../components/utils/BimecLogo';
 import new_img_1 from '../assets/image/news_img_1.png'
 import new_img_2 from '../assets/image/news_img_2.png'   
 import new_img_3 from '../assets/image/news_img_3.png'
 import new_img_4 from '../assets/image/news_img_4.png'
+import Footer from '../components/Footer/BimecFooter'
+import Contact from '../components/utils/Contact'
+import { useNavigate } from 'react-router-dom';
+import FloatButtonGroup from '../components/utils/FloatButtonGroup'
 
 const NewsPage = () => {
+  const navigate = useNavigate();
+
+  const handleReadMore = (post) => {
+    navigate(`/news/${post.title}`, { state: { post, posts } });  // Pass the current post and all posts
+  };
+
+
     const posts = [
         {
             title: "A passion to putting patients first",
@@ -17,33 +28,37 @@ const NewsPage = () => {
             likes: "50",
             image: new_img_1,
             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
+            content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque placerat scelerisque tortor ornare ornare. Quisque placerat scelerisque tortor ornare ornare Convallis felis vitae tortor augue. Velit nascetur proin massa in. Consequat faucibus porttitor enim Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque placerat scelerisque tortor ornare ornare. Quisque placerat scelerisque tortor ornare ornare Convallis felis vitae tortor augue. Velit nascetur proin massa in. Consequat faucibus porttitor enim Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque placerat scelerisque tortor ornare ornare. Quisque placerat scelerisque tortor ornare ornare Convallis felis vitae tortor augue. Velit nascetur proin massa in. Consequat faucibus porttitor enim Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque placerat scelerisque tortor ornare ornare. Quisque placerat scelerisque tortor ornare ornare Convallis felis vitae tortor augue. Velit nascetur proin massa in. Consequat faucibus porttitor enim Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque placerat scelerisque tortor ornare ornare. Quisque placerat scelerisque tortor ornare ornare Convallis felis vitae tortor augue. Velit nascetur proin massa in. Consequat faucibus porttitor enim Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque placerat scelerisque tortor ornare ornare. Quisque placerat scelerisque tortor ornare ornare Convallis felis vitae tortor augue. Velit nascetur proin massa in. Consequat faucibus porttitor enim et."
         },
         {
-            title: "A passion to putting patients first",
+            title: "Doctors lead with empathy and care",
             date: "Monday 05, September 2021",
             author: "Dr. John Doe",
             views: "120",
-            likes: "50",
-            image:new_img_2,
+            likes: "60",
+            image: new_img_2,
             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
+            content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque placerat scelerisque tortor ornare ornare. Quisque placerat scelerisque tortor ornare ornare Convallis felis vitae tortor augue. Velit nascetur proin massa in. Consequat faucibus porttitor enim Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque placerat scelerisque tortor ornare ornare. Quisque placerat scelerisque tortor ornare ornare Convallis felis vitae tortor augue. Velit nascetur proin massa in. Consequat faucibus porttitor enim Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque placerat scelerisque tortor ornare ornare. Quisque placerat scelerisque tortor ornare ornare Convallis felis vitae tortor augue. Velit nascetur proin massa in. Consequat faucibus porttitor enim Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque placerat scelerisque tortor ornare ornare. Quisque placerat scelerisque tortor ornare ornare Convallis felis vitae tortor augue. Velit nascetur proin massa in. Consequat faucibus porttitor enim Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque placerat scelerisque tortor ornare ornare. Quisque placerat scelerisque tortor ornare ornare Convallis felis vitae tortor augue. Velit nascetur proin massa in. Consequat faucibus porttitor enim Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque placerat scelerisque tortor ornare ornare. Quisque placerat scelerisque tortor ornare ornare Convallis felis vitae tortor augue. Velit nascetur proin massa in. Consequat faucibus porttitor enim et."
         },
         {
-            title: "A passion to putting patients first",
+            title: "Our mission to revolutionize health",
             date: "Monday 05, September 2021",
             author: "Dr. John Doe",
             views: "120",
-            likes: "50",
+            likes: "70",
             image: new_img_3,
             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
+            content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque placerat scelerisque tortor ornare ornare. Quisque placerat scelerisque tortor ornare ornare Convallis felis vitae tortor augue. Velit nascetur proin massa in. Consequat faucibus porttitor enim Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque placerat scelerisque tortor ornare ornare. Quisque placerat scelerisque tortor ornare ornare Convallis felis vitae tortor augue. Velit nascetur proin massa in. Consequat faucibus porttitor enim Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque placerat scelerisque tortor ornare ornare. Quisque placerat scelerisque tortor ornare ornare Convallis felis vitae tortor augue. Velit nascetur proin massa in. Consequat faucibus porttitor enim Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque placerat scelerisque tortor ornare ornare. Quisque placerat scelerisque tortor ornare ornare Convallis felis vitae tortor augue. Velit nascetur proin massa in. Consequat faucibus porttitor enim Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque placerat scelerisque tortor ornare ornare. Quisque placerat scelerisque tortor ornare ornare Convallis felis vitae tortor augue. Velit nascetur proin massa in. Consequat faucibus porttitor enim Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque placerat scelerisque tortor ornare ornare. Quisque placerat scelerisque tortor ornare ornare Convallis felis vitae tortor augue. Velit nascetur proin massa in. Consequat faucibus porttitor enim et."
         },
         {
-            title: "A passion to putting patients first",
+            title: "Take care of your health", 
             date: "Monday 05, September 2021",
             author: "Dr. John Doe",
             views: "120",
-            likes: "50",
+            likes: "80",
             image: new_img_4,
             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
+            content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque placerat scelerisque tortor ornare ornare. Quisque placerat scelerisque tortor ornare ornare Convallis felis vitae tortor augue. Velit nascetur proin massa in. Consequat faucibus porttitor enim Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque placerat scelerisque tortor ornare ornare. Quisque placerat scelerisque tortor ornare ornare Convallis felis vitae tortor augue. Velit nascetur proin massa in. Consequat faucibus porttitor enim Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque placerat scelerisque tortor ornare ornare. Quisque placerat scelerisque tortor ornare ornare Convallis felis vitae tortor augue. Velit nascetur proin massa in. Consequat faucibus porttitor enim Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque placerat scelerisque tortor ornare ornare. Quisque placerat scelerisque tortor ornare ornare Convallis felis vitae tortor augue. Velit nascetur proin massa in. Consequat faucibus porttitor enim Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque placerat scelerisque tortor ornare ornare. Quisque placerat scelerisque tortor ornare ornare Convallis felis vitae tortor augue. Velit nascetur proin massa in. Consequat faucibus porttitor enim Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque placerat scelerisque tortor ornare ornare. Quisque placerat scelerisque tortor ornare ornare Convallis felis vitae tortor augue. Velit nascetur proin massa in. Consequat faucibus porttitor enim et."
         },
     ]
 
@@ -69,7 +84,10 @@ const NewsPage = () => {
                   </div>
                   <h2 className="text-2xl font-bold">{post.title}</h2>
                   <p>{post.description}</p>
-                  <button className="bg-green-700 text-white px-4 py-2 rounded hover:bg-green-800">Read More</button>
+                  <button className="bg-green-700 text-white px-4 py-2 rounded hover:bg-green-800"
+                    onClick={() => handleReadMore(post)}>
+                    Read More
+                  </button>
                 </article>
               ))}
     
@@ -94,9 +112,20 @@ const NewsPage = () => {
               <div>
                 <h3 className="text-lg font-semibold border-b pb-2 mb-3">Recent Posts</h3>
                 <ul className="space-y-3 text-sm">
-                  <li><Link to="#" className="text-gray-700 hover:text-green-700">A passion for putting patients first</Link></li>
-                  <li><Link to="#" className="text-gray-700 hover:text-green-700">Doctors lead with empathy and care</Link></li>
-                  <li><Link to="#" className="text-gray-700 hover:text-green-700">Our mission to revolutionize health</Link></li>
+                    {posts.map((recentPost, index) => (
+                        <li key={index}>
+                            <button
+                                onClick={() =>
+                                    navigate(`/news/${recentPost.title}`, {
+                                        state: { post: recentPost, posts },
+                                    })
+                                }
+                                className="text-gray-700 hover:text-green-700"
+                            >
+                                {recentPost.title}
+                            </button>
+                        </li>
+                    ))}
                 </ul>
               </div>
     
@@ -113,51 +142,15 @@ const NewsPage = () => {
             </aside>
           </main>
     
-          {/* Contact Info Section */}
-          <section className="bg-gray-100 py-12">
-            <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-6 text-center text-sm">
-              <div>
-                <h4 className="font-bold mb-2">EMERGENCY</h4>
-                <p>+021-345-67890</p>
-              </div>
-              <div>
-                <h4 className="font-bold mb-2">LOCATION</h4>
-                <p>123 Demo Street, Country</p>
-              </div>
-              <div>
-                <h4 className="font-bold mb-2">EMAIL</h4>
-                <p>bimec@hospital.com</p>
-              </div>
-              <div>
-                <h4 className="font-bold mb-2">WORKING HOURS</h4>
-                <p>Sunday to Thursday</p>
-              </div>
+          <div className="mt-[4rem] mx-auto w-full">
+                <Contact></Contact>
+          </div>
+
+            <div className="mt-[6rem] mx-auto w-full">
+                <Footer></Footer>
             </div>
-          </section>
-    
-          {/* Footer */}
-          <footer className="bg-green-800 text-white py-6">
-            <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8 text-sm">
-              <div>
-                <h5 className="font-bold mb-2">BIMEC</h5>
-                <p>Leading the way in medical excellence.</p>
-              </div>
-              <div>
-                <h5 className="font-bold mb-2">Contact</h5>
-                <p>Call: +021-456-789</p>
-                <p>Email: info@bimec.com</p>
-              </div>
-              <div>
-                <h5 className="font-bold mb-2">Newsletter</h5>
-                <input
-                  type="text"
-                  placeholder="Enter your email"
-                  className="w-full px-3 py-2 rounded text-black"
-                />
-              </div>
-            </div>
-            <div className="text-center text-sm mt-6">© 2025 BIMEC. All rights reserved.</div>
-          </footer>
+
+            <FloatButtonGroup></FloatButtonGroup>
         </div>
       );
 }

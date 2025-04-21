@@ -9,6 +9,7 @@ import Contact from './pages/Contact'
 import DoctorPage from './pages/DoctorPage'
 import NewsPage from './pages/NewsPage'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import SingleNews from './pages/SingleNews'
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
         <Route path='/contact' element={<Contact />}></Route>
         <Route path='/doctors' element={<DoctorPage />}></Route>
         <Route path='/news' element={<NewsPage />}></Route>
+        <Route path="/news/:title" element={<SingleNews />} />
       </Routes>
     </Router>
   )

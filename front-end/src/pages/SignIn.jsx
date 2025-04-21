@@ -2,7 +2,7 @@ import { useState } from 'react'
 import Login_img from '../assets/image/Login.png'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
-import BimecHeader from '../components/BimecHeader'
+import BimecHeader from '../components/Header/BimecHeader'
 import { GoogleLogin } from '@react-oauth/google'
 import { jwtDecode } from 'jwt-decode'
 

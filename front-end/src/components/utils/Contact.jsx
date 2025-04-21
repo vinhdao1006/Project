@@ -1,8 +1,8 @@
 import React from "react";
-import icon_phone from '../assets/icon/icon_phone.png'
-import icon_location from '../assets/icon/icon_location.png'
-import icon_mail from '../assets/icon/icon_mail.png'
-import icon_clock from '../assets/icon/icon_clock.png'
+import icon_phone from '../../assets/icon/icon_phone.png'
+import icon_location from '../../assets/icon/icon_location.png'
+import icon_mail from '../../assets/icon/icon_mail.png'
+import icon_clock from '../../assets/icon/icon_clock.png'
 
 const Contact = () => {
   const contactDetails = [
