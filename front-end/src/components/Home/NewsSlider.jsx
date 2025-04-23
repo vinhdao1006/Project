@@ -1,6 +1,6 @@
 import React from "react";
 import Slider from "react-slick";
-import img_article from "../../assets/image/newSliderDoctor.png"; 
+import img_article from "../../assets/image/newSliderDoctor.png";
 
 const articles = [
   {
@@ -50,13 +50,13 @@ const NewsSlider = () => {
     slidesToScroll: 1,
     responsive: [
       {
-        breakpoint: 1024,
+        breakpoint: 1024, // Tablet and smaller
         settings: {
           slidesToShow: 2,
         },
       },
       {
-        breakpoint: 640,
+        breakpoint: 640, // Mobile
         settings: {
           slidesToShow: 1,
         },
@@ -73,22 +73,27 @@ const NewsSlider = () => {
   };
 
   return (
-    <div className="py-10 ">
+    <div className="py-10 px-4 sm:px-8 lg:px-16">
+      {/* Header */}
       <h2 className="text-center text-xl font-semibold text-bimec-green uppercase mb-2">
         Better Information, Better Health
       </h2>
       <h3 className="text-center text-4xl font-bold text-bimec-heavy-green font-yeseva mb-8">
         News
       </h3>
+
+      {/* Slider */}
       <Slider {...settings}>
         {articles.map((article) => (
           <div key={article.id} className="p-4">
-            <div className="bg-white rounded-lg shadow-md overflow-hidden">
+            <div className="bg-white rounded-lg shadow-md overflow-hidden transition transform hover:scale-105 max-w-md mx-auto">
+              {/* Article Image */}
               <img
                 src={article.image}
                 alt={article.title}
                 className="w-full h-48 object-cover"
               />
+              {/* Article Info */}
               <div className="p-6">
                 <p className="text-sm text-gray-500 mb-2">
                   {article.date} | {article.author}

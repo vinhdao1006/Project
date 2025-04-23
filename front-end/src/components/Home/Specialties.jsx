@@ -20,14 +20,17 @@ const SpecialtiesGrid = () => {
   const [activeSpecialty, setActiveSpecialty] = useState(null);
 
   return (
-    <div className="py-10">
+    <div className="py-10 px-4 sm:px-8 lg:px-16">
+      {/* Header */}
       <h2 className="text-center text-xl font-semibold text-bimec-green uppercase mb-2">
         Always Caring
       </h2>
       <h3 className="text-center text-4xl font-yeseva text-bimec-heavy-green font-bold mb-10">
         Our Specialties
       </h3>
-      <div className="grid grid-cols-3 gap-1 mx-auto max-w-4xl">
+
+      {/* Grid Layout */}
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mx-auto max-w-7xl">
         {specialties.map((specialty) => (
           <div
             key={specialty.id}
@@ -42,9 +45,10 @@ const SpecialtiesGrid = () => {
               <img 
                 src={icon_specialties}
                 alt={`${specialty.name} Icon`}
+                className="w-12 h-12"
               />
             </div>
-            <span className="font-medium">{specialty.name}</span>
+            <span className="font-medium text-center">{specialty.name}</span>
           </div>
         ))}
       </div>

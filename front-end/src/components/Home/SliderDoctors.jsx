@@ -49,13 +49,13 @@ const DoctorsSlider = () => {
     slidesToScroll: 1,
     responsive: [
       {
-        breakpoint: 1024,
+        breakpoint: 1024, // Tablet and smaller
         settings: {
           slidesToShow: 2,
         },
       },
       {
-        breakpoint: 640,
+        breakpoint: 640, // Mobile
         settings: {
           slidesToShow: 1,
         },
@@ -72,22 +72,27 @@ const DoctorsSlider = () => {
   };
 
   return (
-    <div className="py-10">
+    <div className="py-10 px-4 sm:px-8 lg:px-16">
+      {/* Header */}
       <h2 className="text-center text-xl font-semibold text-bimec-green uppercase mb-2">
         Trusted Care
       </h2>
       <h3 className="text-center text-4xl font-bold text-bimec-heavy-green font-yeseva mb-8">
         Our Doctors
       </h3>
+
+      {/* Slider */}
       <Slider {...settings}>
         {doctors.map((doctor) => (
           <div key={doctor.id} className="p-4">
             <div className="bg-white rounded-lg shadow-md overflow-hidden transition transform hover:scale-105">
+              {/* Doctor Image */}
               <img
                 src={doctor.image}
                 alt={doctor.name}
-                className="w-full h-64 object-cover"
+                className="w-full h-fit object-cover"
               />
+              {/* Doctor Info */}
               <div className="p-6">
                 <h4 className="text-lg font-semibold text-gray-800 mb-2">
                   {doctor.name}
@@ -95,6 +100,7 @@ const DoctorsSlider = () => {
                 <p className="text-bimec-green font-medium mb-4">
                   {doctor.specialty}
                 </p>
+                {/* Social Links */}
                 <div className="flex justify-center space-x-4 mb-4">
                   <a
                     href={doctor.social.linkedin}
@@ -118,6 +124,7 @@ const DoctorsSlider = () => {
                     <i className="fab fa-facebook text-green-700 text-lg"></i>
                   </a>
                 </div>
+                {/* View Profile Button */}
                 <button className="bg-bimec-heavy-green text-white py-2 px-4 rounded-lg w-full">
                   View Profile
                 </button>

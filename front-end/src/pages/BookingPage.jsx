@@ -11,13 +11,6 @@ function BookingPage() {
 
     return (
         <div>
-            <div className='max-w-xl mx-auto pt-4 pb-4 ml-48'>
-                <div className="flex-shrink-0">
-                    <a href="/home" className="text-bimec-black font-bold text-2xl">
-                        BIMEC
-                    </a>
-                </div>
-            </div>
 
             <Navbar />
 

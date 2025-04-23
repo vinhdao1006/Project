@@ -10,7 +10,6 @@ import img_SubHead_aboutus from '../assets/image/img_SubHead_aboutus.png'
 const AboutUs = () => {
     return (
         <div>
-            <BimecLogo/>
 
             <Navbar />
             

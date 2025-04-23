@@ -6,7 +6,8 @@ import instagram_icon from '../../assets/icon/instagram_icon.png';
 const Footer = () => {
   return (
     <footer className="bg-bimec-heavy-green text-white py-10">
-      <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8">
+      {/* Top Section */}
+      <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         {/* Logo and Motto */}
         <div>
           <h1 className="text-3xl font-bold text-bimec-green">BIMEC</h1>
@@ -17,8 +18,8 @@ const Footer = () => {
 
         {/* Important Links */}
         <div>
-          <h2 className="text-lg font-semibold mb-4 ml-[10rem]">Important Links</h2>
-          <ul className="space-y-2 ml-[10rem]">
+          <h2 className="text-lg font-semibold mb-4">Important Links</h2>
+          <ul className="space-y-2">
             <li><a href="#" className="hover:underline">Appointment</a></li>
             <li><a href="#" className="hover:underline">Doctors</a></li>
             <li><a href="#" className="hover:underline">Services</a></li>
@@ -45,7 +46,7 @@ const Footer = () => {
               placeholder="Enter your email address"
               className="px-4 py-2 w-full text-gray-700 focus:outline-none"
             />
-            <button className="h-full px-4 text-white flex items-center justify-center">
+            <button className="h-full px-4 bg-bimec-green text-white flex items-center justify-center">
               <img
                 src="/src/assets/icon/send_icon.png"
                 alt="Send"
@@ -58,7 +59,7 @@ const Footer = () => {
 
       {/* Bottom Section */}
       <div className="border-t border-white mt-8 pt-6 flex flex-col md:flex-row items-center justify-between text-sm px-6">
-        <p>&copy; 2024 BIMEC All Rights Reserved</p>
+        <p className="text-center md:text-left">&copy; 2024 BIMEC All Rights Reserved</p>
         <div className="flex space-x-4 mt-4 md:mt-0">
           <a href="#" className="hover:opacity-80">
             <img src={facebook_icon} alt="Facebook" className="w-5 h-5" />

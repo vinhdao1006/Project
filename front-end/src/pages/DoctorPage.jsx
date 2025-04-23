@@ -85,7 +85,6 @@ function DoctorPage() {
 
     return (
         <div>
-            <BimecLogo></BimecLogo>
 
             <Navbar />
 

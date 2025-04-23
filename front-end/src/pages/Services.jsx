@@ -12,7 +12,6 @@ const Services = () => {
     return (
         <div class="overflow-x-hidden overflow-y-auto">
         <div>
-            <BimecLogo></BimecLogo>
 
             <Navbar />
             

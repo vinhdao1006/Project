@@ -65,8 +65,6 @@ const NewsPage = () => {
     return (
         <div className="overflow-x-hidden overflow-y-auto">
 
-          <BimecLogo />
-
           <Navbar />
     
           {/* Content */}
