@@ -18,9 +18,9 @@ function ServicesSection() {
             </h1>
 
             {/* Main Content */}
-            <div className="flex flex-col lg:flex-row max-w-7xl mx-auto">
+            <div className="flex flex-col xl:flex-row max-w-7xl mx-auto">
                 {/* Left Sidebar */}
-                <div className="w-full lg:w-1/5 h-auto lg:h-[17rem] bg-white shadow-lg rounded-md overflow-hidden mb-6 lg:mb-0">
+                <div className="w-full xl:w-1/5 h-auto lg:h-[17rem] bg-white shadow-lg rounded-md overflow-hidden mb-6 xl:mb-0">
                     <ul>
                         <li className="px-4 py-4 border-b border-gray-200 hover:bg-bimec-green hover:text-white cursor-pointer group">
                             <span className="flex items-center group-hover:text-white">
@@ -71,7 +71,7 @@ function ServicesSection() {
                 </div>
 
                 {/* Right Content */}
-                <div className="w-full lg:w-3/5 lg:pl-8">
+                <div className="w-full xl:w-3/5 xl:pl-8">
                     <h2 className="text-2xl font-sans mb-4">
                         A passion for putting patients first.
                     </h2>
@@ -116,7 +116,7 @@ function ServicesSection() {
                 </div>
 
                 {/* Images in Column */}
-                <div className="w-full lg:w-1/5 flex flex-col space-y-4 lg:pl-4 mt-6 lg:mt-0">
+                <div className="w-full xl:w-1/5 flex flex-col space-y-4 xl:pl-4 mt-6 xl:mt-0">
                     <img
                         src={img_PatientDoctor}
                         alt="Doctor with patient"

@@ -37,15 +37,39 @@ function Home() {
                 </div>
 
                 {/* Buttons Section */}
-                <div className="absolute bottom-2 sm:bottom-10 left-0 w-full sm:w-2/3 px-6 sm:px-12 lg:px-32">
-                    <div className="grid grid-cols-3 sm:grid-cols-3 gap-4 justify-center">
+                <div className="absolute bottom-1 xl:bottom-10 md:bottom-3 left-0 xl:w-full w-full md:w-full px-6 md:px-12         xl:px-32">
+                    <div className="grid grid-cols-3 md:grid-cols-3 xl:grid-cols-1 gap-2 md:gap-4 justify-center xl:gap-8">
+                        {/* Our Services Button */}
+                        <div className="bg-white h-8 md:h-12 lg:h-20 rounded-lg flex justify-between items-center w-30 md:w-50 lg:w-72 xl:ml-10 border border-bimec-green">
+                            <button
+                                onClick={() => navigate('/services')}
+                                className="w-full h-full flex items-center justify-between px-2 lg:px-8 md:px-4"
+                            >
+                                <p className="text-xs md:text-lg lg:text-xl text-bimec-green font-sans">Our Services</p>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    strokeWidth="1.5"
+                                    stroke="currentColor"
+                                    className="w-5 h-5 sm:w-8 sm:h-8 text-bimec-green"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
+                                    />
+                                </svg>
+                            </button>
+                        </div>
+                        
                         {/* Book Appointment Button */}
-                        <div className="bg-bimec-heavy-green h-12 sm:h-20 rounded-lg flex justify-between items-center cursor-pointer w-30 sm:w-72 mx-auto">
+                        <div className="bg-bimec-heavy-green h-8 xl:h-20 md:h-12 lg:h-20 rounded-lg flex justify-between items-center cursor-pointer w-30 md:w-50 xl:w-72 xl:ml-10">
                             <button
                                 onClick={() => navigate('/booking')}
-                                className="w-full h-full flex items-center justify-between px-4 sm:px-8"
+                                className="w-full h-full flex items-center justify-between px-2 xl:px-8 md:px-4"
                             >
-                                <p className="text-xs sm:text-lg text-white font-sans">
+                                <p className="text-xs md:text-base lg:text-xl text-white font-sans">
                                     Book an Appointment
                                 </p>
                                 <svg
@@ -66,12 +90,12 @@ function Home() {
                         </div>
 
                         {/* Find Doctors Button */}
-                        <div className="bg-bimec-green h-12 sm:h-20 rounded-lg flex justify-between items-center w-30 sm:w-60 mx-auto">
+                        <div className="bg-bimec-green h-8 lg:h-20 md:h-12 rounded-lg flex justify-between items-center w-30 md:w-48 lg:w-72 xl:ml-10">
                             <button
                                 onClick={() => navigate('/doctors')}
-                                className="w-full h-full flex items-center justify-between px-4 sm:px-8"
+                                className="w-full h-full flex items-center justify-between px-2 lg:px-8 md:px-4"
                             >
-                                <p className="text-xs sm:text-lg text-white font-sans">Find Doctors</p>
+                                <p className="text-xs md:text-lg lg:text-xl text-white font-sans">Find Doctors</p>
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     fill="none"
@@ -84,30 +108,6 @@ function Home() {
                                         strokeLinecap="round"
                                         strokeLinejoin="round"
                                         d="M4.5 17H4a1 1 0 0 1-1-1 3 3 0 0 1 3-3h1m0-3.05A2.5 2.5 0 1 1 9 5.5M19.5 17h.5a1 1 0 0 0 1-1 3 3 0 0 0-3-3h-1m0-3.05a2.5 2.5 0 1 0-2-4.45m.5 13.5h-7a1 1 0 0 1-1-1 3 3 0 0 1 3-3h3a3 3 0 0 1 3 3 1 1 0 0 1-1 1Zm-1-9.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z"
-                                    />
-                                </svg>
-                            </button>
-                        </div>
-
-                        {/* Our Services Button */}
-                        <div className="bg-white h-12 sm:h-20 rounded-lg flex justify-between items-center w-30 sm:w-60 mx-auto border border-bimec-green">
-                            <button
-                                onClick={() => navigate('/services')}
-                                className="w-full h-full flex items-center justify-between px-4 sm:px-8"
-                            >
-                                <p className="text-xs sm:text-lg text-bimec-green font-sans">Our Services</p>
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    strokeWidth="1.5"
-                                    stroke="currentColor"
-                                    className="w-5 h-5 sm:w-8 sm:h-8 text-bimec-green"
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
                                     />
                                 </svg>
                             </button>

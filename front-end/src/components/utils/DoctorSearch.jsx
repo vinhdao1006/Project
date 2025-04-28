@@ -1,6 +1,6 @@
-import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
-import { ChevronDownIcon } from '@heroicons/react/20/solid'
-import { useState } from 'react'
+import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
+import { ChevronDownIcon } from '@heroicons/react/20/solid';
+import { useState } from 'react';
 
 const specialtyOptions = [
     "Neurology",
@@ -13,7 +13,7 @@ const specialtyOptions = [
     "Gastroenterology",
     "Urology",
     "Dermatology",
-    "Gynaecology"
+    "Gynaecology",
 ];
 
 const occupationOptions = [
@@ -42,21 +42,21 @@ const Degree = [
     "MD", // Doctor of Medicine
     "PhD",
     "Bachelor",
-    "Resident Doctor", 
+    "Resident Doctor",
     "MSc",
     "Specialist Level 1 Doctor",
     "Specialist Level 2 Doctor",
 ];
 
 const DoctorSearch = () => {
-    const [selectedSpecialty, setSelectedSpecialty] = useState("Specialty")
-    const [selectedOccupation, setSelectedOccupation] = useState("Occupation")
-    const [selectedTitle, setSelectedTitle] = useState("Title")
-    const [selectedLanguage, setSelectedLanguage] = useState("Language")
-    const [selectedDegree, setSelectedDegree] = useState("Degree")
+    const [selectedSpecialty, setSelectedSpecialty] = useState("Specialty");
+    const [selectedOccupation, setSelectedOccupation] = useState("Occupation");
+    const [selectedTitle, setSelectedTitle] = useState("Title");
+    const [selectedLanguage, setSelectedLanguage] = useState("Language");
+    const [selectedDegree, setSelectedDegree] = useState("Degree");
 
-    return(
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4 mt-[2rem] mx-auto w-[64rem]">
+    return (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4 mb-4 mt-8 mx-auto w-full max-w-7xl px-4 sm:px-8 lg:px-16 xl:px-32">
             {/* Specialty */}
             <div>
                 <Menu as="div" className="relative inline-block w-full text-left">
@@ -68,7 +68,7 @@ const DoctorSearch = () => {
                     </div>
                     <MenuItems className="absolute right-0 z-10 mt-2 w-full origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
                         <div className="py-1">
-                            {specialtyOptions.map(option => (
+                            {specialtyOptions.map((option) => (
                                 <MenuItem key={option}>
                                     {({ active }) => (
                                         <button
@@ -98,7 +98,7 @@ const DoctorSearch = () => {
                     </div>
                     <MenuItems className="absolute right-0 z-10 mt-2 w-full origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
                         <div className="py-1">
-                            {occupationOptions.map(option => (
+                            {occupationOptions.map((option) => (
                                 <MenuItem key={option}>
                                     {({ active }) => (
                                         <button
@@ -128,7 +128,7 @@ const DoctorSearch = () => {
                     </div>
                     <MenuItems className="absolute right-0 z-10 mt-2 w-full origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
                         <div className="py-1">
-                            {Title.map(option => (
+                            {Title.map((option) => (
                                 <MenuItem key={option}>
                                     {({ active }) => (
                                         <button
@@ -158,7 +158,7 @@ const DoctorSearch = () => {
                     </div>
                     <MenuItems className="absolute right-0 z-10 mt-2 w-full origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
                         <div className="py-1">
-                            {Language.map(option => (
+                            {Language.map((option) => (
                                 <MenuItem key={option}>
                                     {({ active }) => (
                                         <button
@@ -188,7 +188,7 @@ const DoctorSearch = () => {
                     </div>
                     <MenuItems className="absolute right-0 z-10 mt-2 w-full origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
                         <div className="py-1">
-                            {Degree.map(option => (
+                            {Degree.map((option) => (
                                 <MenuItem key={option}>
                                     {({ active }) => (
                                         <button
@@ -207,7 +207,6 @@ const DoctorSearch = () => {
                 </Menu>
             </div>
         </div>
-        
     );
 };
 

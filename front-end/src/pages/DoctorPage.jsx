@@ -1,16 +1,13 @@
-import react from 'react'
-import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
-import Navbar from '../components/Navbar/Navbar'
-import Contact from '../components/utils/Contact'
-import BimecFooter from '../components/Footer/BimecFooter'
-import BimecLogo from '../components/utils/BimecLogo'
-import img_SubHead_doctorPage from '../assets/image/img_SubHead_aboutus.png'
+import React from 'react';
+import Navbar from '../components/Navbar/Navbar';
+import Contact from '../components/utils/Contact';
+import BimecFooter from '../components/Footer/BimecFooter';
+import img_SubHead_doctorPage from '../assets/image/img_SubHead_aboutus.png';
 import img_doctor1 from "../assets/image/sliderDoctor1.png";
 import img_doctor2 from "../assets/image/sliderDoctor2.png";
 import img_doctor3 from "../assets/image/sliderDoctor3.png";
-import FloatButtonGroup from '../components/utils/FloatButtonGroup'
-import DoctorSearch from '../components/utils/DoctorSearch'
+import FloatButtonGroup from '../components/utils/FloatButtonGroup';
+import DoctorSearch from '../components/utils/DoctorSearch';
 
 const doctors = [
     {
@@ -82,28 +79,30 @@ const doctors = [
 ];
 
 function DoctorPage() {
-
     return (
-        <div>
-
+        <div className="overflow-x-hidden overflow-y-auto">
+            {/* Navbar */}
             <Navbar />
 
+            {/* Header Image */}
             <div>
-                <img src={img_SubHead_doctorPage} className="w-full h-fit"></img>
+                <img src={img_SubHead_doctorPage} className="w-full h-auto" alt="Doctors Header" />
             </div>
 
-            
-            <DoctorSearch/>
-            
+            {/* Doctor Search */}
+            <div className="px-4 sm:px-8 lg:px-16 xl:px-32 mt-8">
+                <DoctorSearch />
+            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-[2rem] mx-auto w-[64rem]">
+            {/* Doctors Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8 px-4 sm:px-8 lg:px-16 xl:px-32">
                 {doctors.map((doctor) => (
                     <div key={doctor.id} className="p-4">
                         <div className="bg-bimec-light-green rounded-lg shadow-md overflow-hidden transition transform hover:scale-105">
                             <img
                                 src={doctor.image}
                                 alt={doctor.name}
-                                className="w-full h-64 object-cover"
+                                className="w-full h-auto object-cover"
                             />
                             <div className="p-6">
                                 <h4 className="text-lg font-normal text-gray-800 mb-2 text-center">
@@ -144,21 +143,20 @@ function DoctorPage() {
                 ))}
             </div>
 
-            <div className="mt-[2rem] mx-auto w-[64rem]">
-
-            </div>
-
-            <div className="mt-[2rem] mx-auto w-[64rem]">
+            {/* Contact Section */}
+            <div className="mt-8 w-full mx-auto">
                 <Contact />
             </div>
 
-            <div className="mt-[2rem] mx-auto w-full">
+            {/* Footer */}
+            <div className="mt-16 mx-auto w-full">
                 <BimecFooter />
             </div>
 
-            <FloatButtonGroup></FloatButtonGroup>
+            {/* Floating Button Group */}
+            <FloatButtonGroup />
         </div>
-    )
+    );
 }
 
 export default DoctorPage;

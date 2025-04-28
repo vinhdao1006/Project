@@ -102,12 +102,12 @@ app.post('/google-login', async (req, res) => {
         {
             const jwtToken = jwt.sign({ email: user.email }, "jwt-secret-key", { expiresIn: "1d" });
             res.cookie("token", jwtToken);
+            res.json({jwtToken, message: "Success"});
         }
         else {
             const newUser = await UserModel.create({ email: payload.email, firstname: "", lastname: "", password: "" });
-            res.json(newUser)
+            res.json({newUser, message: "Success"})
         }
-        res.json("Success");
     } catch (error) {
         console.error('Error verifying Google token:', error);
         res.status(500).json({ error: 'Unauthorized' });

@@ -10,9 +10,9 @@ const Navbar = () => {
 
   return (
     <div className="w-screen h-16">
-      <header className="w-full h-16 bg-bimec-green flex items-center px-4 sm:px-8 lg:px-16">
+      <header className="w-full h-16 bg-bimec-green flex items-center px-4 md:px-8 lg:px-16">
         {/* Logo */}
-        <a href="/home" className="text-bimec-black font-bold text-lg sm:text-2xl">
+        <a href="/home" className="text-bimec-black font-bold text-lg md:text-xl">
           BIMEC
         </a>
 
@@ -116,10 +116,11 @@ const Navbar = () => {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="absolute top-16 left-0 w-full bg-bimec-green lg:hidden flex flex-col items-start px-4 py-4 space-y-4">
+          <div className="fixed inset-0 z-50 bg-bimec-green lg:hidden flex flex-col items-start px-4 py-4 space-y-4 
+            h-[32vh] md:h-[28vh]">
             <a
               href="/home"
-              className={`${
+              className={`md:text-lg ${
                 isActive("/home") ? "text-bimec-heavy-green font-bold" : "text-white"
               }`}
             >
@@ -127,7 +128,7 @@ const Navbar = () => {
             </a>
             <a
               href="/about-us"
-              className={`${
+              className={`md:text-lg ${
                 isActive("/about-us") ? "text-bimec-heavy-green font-bold" : "text-white"
               }`}
             >
@@ -135,7 +136,7 @@ const Navbar = () => {
             </a>
             <a
               href="/services"
-              className={`${
+              className={`md:text-lg ${
                 isActive("/services") ? "text-bimec-heavy-green font-bold" : "text-white"
               }`}
             >
@@ -143,7 +144,7 @@ const Navbar = () => {
             </a>
             <a
               href="/doctors"
-              className={`${
+              className={`md:text-lg ${
                 isActive("/doctors") ? "text-bimec-heavy-green font-bold" : "text-white"
               }`}
             >
@@ -151,7 +152,7 @@ const Navbar = () => {
             </a>
             <a
               href="/news"
-              className={`${
+              className={`md:text-lg ${
                 isActive("/news") ? "text-bimec-heavy-green font-bold" : "text-white"
               }`}
             >
@@ -159,12 +160,19 @@ const Navbar = () => {
             </a>
             <a
               href="/contact"
-              className={`${
+              className={`md:text-lg ${
                 isActive("/contact") ? "text-bimec-heavy-green font-bold" : "text-white"
               }`}
             >
               Contact
             </a>
+            {/* Close Button */}
+            <button
+              className="mt-4 text-white md:text-lg"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Close
+            </button>
           </div>
         )}
       </header>

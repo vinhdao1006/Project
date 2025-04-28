@@ -38,8 +38,8 @@ function SignIn() {
         axios.post('http://localhost:3001/google-login', { token: credential })
         .then((response) => {
             console.log(response.data)
-            if (response.data === "Success") {
-                const token = response.data.token;
+            if (response.data.message === "Success") {
+                const token = response.data.jwtToken;
                 if (token) {
                     handleRoleRedirect(token); 
                 } else {

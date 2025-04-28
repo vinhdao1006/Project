@@ -40,13 +40,13 @@ const Footer = () => {
         {/* Newsletter */}
         <div>
           <h2 className="text-lg font-semibold mb-4">Newsletter</h2>
-          <div className="flex items-center bg-white rounded-full overflow-hidden">
+          <div className="flex items-center bg-white rounded-full overflow-hidden h-10">
             <input
               type="email"
               placeholder="Enter your email address"
               className="px-4 py-2 w-full text-gray-700 focus:outline-none"
             />
-            <button className="h-full px-4 bg-bimec-green text-white flex items-center justify-center">
+            <button className="px-4 bg-bimec-green text-white flex items-center justify-center h-full">
               <img
                 src="/src/assets/icon/send_icon.png"
                 alt="Send"

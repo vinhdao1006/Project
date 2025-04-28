@@ -44,7 +44,7 @@ const Contact = () => {
       <h3 className="text-center text-4xl font-bold font-yeseva text-bimec-heavy-green mb-8">
         Contact
       </h3>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 px-6 lg:px-20">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 px-6 lg:px-20">
         {contactDetails.map((item) => (
           <a
             key={item.id}
