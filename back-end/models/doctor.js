@@ -31,8 +31,10 @@ const DoctorSchema = new mongoose.Schema({
         required: true
     },
     experience: String,
-    education: [String],
-    languages: [String]
+    occupation: [String],
+    languages: [String],
+    title: String,
+    degree: String,
 })
 
 const DoctorModel = mongoose.model("Doctors", DoctorSchema)

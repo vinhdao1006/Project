@@ -1,31 +1,36 @@
-import { useState } from 'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import SignUp from './pages/SignUp'
 import SignIn from './pages/SignIn'
-import Home from './pages/Home'
-import BookingPage from './pages/BookingPage'
-import AboutUs from './pages/AboutUs'
-import Services from './pages/Services'
-import Contact from './pages/Contact'
-import DoctorPage from './pages/DoctorPage'
-import NewsPage from './pages/NewsPage'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import SingleNews from './pages/SingleNews'
-
+import Home from './pages/default/Home'
+import BookingPage from './pages/default/BookingPage'
+import AboutUs from './pages/default/AboutUs'
+import Services from './pages/default/Services'
+import Contact from './pages/default/Contact'
+import DoctorPage from './pages/default/DoctorPage'
+import NewsPage from './pages/default/NewsPage'
+import SingleNews from './pages/default/SingleNews'
+import AdminDashboard from './pages/admin/Dashboard'
+import DoctorManagement from './pages/admin/DoctorManagement'
 
 function App() {
   return (
     <Router>
       <Routes>
+        {/* Patient routes */}
         <Route path='/register' element={<SignUp />}></Route>
         <Route path='/login' element={<SignIn />}></Route>
-        <Route path='/home' element={<Home />}></Route>
-        <Route path='/booking' element={<BookingPage />}></Route>
-        <Route path='/about-us' element={<AboutUs />}></Route>
-        <Route path='/services' element={<Services />}></Route>
-        <Route path='/contact' element={<Contact />}></Route>
-        <Route path='/doctors' element={<DoctorPage />}></Route>
-        <Route path='/news' element={<NewsPage />}></Route>
-        <Route path="/news/:title" element={<SingleNews />} />
+        <Route path='/default/home' element={<Home />}></Route>
+        <Route path='/default/booking' element={<BookingPage />}></Route>
+        <Route path='/default/about-us' element={<AboutUs />}></Route>
+        <Route path='/default/services' element={<Services />}></Route>
+        <Route path='/default/contact' element={<Contact />}></Route>
+        <Route path='/default/doctors' element={<DoctorPage />}></Route>
+        <Route path='/default/news' element={<NewsPage />}></Route>
+        <Route path="/default/news/:title" element={<SingleNews />} />
+
+        {/* Admin routes */}
+        <Route path='/admin/dashboard' element={<AdminDashboard />}></Route>
+        <Route path='/admin/doctors' element={<DoctorManagement />}></Route>
       </Routes>
     </Router>
   )
