@@ -74,7 +74,7 @@ function BookingPage() {
         
         try {
             // First, get the current user's ID (you'll need to implement this based on your auth system)
-            let userId = localStorage.getItem('userId'); // Assuming you store user ID in localStorage
+            var userId = localStorage.getItem('userId'); // Assuming you store user ID in localStorage
             
             if (!userId) {
                 userId = 123456; // or generate dynamically
