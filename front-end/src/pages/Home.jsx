@@ -70,7 +70,7 @@ function Home() {
                                 className="w-full h-full flex items-center justify-between px-2 xl:px-8 md:px-4"
                             >
                                 <p className="text-xs md:text-base lg:text-xl text-white font-sans">
-                                    Book an Appointment
+                                    Book An Appointment
                                 </p>
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"

@@ -10,6 +10,7 @@ import DoctorPage from './pages/DoctorPage'
 import NewsPage from './pages/NewsPage'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import SingleNews from './pages/SingleNews'
+import Appointments from './pages/Appointments'
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
         <Route path='/doctors' element={<DoctorPage />}></Route>
         <Route path='/news' element={<NewsPage />}></Route>
         <Route path="/news/:title" element={<SingleNews />} />
+        <Route path='/appointments' element={<Appointments />}></Route>
       </Routes>
     </Router>
   )
