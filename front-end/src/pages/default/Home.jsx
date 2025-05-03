@@ -41,7 +41,7 @@ function Home() {
                         {/* Our Services Button */}
                         <div className="bg-white h-8 md:h-12 lg:h-20 rounded-lg flex justify-between items-center w-30 md:w-50 lg:w-72 xl:ml-10 border border-bimec-green">
                             <button
-                                onClick={() => navigate('/services')}
+                                onClick={() => navigate('/default/services')}
                                 className="w-full h-full flex items-center justify-between px-2 lg:px-8 md:px-4"
                             >
                                 <p className="text-xs md:text-lg lg:text-xl text-bimec-green font-sans">Our Services</p>
@@ -65,7 +65,7 @@ function Home() {
                         {/* Book Appointment Button */}
                         <div className="bg-bimec-heavy-green h-8 xl:h-20 md:h-12 lg:h-20 rounded-lg flex justify-between items-center cursor-pointer w-30 md:w-50 xl:w-72 xl:ml-10">
                             <button
-                                onClick={() => navigate('/booking')}
+                                onClick={() => navigate('/default/booking')}
                                 className="w-full h-full flex items-center justify-between px-2 xl:px-8 md:px-4"
                             >
                                 <p className="text-xs md:text-base lg:text-xl text-white font-sans">
@@ -91,7 +91,7 @@ function Home() {
                         {/* Find Doctors Button */}
                         <div className="bg-bimec-green h-8 lg:h-20 md:h-12 rounded-lg flex justify-between items-center w-30 md:w-48 lg:w-72 xl:ml-10">
                             <button
-                                onClick={() => navigate('/doctors')}
+                                onClick={() => navigate('/default/doctors')}
                                 className="w-full h-full flex items-center justify-between px-2 lg:px-8 md:px-4"
                             >
                                 <p className="text-xs md:text-lg lg:text-xl text-white font-sans">Find Doctors</p>

@@ -1,8 +1,8 @@
 import React from 'react';
-import Navbar from '../components/Navbar/Navbar';
-import Footer from '../components/Footer/BimecFooter';
-import Contact from '../components/utils/Contact';
-import FloatButtonGroup from '../components/utils/FloatButtonGroup';
+import Navbar from '../../components/Navbar/Navbar';
+import Footer from '../../components/Footer/BimecFooter';
+import Contact from '../../components/utils/Contact';
+import FloatButtonGroup from '../../components/utils/FloatButtonGroup';
 
 // Mock data for demonstration
 const mockAppointments = [

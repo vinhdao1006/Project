@@ -9,9 +9,10 @@ import Contact from './pages/default/Contact'
 import DoctorPage from './pages/default/DoctorPage'
 import NewsPage from './pages/default/NewsPage'
 import SingleNews from './pages/default/SingleNews'
+import Appointments from './pages/default/Appointments'
+
 import AdminDashboard from './pages/admin/Dashboard'
 import DoctorManagement from './pages/admin/DoctorManagement'
-import Appointments from './pages/Appointments'
 
 function App() {
   return (
@@ -28,7 +29,7 @@ function App() {
         <Route path='/default/doctors' element={<DoctorPage />}></Route>
         <Route path='/default/news' element={<NewsPage />}></Route>
         <Route path="/default/news/:title" element={<SingleNews />} />
-        <Route path='/appointments' element={<Appointments />}></Route>
+        <Route path='/default/appointments' element={<Appointments />}></Route>
 
         {/* Admin routes */}
         <Route path='/admin/dashboard' element={<AdminDashboard />}></Route>
