@@ -72,11 +72,11 @@ function SignIn() {
         const role = decodedToken.role; 
 
         if (role === 'Admin') {
-            navigate('/admin-dashboard'); 
+            navigate('/admin/dashboard'); 
         } else if (role === 'Doctor') {
-            navigate('/doctor-dashboard');
+            navigate('/doctor/dashboard');
         } else {
-            navigate('/home');
+            navigate('/default/home');
         }
     }
 
