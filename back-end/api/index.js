@@ -255,6 +255,9 @@ app.get('/api/users/:email', verifyRole(['Patient', 'Doctor', 'Admin']), async (
         console.error('Error fetching user:', error);
         res.status(500).json({ message: 'Error fetching user data' });
     }
+}
+);
+
 // user information
 app.get('/user-info', (req, res) => {
     const token = req.cookies.token;
