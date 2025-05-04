@@ -103,7 +103,7 @@ app.post('/google-login', async (req, res) => {
 
         if(user)
         {
-            const jwtToken = jwt.sign({ email: user.email }, "jwt-secret-key", { expiresIn: "1d" });
+            const jwtToken = jwt.sign({ email: user.email, role: user.role }, "jwt-secret-key", { expiresIn: "1d" });
             res.cookie("token", jwtToken);
             res.json({jwtToken, message: "Success"});
         }
@@ -117,34 +117,44 @@ app.post('/google-login', async (req, res) => {
     }
 })
 
-app.post('/register', (req, res) => {
-    const { firstname, lastname, email, phone, password, role } = req.body;
-
-    // password confirmation
-    if (req.body.password !== req.body.confirmpassword) {
-        return res.status(400).json({ error: "Passwords do not match" });
+app.post('/register', async (req, res) => {
+    try {
+      const { firstname, lastname, email, phone, password, role } = req.body;
+  
+      // Check for required fields
+      if (!firstname || !lastname || !email || !phone || !password || !role) {
+        return res.status(400).json({ message: 'All fields are required' });
+      }
+      
+      const existingUser = await UserModel.findOne({ email });
+      if (existingUser) {
+        console.log("existing Email")
+        return res.status(409).json({ message: 'Email already in use' });
+      }
+  
+      const hashedPassword = await bcrypt.hash(password, 10);
+      const newUser = new UserModel({
+        firstname,
+        lastname,
+        email,
+        phone,
+        password: hashedPassword,
+        role,
+      });
+  
+      await newUser.save();
+      res.status(200).json({ message: 'User registered successfully' });
+  
+    } catch (error) {
+      if (error.code === 11000) {
+        console.log("debug1")
+        return res.status(409).json({ message: 'Email already exists' });
+      }
+      console.error('Register Error:', error);
+      res.status(500).json({ message: 'Internal Server Error' });
     }
-
-    bcrypt.hash(password, 10)
-        .then(async hash => {
-            // create new account
-            try {
-                const newUser = await UserModel.create({ 
-                    firstname, 
-                    lastname, 
-                    email, 
-                    phone, 
-                    password: hash,
-                    role 
-                })
-                res.json(newUser);
-            } catch (err) {
-                console.error(err);
-                res.status(500).json({ error: "Failed to register patient" });
-            }
-        })
-        .catch(err => console.log(err.message))
-})
+  });
+  
 
 // Get all specialties
 app.get('/api/specialties', async (req, res) => {
@@ -224,6 +234,26 @@ app.get('/api/patient-appointments/:patientId', async (req, res) => {
         res.json(appointments);
     } catch (error) {
         res.status(500).json({ error: error.message });
+    }
+});
+
+// Get user data by email
+app.get('/api/users/:email', verifyRole(['Patient', 'Doctor', 'Admin']), async (req, res) => {
+    try {
+        const user = await UserModel.findOne({ email: req.params.email });
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        res.json({
+            firstname: user.firstname,
+            lastname: user.lastname,
+            email: user.email,
+            phone: user.phone,
+            role: user.role
+        });
+    } catch (error) {
+        console.error('Error fetching user:', error);
+        res.status(500).json({ message: 'Error fetching user data' });
     }
 });
 

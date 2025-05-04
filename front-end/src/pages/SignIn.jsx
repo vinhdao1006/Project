@@ -7,29 +7,35 @@ import { GoogleLogin } from '@react-oauth/google'
 import { jwtDecode } from 'jwt-decode'
 
 function SignIn() {
-    const [email, setEmail] = useState()
-    const [password, setPassword] = useState()
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
     const [role, setRole] = useState()
+    const [error, setError] = useState(null)
     const navigate = useNavigate()
 
     axios.defaults.withCredentials = true;
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        axios.post('http://localhost:3001/login', { email, password, role })
-            .then(result => {
-                console.log(result)
-                if (result.data.message === "Success") {
-                    const token = result.data.token;
-                    if (token) {
-                        handleRoleRedirect(token); 
-                    } else {
-                        console.error("Token is missing in the response");
-                    }
-                }
-            })
-            .catch(err => console.log(err))
-    }
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.post('http://localhost:3001/login', {
+                email: email,
+                password: password
+            });
+
+            if (response.data.token) {
+                localStorage.setItem('token', response.data.token);
+                handleRoleRedirect(response.data.token);
+                console.log('Login success:', response.data);
+            }
+            else {
+                console.log('Full response from backend:', response);
+            }
+        } catch (error) {
+            console.error('Login error:', error);
+            setError('Invalid email or password');
+        }
+    };
 
     // login with google
     const handleGoogleSuccess = (credentialResponse) => {

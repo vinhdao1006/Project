@@ -1,9 +1,72 @@
-import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useState, useEffect, useRef } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { Menu, Transition } from '@headlessui/react';
+import { Fragment } from 'react';
+import { ChevronDownIcon, UserCircleIcon } from '@heroicons/react/24/outline';
+import { jwtDecode } from 'jwt-decode';
 
 const Navbar = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userName, setUserName] = useState("");
+  const [userRole, setUserRole] = useState("");
+  const [showDropdown, setShowDropdown] = useState(false);
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        if (token) {
+          const decodedToken = jwtDecode(token);
+          const response = await axios.get(`http://localhost:3001/api/users/${decodedToken.email}`);
+          setIsLoggedIn(true);
+          setUserName(`${response.data.firstname} ${response.data.lastname}`);
+          setUserRole(response.data.role);
+        }
+      } catch (error) {
+        console.error('Error checking auth status:', error);
+        localStorage.removeItem('token');
+      }
+    };
+
+    checkAuth();
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowDropdown(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setIsLoggedIn(false);
+    setUserName("");
+    setUserRole("");
+    setShowDropdown(false);
+    navigate('/');
+  };
+
+  const handleProfileClick = () => {
+    navigate('/profile');
+    setShowDropdown(false);
+  };
+
+  const handleSettingsClick = () => {
+    navigate('/settings');
+    setShowDropdown(false);
+  };
 
   // Function to determine the active link
   const isActive = (path) => location.pathname === path;
@@ -93,6 +156,82 @@ const Navbar = () => {
           />
         </div>
 
+        {/* Auth Buttons */}
+        <div className="hidden lg:flex items-center ml-6" ref={dropdownRef}>
+          {isLoggedIn ? (
+            <Menu as="div" className="relative">
+              <Menu.Button className="flex items-center space-x-2 text-gray-700 hover:text-gray-900">
+                <UserCircleIcon className="h-8 w-8" />
+                <span className="text-sm font-medium">{userName}</span>
+                <ChevronDownIcon className="h-4 w-4" />
+              </Menu.Button>
+              <Transition
+                as={Fragment}
+                enter="transition ease-out duration-100"
+                enterFrom="transform opacity-0 scale-95"
+                enterTo="transform opacity-100 scale-100"
+                leave="transition ease-in duration-75"
+                leaveFrom="transform opacity-100 scale-100"
+                leaveTo="transform opacity-0 scale-95"
+              >
+                <Menu.Items className="absolute right-0 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                  <Menu.Item>
+                    {({ active }) => (
+                      <Link
+                        to="/profile"
+                        className={`${
+                          active ? 'bg-gray-100' : ''
+                        } block px-4 py-2 text-sm text-gray-700`}
+                      >
+                        Profile
+                      </Link>
+                    )}
+                  </Menu.Item>
+                  <Menu.Item>
+                    {({ active }) => (
+                      <Link
+                        to="/settings"
+                        className={`${
+                          active ? 'bg-gray-100' : ''
+                        } block px-4 py-2 text-sm text-gray-700`}
+                      >
+                        Settings
+                      </Link>
+                    )}
+                  </Menu.Item>
+                  <Menu.Item>
+                    {({ active }) => (
+                      <button
+                        onClick={handleLogout}
+                        className={`${
+                          active ? 'bg-gray-100' : ''
+                        } block w-full text-left px-4 py-2 text-sm text-gray-700`}
+                      >
+                        Logout
+                      </button>
+                    )}
+                  </Menu.Item>
+                </Menu.Items>
+              </Transition>
+            </Menu>
+          ) : (
+            <div className="flex items-center space-x-4">
+              <a
+                href="/login"
+                className="text-white hover:text-bimec-heavy-green transition"
+              >
+                Login
+              </a>
+              <a
+                href="/register"
+                className="bg-bimec-heavy-green text-white px-4 py-2 rounded hover:bg-bimec-green transition"
+              >
+                Sign Up
+              </a>
+            </div>
+          )}
+        </div>
+
         {/* Mobile Menu Button */}
         <button
           className="lg:hidden ml-auto text-white"
@@ -166,6 +305,43 @@ const Navbar = () => {
             >
               Contact
             </a>
+            {isLoggedIn ? (
+              <>
+                <button
+                  onClick={handleProfileClick}
+                  className="text-white hover:text-bimec-heavy-green transition md:text-lg"
+                >
+                  Profile
+                </button>
+                <button
+                  onClick={handleSettingsClick}
+                  className="text-white hover:text-bimec-heavy-green transition md:text-lg"
+                >
+                  Settings
+                </button>
+                <button
+                  onClick={handleLogout}
+                  className="text-white hover:text-bimec-heavy-green transition md:text-lg"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <a
+                  href="/login"
+                  className="text-white hover:text-bimec-heavy-green transition md:text-lg"
+                >
+                  Login
+                </a>
+                <a
+                  href="/register"
+                  className="text-white hover:text-bimec-heavy-green transition md:text-lg"
+                >
+                  Sign Up
+                </a>
+              </>
+            )}
             {/* Close Button */}
             <button
               className="mt-4 text-white md:text-lg"

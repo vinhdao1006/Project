@@ -11,6 +11,9 @@ import NewsPage from './pages/NewsPage'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import SingleNews from './pages/SingleNews'
 import Appointments from './pages/Appointments'
+import Profile from './pages/Profile'
+import Settings from './pages/Settings'
+import Login from './pages/SignIn'
 
 
 function App() {
@@ -28,6 +31,9 @@ function App() {
         <Route path='/news' element={<NewsPage />}></Route>
         <Route path="/news/:title" element={<SingleNews />} />
         <Route path='/appointments' element={<Appointments />}></Route>
+        <Route path='/profile' element={<Profile />}></Route>
+        <Route path='/settings' element={<Settings />}></Route>
+        <Route path='/login' element={<Login />}></Route>
       </Routes>
     </Router>
   )

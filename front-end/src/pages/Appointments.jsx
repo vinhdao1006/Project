@@ -1,30 +1,66 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar/Navbar';
 import Footer from '../components/Footer/BimecFooter';
 import Contact from '../components/utils/Contact';
 import FloatButtonGroup from '../components/utils/FloatButtonGroup';
 
-// Mock data for demonstration
-const mockAppointments = [
-  {
-    id: 1,
-    doctor: 'Dr. John Doe',
-    specialty: 'Cardiology',
-    date: '2024-06-10',
-    time: '10:00 AM',
-    status: 'Confirmed',
-  },
-  {
-    id: 2,
-    doctor: 'Dr. Jane Smith',
-    specialty: 'Dermatology',
-    date: '2024-06-15',
-    time: '2:30 PM',
-    status: 'Pending',
-  },
-];
-
 const Appointments = () => {
+  const [appointments, setAppointments] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchAppointments = async () => {
+      try {
+        const userId = localStorage.getItem('userId');
+        if (!userId) {
+          navigate('/login');
+          return;
+        }
+
+        const response = await axios.get(`http://localhost:3001/api/appointments/user/${userId}`);
+        setAppointments(response.data);
+        setLoading(false);
+      } catch (err) {
+        setError('Failed to fetch appointments. Please try again later.');
+        setLoading(false);
+        console.error('Error fetching appointments:', err);
+      }
+    };
+
+    fetchAppointments();
+  }, [navigate]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-bimec-green mx-auto"></div>
+          <p className="mt-4 text-bimec-heavy-green">Loading appointments...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-red-500 mb-4">{error}</p>
+          <button 
+            onClick={() => window.location.reload()} 
+            className="bg-bimec-green text-white px-4 py-2 rounded hover:bg-bimec-heavy-green"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="overflow-x-hidden overflow-y-auto min-h-screen bg-gray-50">
       <Navbar />
@@ -33,7 +69,7 @@ const Appointments = () => {
           <h1 className="text-4xl font-yeseva font-bold text-white">My Appointments</h1>
         </div>
         <div className="max-w-4xl mx-auto mt-10 px-4 py-8 bg-white rounded-lg shadow-md">
-          {mockAppointments.length === 0 ? (
+          {appointments.length === 0 ? (
             <div className="text-center py-16">
               <h2 className="text-2xl font-bold text-bimec-heavy-green mb-4">No Appointments Yet</h2>
               <p className="mb-6">You have not booked any appointments. Book your first appointment now!</p>
@@ -54,14 +90,18 @@ const Appointments = () => {
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
-                    {mockAppointments.map((appt) => (
-                      <tr key={appt.id}>
-                        <td className="px-6 py-4 whitespace-nowrap font-semibold text-bimec-heavy-green">{appt.doctor}</td>
-                        <td className="px-6 py-4 whitespace-nowrap">{appt.specialty}</td>
-                        <td className="px-6 py-4 whitespace-nowrap">{appt.date}</td>
-                        <td className="px-6 py-4 whitespace-nowrap">{appt.time}</td>
+                    {appointments.map((appt) => (
+                      <tr key={appt._id}>
+                        <td className="px-6 py-4 whitespace-nowrap font-semibold text-bimec-heavy-green">
+                          Dr. {appt.doctorId?.userId?.firstname} {appt.doctorId?.userId?.lastname}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">{appt.specialtyId?.name}</td>
+                        <td className="px-6 py-4 whitespace-nowrap">{new Date(appt.appointmentDate).toLocaleDateString()}</td>
+                        <td className="px-6 py-4 whitespace-nowrap">{appt.appointmentTime}</td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <span className={`px-3 py-1 rounded-full text-xs font-bold ${appt.status === 'Confirmed' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}`}>{appt.status}</span>
+                          <span className={`px-3 py-1 rounded-full text-xs font-bold ${appt.status === 'Confirmed' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}`}>
+                            {appt.status}
+                          </span>
                         </td>
                       </tr>
                     ))}
