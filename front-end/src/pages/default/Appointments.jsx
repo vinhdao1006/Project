@@ -15,19 +15,31 @@ const Appointments = () => {
   useEffect(() => {
     const fetchAppointments = async () => {
       try {
+        const token = localStorage.getItem('token');
         const userId = localStorage.getItem('userId');
-        if (!userId) {
+        
+        if (!token || !userId) {
           navigate('/login');
           return;
         }
 
-        const response = await axios.get(`http://localhost:3001/api/appointments/user/${userId}`);
+        const response = await axios.get(`http://localhost:3001/api/patient-appointments/${userId}`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        
         setAppointments(response.data);
         setLoading(false);
       } catch (err) {
-        setError('Failed to fetch appointments. Please try again later.');
-        setLoading(false);
         console.error('Error fetching appointments:', err);
+        if (err.response && err.response.status === 401) {
+          alert('Session expired. Please login again.');
+          navigate('/login');
+        } else {
+          setError('Failed to fetch appointments. Please try again later.');
+        }
+        setLoading(false);
       }
     };
 
@@ -65,7 +77,7 @@ const Appointments = () => {
     <div className="overflow-x-hidden overflow-y-auto min-h-screen bg-gray-50">
       <Navbar />
       <div className="w-full mx-auto">
-        <div className="w-full h-48 bg-bimec-green flex items-center justify-center">
+        <div className="w-full h-48 bg-bimec-heavy-green flex items-center justify-center">
           <h1 className="text-4xl font-yeseva font-bold text-white">My Appointments</h1>
         </div>
         <div className="max-w-4xl mx-auto mt-10 px-4 py-8 bg-white rounded-lg shadow-md">

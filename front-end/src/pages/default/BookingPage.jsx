@@ -25,32 +25,54 @@ function BookingPage() {
     });
 
     useEffect(() => {
+        // Check if user is logged in
+        const token = localStorage.getItem('token');
+        if (!token) {
+            navigate('/login');
+            return;
+        }
+
         // Fetch specialties
-        axios.get('http://localhost:3001/api/specialties')
-            .then(response => {
+        const fetchSpecialties = async () => {
+            try {
+                console.log('Fetching specialties...');
+                const response = await axios.get('http://localhost:3001/api/specialties');
+                console.log('Received specialties:', response.data);
                 setSpecialties(response.data);
-            })
-            .catch(error => {
+            } catch (error) {
                 console.error('Error fetching specialties:', error);
-            });
-    }, []);
+            }
+        };
+
+        fetchSpecialties();
+    }, [navigate]);
 
     useEffect(() => {
         // Fetch doctors when specialty is selected
-        if (selectedSpecialty) {
-            axios.get(`http://localhost:3001/api/doctors/${selectedSpecialty}`)
-                .then(response => {
+        const fetchDoctors = async () => {
+            if (selectedSpecialty) {
+                try {
+                    console.log('Fetching doctors for specialty:', selectedSpecialty);
+                    const response = await axios.get(`http://localhost:3001/api/doctors/${selectedSpecialty}`);
+                    console.log('Received doctors:', response.data);
                     setDoctors(response.data);
-                })
-                .catch(error => {
+                } catch (error) {
                     console.error('Error fetching doctors:', error);
-                });
-        }
+                    setDoctors([]);
+                }
+            } else {
+                setDoctors([]);
+            }
+        };
+
+        fetchDoctors();
     }, [selectedSpecialty]);
 
     const handleSpecialtyChange = (e) => {
-        setSelectedSpecialty(e.target.value);
-        setSelectedDoctor('');
+        const value = e.target.value;
+        console.log('Selected specialty:', value);
+        setSelectedSpecialty(value);
+        setSelectedDoctor(''); // Reset doctor selection when specialty changes
     };
 
     const handleDoctorChange = (e) => {
@@ -73,12 +95,17 @@ function BookingPage() {
         e.preventDefault();
         
         try {
-            // First, get the current user's ID (you'll need to implement this based on your auth system)
-            var userId = localStorage.getItem('userId'); // Assuming you store user ID in localStorage
-            
+            const token = localStorage.getItem('token');
+            if (!token) {
+                navigate('/login');
+                return;
+            }
+
+            const userId = localStorage.getItem('userId');
             if (!userId) {
-                userId = 123456; // or generate dynamically
-                localStorage.setItem('userId', userId);
+                alert('User information not found. Please login again.');
+                navigate('/login');
+                return;
             }
 
             const appointmentData = {
@@ -86,20 +113,29 @@ function BookingPage() {
                 doctorId: selectedDoctor,
                 specialtyId: selectedSpecialty,
                 appointmentDate: selectedDate,
-                appointmentTime: formData.appointmentTime, // Ensure it's passed correctly
+                appointmentTime: formData.appointmentTime,
                 reason: formData.reason,
                 ...formData
             };
 
-            const response = await axios.post('http://localhost:3001/api/appointments', appointmentData);
+            const response = await axios.post('http://localhost:3001/api/appointments', appointmentData, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
             
             if (response.status === 201) {
                 alert('Appointment booked successfully!');
-                navigate('/appointments'); // Redirect to appointments page
+                navigate('/default/appointments');
             }
         } catch (error) {
             console.error('Error booking appointment:', error);
-            alert('Failed to book appointment. Please try again.');
+            if (error.response && error.response.status === 401) {
+                alert('Session expired. Please login again.');
+                navigate('/login');
+            } else {
+                alert('Failed to book appointment. Please try again.');
+            }
         }
     };
 
@@ -131,7 +167,7 @@ function BookingPage() {
                                     required
                                 >
                                     <option value="">Select Specialty</option>
-                                    {specialties.map(specialty => (
+                                    {specialties && specialties.map(specialty => (
                                         <option key={specialty._id} value={specialty._id}>
                                             {specialty.name}
                                         </option>
@@ -139,7 +175,7 @@ function BookingPage() {
                                 </select>
                             </div>
                             <div>
-                                <label className="block text-sm font-bold font-yeseva text-bimec-black">Doctor<span className='text-bimec-red'>*</span></label>
+                                <label className="block text-sm font-bold text-bimec-black font-yeseva">Doctor<span className='text-bimec-red'>*</span></label>
                                 <select 
                                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm h-10 bg-bimec-gray"
                                     value={selectedDoctor}
@@ -147,7 +183,14 @@ function BookingPage() {
                                     required
                                     disabled={!selectedSpecialty}
                                 >
-                                    <option value="">Select Doctor</option>
+                                    <option value="">
+                                        {!selectedSpecialty 
+                                            ? "Please select a specialty first" 
+                                            : doctors.length === 0 
+                                                ? "No doctors available for this specialty"
+                                                : "Select Doctor"
+                                        }
+                                    </option>
                                     {doctors.map(doctor => (
                                         <option key={doctor._id} value={doctor._id}>
                                             Dr. {doctor.userId.firstname} {doctor.userId.lastname}

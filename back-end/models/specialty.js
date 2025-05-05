@@ -7,7 +7,11 @@ const SpecialtySchema = new mongoose.Schema({
         unique: true
     },
     description: String,
-    image: String
+    image: String,
+    code: {
+        type: String,
+        unique: true
+    }
 })
 
 const SpecialtyModel = mongoose.model("Specialties", SpecialtySchema)
