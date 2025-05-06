@@ -104,7 +104,7 @@ function SignUp() {
                                                         </button>
                                                     )}
                                                 </MenuItem>
-                                                <MenuItem>
+                                                {/* <MenuItem>
                                                     {({ active }) => (
                                                         <button
                                                             onClick={() => setRole('Admin')}
@@ -115,7 +115,7 @@ function SignUp() {
                                                             Admin
                                                         </button>
                                                     )}
-                                                </MenuItem>
+                                                </MenuItem> */}
                                                 <MenuItem>
                                                     {({ active }) => (
                                                         <button

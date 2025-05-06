@@ -118,35 +118,38 @@ app.post('/google-login', async (req, res) => {
     }
 })
 
-// register new user
-app.post('/register', (req, res) => {
-    const { firstname, lastname, email, phone, password, role } = req.body;
+// Register new user
+app.post('/register', async (req, res) => {
+    const { firstname, lastname, email, phone, password, confirmpassword, role, specialty } = req.body;
 
-    // password confirmation
-    if (req.body.password !== req.body.confirmpassword) {
+    // Password confirmation
+    if (password !== confirmpassword) {
         return res.status(400).json({ error: "Passwords do not match" });
     }
 
-    bcrypt.hash(password, 10)
-        .then(async hash => {
-            // create new account
-            try {
-                const newUser = await UserModel.create({ 
-                    firstname, 
-                    lastname, 
-                    email, 
-                    phone, 
-                    password: hash,
-                    role 
-                })
-                res.json(newUser);
-            } catch (err) {
-                console.error(err);
-                res.status(500).json({ error: "Failed to register patient" });
-            }
-        })
-        .catch(err => console.log(err.message))
-})
+    try {
+        // Hash the password
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        // Create a new user
+        const newUser = new UserModel({
+            firstname,
+            lastname,
+            email,
+            phone,
+            password: hashedPassword,
+            role,
+            specialty: role === "Doctor" ? specialty : null // Set specialty only for doctors
+        });
+
+        await newUser.save();
+
+        res.status(201).json({ message: "User registered successfully", user: newUser });
+    } catch (err) {
+        console.error("Error registering user:", err);
+        res.status(500).json({ error: "Failed to register user" });
+    }
+});
 
 // Get all specialties
 app.get('/api/specialties', async (req, res) => {
@@ -254,6 +257,9 @@ app.get('/user-info', (req, res) => {
         }
     });
 });
+
+// Add doctor endpoint
+
 
 app.listen(3001, () => {
     console.log("Server is running")

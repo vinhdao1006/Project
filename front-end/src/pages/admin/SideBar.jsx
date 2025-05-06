@@ -8,9 +8,11 @@ const SideBar = () => {
                 <NavLink
                     to="/admin/dashboard"
                     className={({ isActive }) =>
-                        isActive
-                            ? "text-bimec-green font-bold"
-                            : "text-bimec-black hover:text-bimec-green hover:font-bold"
+                        `block px-4 py-2 rounded ${
+                            isActive
+                                ? "text-bimec-green font-bold bg-bimec-light-green"
+                                : "text-bimec-black hover:text-bimec-green hover:border-bimec-green"
+                        }`
                     }
                 >
                     Dashboard
@@ -18,9 +20,11 @@ const SideBar = () => {
                 <NavLink
                     to="/admin/appointments"
                     className={({ isActive }) =>
-                        isActive
-                            ? "text-bimec-green font-bold"
-                            : "text-bimec-black hover:text-bimec-green hover:font-bold"
+                        `block px-4 py-2 rounded  ${
+                            isActive
+                                ? "text-bimec-green font-bold  bg-bimec-light-green"
+                                : "text-bimec-black  hover:text-bimec-green hover:border-bimec-green"
+                        }`
                     }
                 >
                     Appointments
@@ -28,9 +32,11 @@ const SideBar = () => {
                 <NavLink
                     to="/admin/patients"
                     className={({ isActive }) =>
-                        isActive
-                            ? "text-bimec-green font-bold"
-                            : "text-bimec-black hover:text-bimec-green hover:font-bold"
+                        `block px-4 py-2 rounded  ${
+                            isActive
+                                ? "text-bimec-green font-bold  bg-bimec-light-green"
+                                : "text-bimec-black  hover:text-bimec-green hover:border-bimec-green"
+                        }`
                     }
                 >
                     Patients
@@ -38,9 +44,11 @@ const SideBar = () => {
                 <NavLink
                     to="/admin/doctors"
                     className={({ isActive }) =>
-                        isActive
-                            ? "text-bimec-green font-bold"
-                            : "text-bimec-black hover:text-bimec-green hover:font-bold"
+                        `block px-4 py-2 rounded  ${
+                            isActive
+                                ? "text-bimec-green font-bold  bg-bimec-light-green"
+                                : "text-bimec-black  hover:text-bimec-green hover:border-bimec-green"
+                        }`
                     }
                 >
                     Doctors
@@ -48,52 +56,26 @@ const SideBar = () => {
                 <NavLink
                     to="/admin/departments"
                     className={({ isActive }) =>
-                        isActive
-                            ? "text-bimec-green font-bold"
-                            : "text-bimec-black hover:text-bimec-green hover:font-bold"
+                        `block px-4 py-2 rounded  ${
+                            isActive
+                                ? "text-bimec-green font-bold  bg-bimec-light-green"
+                                : "text-bimec-black  hover:text-bimec-green hover:border-bimec-green"
+                        }`
                     }
                 >
                     Departments
                 </NavLink>
                 <NavLink
-                    to="/admin/schedule"
+                    to="/admin/doctor-schedule"
                     className={({ isActive }) =>
-                        isActive
-                            ? "text-bimec-green font-bold"
-                            : "text-bimec-black hover:text-bimec-green hover:font-bold"
+                        `block px-4 py-2 rounded  ${
+                            isActive
+                                ? "text-bimec-green font-bold  bg-bimec-light-green"
+                                : "text-bimec-black  hover:text-bimec-green hover:border-bimec-green"
+                        }`
                     }
                 >
-                    Schedule
-                </NavLink>
-                <NavLink
-                    to="/admin/payments"
-                    className={({ isActive }) =>
-                        isActive
-                            ? "text-bimec-green font-bold"
-                            : "text-bimec-black hover:text-bimec-green hover:font-bold"
-                    }
-                >
-                    Payments
-                </NavLink>
-                <NavLink
-                    to="/admin/inventory"
-                    className={({ isActive }) =>
-                        isActive
-                            ? "text-bimec-green font-bold"
-                            : "text-bimec-black hover:text-bimec-green hover:font-bold"
-                    }
-                >
-                    Inventory
-                </NavLink>
-                <NavLink
-                    to="/admin/personal-info"
-                    className={({ isActive }) =>
-                        isActive
-                            ? "text-bimec-green font-bold"
-                            : "text-bimec-black hover:text-bimec-green hover:font-bold"
-                    }
-                >
-                    Personal Information
+                    Doctor's Schedule
                 </NavLink>
             </nav>
         </div>

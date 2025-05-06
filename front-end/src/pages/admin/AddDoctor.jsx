@@ -1,35 +1,50 @@
 import React, { useState } from 'react';
+import { useEffect } from 'react';
 import Select from 'react-select';
 
 const specialties = [
-  "Cardiology", "Neurology", "Oncology", "Otorhinolaryngology", "Ophthalmology",
-  "Cardiovascular", "Pulmonology", "Renal Medicine", "Gastroenterology",
-  "Urology", "Dermatology", "Gynaecology"
+    "Neurology",
+    "Oncology",
+    "Otorhinolaryngology",
+    "Ophthalmology",
+    "Cardiovascular",
+    "Pulmonology",
+    "Renal Medicine",
+    "Gastroenterology",
+    "Urology",
+    "Dermatology",
+    "Gynaecology",
 ];
 
-const occupations = ["Full-time", "Part-time", "Visiting", "Resident"];
-const languages = ["English", "Spanish", "French", "German", "Hindi", "Arabic", "Mandarin"];
-const titles = ["Dr.", "Prof.", "Mr.", "Ms."];
-const degrees = ["MBBS", "MD", "DO", "PhD", "DM", "MCh"];
+const languages = ["Vietnamese", "English"]; 
+const titles = ["Professor", "Associate Professor"];
+const degrees = [
+  "MD", 
+  "PhD", 
+  "Bachelor",
+  "Resident Doctor", 
+  "Specialist Level 1 Doctor", 
+  "Specialist Level 2 Doctor"];
 
 const toOptions = (array) => array.map(item => ({ label: item, value: item }));
 
 const AddDoctor = ({ onClose }) => {
   const [formData, setFormData] = useState({
     name: '',
-    specialty: [],
+    specialty: '',
     consultantFee: '',
     experience: '',
-    occupation: [],
+    title: '',
     language: [],
-    title: [],
-    degree: [],
+    degree: '',
   });
 
-  const handleMultiChange = (name) => (selected) => {
-    setFormData(prev => ({
+  const handleMultiChange = (name, isMulti = true) => (selected) => {
+    setFormData((prev) => ({
       ...prev,
-      [name]: selected ? selected.map(item => item.value) : [],
+      [name]: isMulti
+        ? selected?.map((item) => item.value) || []
+        : selected?.value || "",
     }));
   };
 
@@ -38,15 +53,25 @@ const AddDoctor = ({ onClose }) => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Submitted Doctor Info:", formData);
+
+    const payload = {
+      name: formData.name,
+      specialty: formData.specialty,
+      title: formData.title,
+      consultationFee: Number(formData.consultantFee),
+      experience: Number(formData.experience),
+      language: formData.language,
+      degree: formData.degree,
+    };
+
     onClose(); // Close the modal after submission
   };
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-xl h-full overflow-y-auto">
+      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-xl h-5/6  overflow-y-auto">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-xl font-bold">Add Doctor Information</h2>
           <button
@@ -73,18 +98,8 @@ const AddDoctor = ({ onClose }) => {
             <label className="block text-sm font-medium mb-1">Specialties:</label>
             <Select
               options={toOptions(specialties)}
-              isMulti
-              onChange={handleMultiChange('specialty')}
-              className="text-sm"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium mb-1">Occupation:</label>
-            <Select
-              options={toOptions(occupations)}
-              isMulti
-              onChange={handleMultiChange('occupation')}
+              isMulti = {false}
+              onChange={handleMultiChange('specialty', false)}
               className="text-sm"
             />
           </div>
@@ -103,8 +118,8 @@ const AddDoctor = ({ onClose }) => {
             <label className="block text-sm font-medium mb-1">Title:</label>
             <Select
               options={toOptions(titles)}
-              isMulti
-              onChange={handleMultiChange('title')}
+              isMulti = {false}
+              onChange={handleMultiChange('title', false)}
               className="text-sm"
             />
           </div>
@@ -113,8 +128,8 @@ const AddDoctor = ({ onClose }) => {
             <label className="block text-sm font-medium mb-1">Degree:</label>
             <Select
               options={toOptions(degrees)}
-              isMulti
-              onChange={handleMultiChange('degree')}
+              isMulti = {false}
+              onChange={handleMultiChange('degree', false)}
               className="text-sm"
             />
           </div>
