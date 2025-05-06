@@ -1,10 +1,19 @@
-const express = require("express")
-const mongoose = require("mongoose")
+require('dotenv').config();
+const connection = require("./db");
+const express = require("express");
+const app = express();
+
+connection(); // Connect to MongoDB
+
+const port = process.env.PORT || 3001;
+app.listen(port, console.log(`Server is running on port ${port}...`));
+
+// const mongoose = require("mongoose")
 const cors = require("cors")
-const UserModel = require('../models/user')
-const SpecialtyModel = require('../models/specialty')
-const DoctorModel = require('../models/doctor')
-const AppointmentModel = require('../models/appointment')
+const UserModel = require('./models/user')
+const SpecialtyModel = require('./models/specialty')
+const DoctorModel = require('./models/doctor')
+const AppointmentModel = require('./models/appointment')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
 const cookieParser = require('cookie-parser')
@@ -12,16 +21,20 @@ const cookieParser = require('cookie-parser')
 const {OAuth2Client} = require('google-auth-library');
 const client = new OAuth2Client('151040209139-vfpad4pm3ktv6pmrub9sjoj4ri4qr8dn.apps.googleusercontent.com');
 
-const app = express()
+const path = require("path");
+
 app.use(express.json())
 app.use(cors({
     origin: ["http://localhost:5173"],
     methods: ["GET", "POST"],
     credentials: true
 }))
+
+// Serve images from /public
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use(cookieParser())
 
-mongoose.connect("mongodb+srv://vinhdao1006:VinhDao1006@cluster0.yfwoj.mongodb.net/user");
+// mongoose.connect("mongodb+srv://vinhdao1006:VinhDao1006@cluster0.yfwoj.mongodb.net/user");
 
 const verifyRole = (roles) => (req, res, next) => {
     const token = req.cookies.token;
@@ -155,9 +168,15 @@ app.post('/register', async (req, res) => {
 app.get('/api/specialties', async (req, res) => {
     try {
         const specialties = await SpecialtyModel.find();
-        res.json(specialties);
+        const baseUrl = `${req.protocol}://${req.get("host")}`;
+        const result = specialties.map(s => ({
+            ...s._doc,
+            image: baseUrl + s.image, // prepend full URL
+        }));
+        res.json(result); 
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        console.error('Error fetching specialties:', error);
+        res.status(500).json({ error: 'Failed to fetch specialties' });
     }
 });
 
@@ -261,6 +280,6 @@ app.get('/user-info', (req, res) => {
 // Add doctor endpoint
 
 
-app.listen(3001, () => {
-    console.log("Server is running")
-})
+// app.listen(3001, () => {
+//     console.log("Server is running")
+// })
