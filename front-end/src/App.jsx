@@ -13,6 +13,7 @@ import Appointments from './pages/default/Appointments'
 
 import AdminDashboard from './pages/admin/Dashboard'
 import DoctorManagement from './pages/admin/DoctorManagement'
+import DepartmentsPage from './pages/admin/Department'
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
         {/* Admin routes */}
         <Route path='/admin/dashboard' element={<AdminDashboard />}></Route>
         <Route path='/admin/doctors' element={<DoctorManagement />}></Route>
+        <Route path='/admin/departments' element={<DepartmentsPage />}></Route>
       </Routes>
     </Router>
   )
