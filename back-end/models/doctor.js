@@ -31,7 +31,6 @@ const DoctorSchema = new mongoose.Schema({
         required: true
     },
     experience: String,
-    occupation: [String],
     languages: [String],
     title: String,
     degree: String,

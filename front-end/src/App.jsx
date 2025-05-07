@@ -17,6 +17,8 @@ import Appointments from './pages/default/Appointments'
 
 import AdminDashboard from './pages/admin/Dashboard'
 import DoctorManagement from './pages/admin/DoctorManagement'
+import PatientsManagement from './pages/admin/PatientManagement'
+import AppointmentsManagement from './pages/admin/AppointmentManagement'
 
 function App() {
   return (
@@ -41,6 +43,8 @@ function App() {
         {/* Admin routes */}
         <Route path='/admin/dashboard' element={<AdminDashboard />}></Route>
         <Route path='/admin/doctors' element={<DoctorManagement />}></Route>
+        <Route path='/admin/patients' element={<PatientsManagement />}></Route>
+        <Route path='/admin/appointments' element={<AppointmentsManagement />}></Route>
       </Routes>
     </Router>
   )

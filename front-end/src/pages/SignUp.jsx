@@ -146,7 +146,7 @@ const SignUp = () => {
                                                         </button>
                                                     )}
                                                 </MenuItem>
-                                                <MenuItem>
+                                                {/* <MenuItem>
                                                     {({ active }) => (
                                                         <button
                                                             onClick={() => setFormData(prev => ({ ...prev, role: 'Admin' }))}
@@ -157,7 +157,7 @@ const SignUp = () => {
                                                             Admin
                                                         </button>
                                                     )}
-                                                </MenuItem>
+                                                </MenuItem> */}
                                                 <MenuItem>
                                                     {({ active }) => (
                                                         <button

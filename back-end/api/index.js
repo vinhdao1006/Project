@@ -284,6 +284,9 @@ app.get('/user-info', (req, res) => {
     });
 });
 
+// Add doctor endpoint
+
+
 app.listen(3001, () => {
     console.log("Server is running")
 })

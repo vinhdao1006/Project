@@ -42,7 +42,6 @@ const AdminDashboard = () => {
       <main className="col-span-10 p-6 space-y-6">
         <div className="flex justify-between items-center">
             <h1 className="text-2xl font-bold">Dashboard</h1>
-            <input type="text" placeholder="Search anything" className="w-1/3 border rounded px-4 py-2" />
             <div className="flex items-center space-x-4">
                 <img src={Admin_ava} alt="Admin" className="w-10 h-10 rounded-full" />
                 <span className="font-bold">{user.firstname + " " + user.lastname}</span>
@@ -82,7 +81,7 @@ const AdminDashboard = () => {
             <CardContent className="flex items-center space-x-4 p-4">
               <Stethoscope className="text-red-600" />
               <div>
-                <div className="text-sm text-gray-500">Consultants</div>
+                <div className="text-sm text-gray-500">Doctors</div>
                 <div className="text-xl font-semibold">45</div>
               </div>
             </CardContent>
