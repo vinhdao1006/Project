@@ -21,6 +21,9 @@ const cookieParser = require('cookie-parser')
 const {OAuth2Client} = require('google-auth-library');
 const client = new OAuth2Client('151040209139-vfpad4pm3ktv6pmrub9sjoj4ri4qr8dn.apps.googleusercontent.com');
 
+const googleCalendar = require("./routes/google_services")
+app.use("/api/calendar", googleCalendar);
+
 const path = require("path");
 
 app.use(express.json())
