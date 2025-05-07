@@ -1,0 +1,49 @@
+import React from 'react';
+
+function Header() {
+  return (
+    <header className="flex items-center justify-between px-8 py-4 border-b border-gray-200 bg-white">
+      <div className="flex items-center gap-6">
+        <button
+          aria-label="Toggle sidebar"
+          className="text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-gray-400 rounded-full"
+        >
+          <i className="fas fa-chevron-left"></i>
+        </button>
+        <h1 className="text-2xl font-extrabold text-[#111827] select-none">Patients</h1>
+      </div>
+      <div className="flex items-center gap-6 max-w-lg w-full">
+        <div className="relative flex-1">
+          <input
+            type="search"
+            placeholder="Search"
+            className="w-full rounded-full border border-gray-200 bg-[#F9FAFB] py-2.5 pl-10 pr-4 text-gray-500 placeholder-gray-400 text-sm focus:outline-none focus:ring-2 focus:ring-[#2F4F2F] focus:border-transparent"
+          />
+          <i className="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm pointer-events-none"></i>
+        </div>
+        <button
+          aria-label="Notifications"
+          className="p-2 rounded-lg bg-white border border-gray-200 text-gray-400 hover:text-gray-600 hover:border-gray-300 transition"
+        >
+          <i className="far fa-bell"></i>
+        </button>
+        <div className="flex items-center gap-3 cursor-pointer select-none">
+          <img
+            alt="Profile picture of Dr John Smith wearing white coat and tie"
+            className="w-8 h-8 rounded-full object-cover"
+            src="https://storage.googleapis.com/a1aa/image/c2bab0f3-f67d-4f8c-c5d7-4e715c9fe8eb.jpg"
+            width="32"
+            height="32"
+          />
+          <div className="flex flex-col leading-tight">
+            <span className="font-semibold text-sm text-[#111827]">Dr John Smith</span>
+            <span className="text-xs text-gray-400">Urologist</span>
+          </div>
+          <i className="fas fa-chevron-down text-gray-400"></i>
+        </div>
+      </div>
+    </header>
+  );
+}
+
+export default Header;

@@ -22,6 +22,9 @@ import AppointmentsManagement from './pages/admin/AppointmentManagement'
 import DepartmentsPage from './pages/admin/Department'
 import DoctorSchedulePage from './pages/admin/Schedule'
 
+import Patients from './pages/doctor/Patients'
+import PatientDetailStatic from './pages/doctor/PatientDetailStatic'
+
 function App() {
   return (
     <Router>
@@ -49,6 +52,10 @@ function App() {
         <Route path='/admin/appointments' element={<AppointmentsManagement />}></Route>
         <Route path='/admin/departments' element={<DepartmentsPage />}></Route>
         <Route path='/admin/doctor-schedule' element={<DoctorSchedulePage />}></Route>
+
+        {/* Doctor routes */}
+        <Route path='/doctor/patients' element={<Patients />}></Route>
+        <Route path='/doctor/patient-static' element={<PatientDetailStatic />} />
       </Routes>
     </Router>
   )
