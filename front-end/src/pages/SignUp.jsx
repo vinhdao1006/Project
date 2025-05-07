@@ -6,8 +6,6 @@ import { useNavigate } from 'react-router-dom'
 import BimecHeader from '../components/Header/BimecHeader'
 import {Menu, MenuButton, MenuItems, MenuItem} from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
-import Navbar from '../components/Navbar/Navbar'
-import Footer from '../components/Footer/BimecFooter'
 
 const SignUp = () => {
     const [formData, setFormData] = useState({
@@ -75,7 +73,6 @@ const SignUp = () => {
 
     return (
         <div className="min-h-screen bg-gray-50">
-            <Navbar />
             <div className="container mx-auto">
                 <BimecHeader />
 
@@ -289,7 +286,6 @@ const SignUp = () => {
                     </div>
                 </div>
             </div>
-            <Footer />
         </div>
     )
 }

@@ -4,7 +4,7 @@ import Bimec_logo from '../../assets/icon/Bimec_logo.png';
 const BimecHeader = () => {
     return (
         <div className="mt-6 flex justify-center sm:justify-end px-4 sm:px-8 lg:px-16">
-            <a href="http://localhost:5173/home" className="flex items-center">
+            <a href="http://localhost:5173/default/home" className="flex items-center">
                 <img
                     src={Bimec_logo}
                     alt="Bimec Logo"
