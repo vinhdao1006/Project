@@ -14,6 +14,9 @@ import Appointments from './pages/default/Appointments'
 import AdminDashboard from './pages/admin/Dashboard'
 import DoctorManagement from './pages/admin/DoctorManagement'
 
+import Patients from './pages/doctor/Patients'
+import PatientDetailStatic from './pages/doctor/PatientDetailStatic'
+
 function App() {
   return (
     <Router>
@@ -34,6 +37,10 @@ function App() {
         {/* Admin routes */}
         <Route path='/admin/dashboard' element={<AdminDashboard />}></Route>
         <Route path='/admin/doctors' element={<DoctorManagement />}></Route>
+
+        {/* Doctor routes */}
+        <Route path='/doctor/patients' element={<Patients />}></Route>
+        <Route path='/doctor/patient-static' element={<PatientDetailStatic />} />
       </Routes>
     </Router>
   )
