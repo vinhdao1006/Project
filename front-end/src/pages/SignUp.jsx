@@ -117,15 +117,15 @@ const SignUp = () => {
                                     </div>
                                 </div>
 
-                                {/* Role Dropdown */}
-                                <div>
+                            {/* Role Dropdown */}
+                                {/* <div>
                                     <label className="block text-sm font-medium text-gray-700" htmlFor="role">
                                         Register as
                                     </label>
                                     <Menu as="div" className="relative inline-block text-left w-full">
                                         <div>
                                             <MenuButton className="inline-flex w-full justify-between items-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset hover:bg-gray-50">
-                                                {formData.role} {/* Display the selected role */}
+                                                {role} 
                                                 <ChevronDownIcon aria-hidden="true" className="-mr-1 size-5 text-gray-400" />
                                             </MenuButton>
                                         </div>
@@ -146,7 +146,7 @@ const SignUp = () => {
                                                         </button>
                                                     )}
                                                 </MenuItem>
-                                                {/* <MenuItem>
+                                                <MenuItem>
                                                     {({ active }) => (
                                                         <button
                                                             onClick={() => setFormData(prev => ({ ...prev, role: 'Admin' }))}
@@ -157,7 +157,7 @@ const SignUp = () => {
                                                             Admin
                                                         </button>
                                                     )}
-                                                </MenuItem> */}
+                                                </MenuItem>
                                                 <MenuItem>
                                                     {({ active }) => (
                                                         <button
@@ -173,7 +173,7 @@ const SignUp = () => {
                                             </div>
                                         </MenuItems>
                                     </Menu>
-                                </div>
+                                </div> */}
 
                                 {/* Email and Phone Fields */}
                                 <div className="grid grid-cols-2 gap-4">

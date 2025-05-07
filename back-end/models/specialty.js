@@ -6,11 +6,19 @@ const SpecialtySchema = new mongoose.Schema({
         required: true,
         unique: true
     },
-    description: String,
-    image: String,
     code: {
         type: String,
+        required: true,
         unique: true
+    },
+    description: 
+    {
+        type: String,
+        required: true
+    },
+    image: {
+        type: String,
+        required: true
     }
 })
 
