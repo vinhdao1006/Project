@@ -255,7 +255,7 @@ function PatientDetailStatic() {
       <Sidebar />
       <main className="flex-1 flex flex-col bg-white">
         <Header />
-        <section className="flex-1 overflow-auto p-8">
+        <section className="bg-[#F9FAFB] flex-1 overflow-auto p-8">
           <PatientInfo />
           <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
           <section>
