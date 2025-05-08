@@ -3,6 +3,7 @@ import axios from "axios";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import SideBar from "./SideBar";
 import AddScheduleForm from "./AddSchedule";
+import Header from "./Header";
 
 const DoctorSchedulePage = () => {
   const [events, setEvents] = useState([]);
@@ -33,8 +34,9 @@ const DoctorSchedulePage = () => {
       </aside>
 
       <ScrollArea className="col-span-10 p-6">
+        <Header activeRouteName="Schedule" />
         <div className="p-6">
-          <h2 className="text-2xl font-bold mb-4">Doctors' Schedule (Google Calendar)</h2>
+          {/* <h2 className="text-2xl font-bold mb-4">Doctors' Schedule (Google Calendar)</h2> */}
           <AddScheduleForm onEventCreated={fetchEvents} /> {/* Refresh events on add */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {events.length === 0 ? (

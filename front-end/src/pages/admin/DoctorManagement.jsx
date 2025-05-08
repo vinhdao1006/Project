@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Search, Filter, ChevronLeft, ChevronRight } from 'lucide-react';
 import SideBar from './SideBar';
 import AddDoctor from './AddDoctor';
+import Header from './Header';
 
 const doctors = [
   {
@@ -69,24 +70,16 @@ const DoctorsManagement = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
+    <div className="grid grid-cols-12 min-h-screen bg-gray-50">
       {/* Sidebar */}
       <aside className="col-span-2 bg-white shadow-lg p-4 space-y-4">
         <SideBar />
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 p-6">
+      <main className="col-span-10 p-6">
         {/* Header */}
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-bold">Doctors</h1>
-          <button
-            onClick={handleAddDoctorClick}
-            className="bg-bimec-green text-white px-4 py-2 rounded hover:bg-bimec-heavy-green"
-          >
-            + Add Doctor
-          </button>
-        </div>
+        <Header activeRouteName="Doctors" />
 
         {/* Search & Filters */}
         <div className="flex gap-4 mb-4">
@@ -115,6 +108,14 @@ const DoctorsManagement = () => {
               {status}
             </button>
           ))}
+          <div className="flex justify-end items-center">
+            <button
+              onClick={handleAddDoctorClick}
+              className="bg-bimec-green text-white px-4 py-2 rounded hover:bg-bimec-heavy-green"
+            >
+              + Add Doctor
+            </button>
+          </div>
         </div>
 
         {/* Table */}

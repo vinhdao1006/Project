@@ -6,11 +6,10 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Badge } from "@/components/ui/badge";
 import SideBar from "./SideBar";
 import axios from "axios";
+import Header from "./Header";
 
 const DepartmentCard = ({ title, description, image, users }) => (
   <Card className="w-full max-w-sm">
@@ -52,7 +51,8 @@ const DepartmentsPage = () => {
 
       {/* Scrollable Content */}
       <ScrollArea className="col-span-10 p-6 overflow-y-auto">
-        <h2 className="text-2xl font-bold mb-6">Departments</h2>
+        {/* <h2 className="text-2xl font-bold mb-6">Departments</h2> */}
+        <Header activeRouteName="Departments" />
 
         {/* Show loading spinner or message */}
         {loading ? (

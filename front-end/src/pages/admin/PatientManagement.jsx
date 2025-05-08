@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Search, Filter, ChevronLeft, ChevronRight } from 'lucide-react';
 import SideBar from './SideBar';
+import Header from './Header';
 
 const patients = [
   {
@@ -62,18 +63,19 @@ const PatientsManagement = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
+    <div className="min-h-screen bg-gray-50 grid grid-cols-12">
       {/* Sidebar */}
       <aside className="col-span-2 bg-white shadow-lg p-4 space-y-4">
         <SideBar />
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 p-6">
+      <main className="col-span-10 p-6">
         {/* Header */}
-        <div className="flex justify-between items-center mb-6">
+        {/* <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-bold">Patients</h1>
-        </div>
+        </div> */}
+        <Header activeRouteName="Patients" />
 
         {/* Search & Filters */}
         <div className="flex gap-4 mb-4">
