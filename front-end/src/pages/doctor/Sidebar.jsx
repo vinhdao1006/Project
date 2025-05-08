@@ -4,7 +4,7 @@ import BimecLogo from '../../assets/icon/Bimec_logo.png';
 
 function Sidebar() {
   return (
-    <aside className="w-64 bg-white border-r border-gray-200 flex flex-col">
+    <aside className="w-48 bg-white border-r border-gray-200 flex flex-col">
       <div className="flex items-center gap-2 px-6 py-6 border-b border-gray-200">
         <img
           alt="BIMEC logo"

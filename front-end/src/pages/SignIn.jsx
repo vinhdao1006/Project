@@ -74,7 +74,7 @@ function SignIn() {
         if (role === 'Admin') {
             navigate('/admin/dashboard'); 
         } else if (role === 'Doctor') {
-            navigate('/doctor/dashboard');
+            navigate('/doctor/patients');
         } else {
             navigate('/default/home');
         }

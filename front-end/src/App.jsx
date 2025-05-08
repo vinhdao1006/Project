@@ -23,7 +23,8 @@ import DepartmentsPage from './pages/admin/Department'
 import DoctorSchedulePage from './pages/admin/Schedule'
 
 import Patients from './pages/doctor/Patients'
-import PatientDetailStatic from './pages/doctor/PatientDetailStatic'
+import PatientDetail from './pages/doctor/PatientDetail'
+import DoctorAppointment from './pages/doctor/Appointments'
 
 function App() {
   return (
@@ -55,7 +56,8 @@ function App() {
 
         {/* Doctor routes */}
         <Route path='/doctor/patients' element={<Patients />}></Route>
-        <Route path='/doctor/patient-static' element={<PatientDetailStatic />} />
+        <Route path='/doctor/patient-detail' element={<PatientDetail />} />
+        <Route path='/doctor/appointments' element={<DoctorAppointment />}></Route>
       </Routes>
     </Router>
   )

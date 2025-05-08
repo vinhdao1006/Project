@@ -107,7 +107,7 @@ function PatientsTable({ paginatedPatients, onPatientClick }) {
   );
 }
 
-function Patients() {
+function DoctorAppoinments() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
   const navigate = useNavigate();
@@ -164,4 +164,4 @@ function Patients() {
   );
 }
 
-export default Patients;
+export default DoctorAppoinments;

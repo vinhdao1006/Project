@@ -1,6 +1,41 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 function Header() {
+  const [user, setUser] = useState({ firstname: "...", lastname: "...", role: "..." });
+  const location = useLocation();
+
+  // Map routes to their corresponding names
+  const routeNames = {
+    "/doctor/appointments": "Appointments",
+    "/doctor/patients": "Patients",
+    "/doctor/schedule": "Schedule",
+  };
+
+  const activeRouteName = routeNames[location.pathname] || "Dashboard";
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await fetch("http://localhost:3001/user-info", {
+          method: "GET",
+          credentials: "include",
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          setUser(data);
+        } else {
+          console.error("Failed to fetch user info:", response.statusText);
+        }
+      } catch (error) {
+        console.error("Error fetching user info:", error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
   return (
     <header className="flex items-center justify-between px-8 py-4 border-b border-gray-200 bg-white">
       <div className="flex items-center gap-6">
@@ -8,9 +43,9 @@ function Header() {
           aria-label="Toggle sidebar"
           className="text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-gray-400 rounded-full"
         >
-          <i className="fas fa-chevron-left"></i>
+          {/* <i className="fas fa-chevron-left"></i> */}
         </button>
-        <h1 className="text-2xl font-extrabold text-[#111827] select-none">Patients</h1>
+        <h1 className="text-2xl font-extrabold text-[#111827] select-none">{activeRouteName}</h1>
       </div>
       <div className="flex items-center gap-6 max-w-lg w-full">
         <div className="relative flex-1">
@@ -36,8 +71,10 @@ function Header() {
             height="32"
           />
           <div className="flex flex-col leading-tight">
-            <span className="font-semibold text-sm text-[#111827]">Dr John Smith</span>
-            <span className="text-xs text-gray-400">Urologist</span>
+            <span className="font-semibold text-sm text-[#111827]">
+              {user.firstname + " " + user.lastname}
+            </span>
+            <span className="text-xs text-gray-400">{user.role}</span>
           </div>
           <i className="fas fa-chevron-down text-gray-400"></i>
         </div>

@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import {React, useState} from 'react';
+import { useLocation } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import Header from './Header';
 
-const PatientInfo = () => (
+const PatientInfo = ({ patient }) => (
   <div className="flex items-center justify-between border border-gray-200 rounded-xl p-6 mb-6">
     <div className="flex items-center gap-6">
       <img
@@ -13,19 +14,19 @@ const PatientInfo = () => (
         src="https://storage.googleapis.com/a1aa/image/850002c1-0f6a-44f0-1528-80f0a5dc0c5c.jpg"
         width="64"
       />
-      <div className="flex flex-col justify-center">
+      <div className="flex flex-col justify-center gap-1">
         <div className="flex items-center gap-2">
           <h2 className="font-semibold text-gray-900 text-base leading-5 select-text">
-            Marvin McKinney
+            {patient.patient}
           </h2>
-          <button
+          {/* <button
             aria-label="ICU status dropdown"
             className="flex items-center gap-1 text-white text-xs font-semibold bg-purple-700 rounded-md px-2 py-1"
           >
-            <span className="w-3 h-3 rounded-full bg-purple-700 inline-block"></span>
-            ICU
+            <span className="w-full h-3 rounded-full bg-purple-700 inline-block"></span>
+            {patient.status.label}
             <i className="fas fa-chevron-down text-xs"></i>
-          </button>
+          </button> */}
         </div>
         <p className="text-xs text-gray-500 leading-4 select-text">Male · Age 32</p>
         <p className="text-xs text-gray-500 leading-4 select-text max-w-xs">
@@ -244,11 +245,28 @@ const MedicalRecord = () => (
   </div>
 );
 
-function PatientDetailStatic() {
+function PatientDetail() {
   const [activeTab, setActiveTab] = useState('Overview');
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]); // Ngày hiện tại
   const [startTime, setStartTime] = useState('14:00'); // 02:00 PM
   const [endTime, setEndTime] = useState('23:20'); // 11:20 PM
+
+  const location = useLocation();
+  const {patient} = location.state || {}; // Lấy thông tin bệnh nhân từ state
+
+  if (!patient) {
+    return (
+      <div className="flex min-h-screen max-w-[1440px] mx-auto">
+        <Sidebar />
+        <main className="flex-1 flex flex-col bg-white">
+          <Header />
+          <section className="bg-[#F9FAFB] flex-1 overflow-auto p-8">
+            <p className="text-center text-gray-500">No patient data available.</p>
+          </section>
+        </main>
+      </div>
+    );
+  }
 
   return (
     <div className="flex min-h-screen max-w-[1440px] mx-auto">
@@ -256,7 +274,14 @@ function PatientDetailStatic() {
       <main className="flex-1 flex flex-col bg-white">
         <Header />
         <section className="bg-[#F9FAFB] flex-1 overflow-auto p-8">
-          <PatientInfo />
+          {/* Back button */}
+          <button
+            onClick={() => window.history.back()}
+            className="mb-4 text-sm text-gray-600 hover:text-green-700"
+          > 
+            <i className="fas fa-chevron-left text-xs"> Back</i>
+          </button>
+          <PatientInfo patient={patient}/>
           <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
           <section>
             {activeTab === 'Overview' && (
@@ -284,4 +309,4 @@ function PatientDetailStatic() {
   );
 }
 
-export default PatientDetailStatic;
+export default PatientDetail;
