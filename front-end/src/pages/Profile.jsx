@@ -42,9 +42,9 @@ const Profile = () => {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-gray-50">
+            <div className="min-h-screen bg-gray-50 flex flex-col">
                 <Navbar />
-                <div className="flex items-center justify-center min-h-[calc(100vh-8rem)]">
+                <div className="flex-grow flex items-center justify-center">
                     <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-bimec-green"></div>
                 </div>
                 <Footer />
@@ -54,9 +54,9 @@ const Profile = () => {
 
     if (error) {
         return (
-            <div className="min-h-screen bg-gray-50">
+            <div className="min-h-screen bg-gray-50 flex flex-col">
                 <Navbar />
-                <div className="flex items-center justify-center min-h-[calc(100vh-8rem)]">
+                <div className="flex-grow flex items-center justify-center">
                     <div className="text-red-500">{error}</div>
                 </div>
                 <Footer />
@@ -65,24 +65,24 @@ const Profile = () => {
     }
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-gray-50 flex flex-col">
             <Navbar />
-            <div className="max-w-4xl mx-auto px-4 py-8">
-                <div className="bg-white rounded-lg shadow-md p-6">
+            <div className="flex-grow w-2/5 px-4 py-8 mx-auto">
+                <div className="bg-white rounded-lg shadow-md p-6 w-full">
                     <h1 className="text-3xl font-bold text-bimec-heavy-green mb-6">Profile</h1>
                     
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label className="block text-sm font-medium text-gray-700">First Name</label>
-                            <div className="mt-1 p-2 bg-gray-50 rounded-md">{userData.firstname}</div>
+                            <div className="mt-1 p-2 bg-gray-50 rounded-md">{userData.firstname || 'Not provided'}</div>
                         </div>
                         <div>
                             <label className="block text-sm font-medium text-gray-700">Last Name</label>
-                            <div className="mt-1 p-2 bg-gray-50 rounded-md">{userData.lastname}</div>
+                            <div className="mt-1 p-2 bg-gray-50 rounded-md">{userData.lastname || 'Not provided'}</div>
                         </div>
                         <div>
                             <label className="block text-sm font-medium text-gray-700">Email</label>
-                            <div className="mt-1 p-2 bg-gray-50 rounded-md">{userData.email}</div>
+                            <div className="mt-1 p-2 bg-gray-50 rounded-md">{userData.email || 'Not provided'}</div>
                         </div>
                         <div>
                             <label className="block text-sm font-medium text-gray-700">Phone</label>
@@ -90,7 +90,7 @@ const Profile = () => {
                         </div>
                         <div>
                             <label className="block text-sm font-medium text-gray-700">Role</label>
-                            <div className="mt-1 p-2 bg-gray-50 rounded-md">{userData.role}</div>
+                            <div className="mt-1 p-2 bg-gray-50 rounded-md">{userData.role || 'Not provided'}</div>
                         </div>
                     </div>
 
@@ -109,4 +109,4 @@ const Profile = () => {
     );
 };
 
-export default Profile; 
+export default Profile;

@@ -66,13 +66,13 @@ function Header() {
         </div>
         
         <div className="flex items-center gap-3 cursor-pointer select-none">
-          <img
+          {/* <img
             alt="Profile picture of Dr John Smith wearing white coat and tie"
             className="w-8 h-8 rounded-full object-cover"
             src="https://storage.googleapis.com/a1aa/image/c2bab0f3-f67d-4f8c-c5d7-4e715c9fe8eb.jpg"
             width="32"
             height="32"
-          />
+          /> */}
           <div className="flex flex-col leading-tight">
             <span className="font-semibold text-sm text-[#111827]">
               {user.firstname + " " + user.lastname}

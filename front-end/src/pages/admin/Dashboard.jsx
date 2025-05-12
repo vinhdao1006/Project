@@ -4,6 +4,7 @@ import Admin_ava from "@/assets/image/admin_ava.png";
 import { Button } from "@/components/ui/button";
 import { CalendarDays, Search, Users, Stethoscope, CalendarCheck, BedDouble } from "lucide-react";
 import SideBar from './SideBar';
+import Header from './Header';
 
 const AdminDashboard = () => {
     const [user, setUser] = useState({ name: "..." });
@@ -40,14 +41,8 @@ const AdminDashboard = () => {
 
       {/* Main Content */}
       <main className="col-span-10 p-6 space-y-6">
-        <div className="flex justify-between items-center">
-            <h1 className="text-2xl font-bold">Dashboard</h1>
-            <div className="flex items-center space-x-4">
-                <img src={Admin_ava} alt="Admin" className="w-10 h-10 rounded-full" />
-                <span className="font-bold">{user.firstname + " " + user.lastname}</span>
-            </div>
-        </div>
-
+        <Header />
+        
         {/* Metrics */}
         <div className="grid grid-cols-4 gap-4">
           <Card>

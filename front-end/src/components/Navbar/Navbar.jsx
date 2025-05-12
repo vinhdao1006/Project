@@ -55,7 +55,7 @@ const Navbar = () => {
     setUserName("");
     setUserRole("");
     setShowDropdown(false);
-    navigate('/');
+    navigate('/default/home');
   };
 
   const handleProfileClick = () => {
