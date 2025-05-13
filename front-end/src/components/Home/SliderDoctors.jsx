@@ -85,7 +85,7 @@ const DoctorsSlider = () => {
       <Slider {...settings}>
         {doctors.map((doctor) => (
           <div key={doctor.id} className="p-4">
-            <div className="bg-white rounded-lg shadow-md overflow-hidden transition transform hover:scale-105">
+            <div className="bg-white rounded-lg shadow-md overflow-hidden hover:scale-105 transition-transform duration-300">
               {/* Doctor Image */}
               <img
                 src={doctor.image}

@@ -34,7 +34,7 @@ const SpecialtiesGrid = () => {
         {specialties.map((specialty) => (
           <div
             key={specialty.id}
-            className={`flex flex-col items-center justify-center p-6 border rounded-lg cursor-pointer transition-colors ${
+            className={`flex flex-col items-center justify-center p-6 border rounded-lg cursor-pointer transition-colors duration-300 ${
               activeSpecialty === specialty.id
                 ? "bg-bimec-heavy-green text-white"
                 : "bg-white text-bimec-green border-bimec-green hover:bg-bimec-green hover:text-white"
