@@ -25,6 +25,7 @@ import DoctorSchedulePage from './pages/admin/Schedule'
 import Patients from './pages/doctor/Patients'
 import PatientDetail from './pages/doctor/PatientDetail'
 import DoctorAppointment from './pages/doctor/Appointments'
+import DoctorSchedule from './pages/doctor/DoctorSchedule'
 
 function App() {
   return (
@@ -58,6 +59,7 @@ function App() {
         <Route path='/doctor/patients' element={<Patients />}></Route>
         <Route path='/doctor/patient-detail' element={<PatientDetail />} />
         <Route path='/doctor/appointments' element={<DoctorAppointment />}></Route>
+        <Route path='/doctor/schedule' element={<DoctorSchedule />}></Route>
       </Routes>
     </Router>
   )
