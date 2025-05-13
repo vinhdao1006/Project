@@ -161,30 +161,9 @@ router.post('/google-login', async (req, res) => {
     }
 });
 
-// Get user data by email
-router.get('/:email', verifyRole(['Patient', 'Doctor', 'Admin']), async (req, res) => {
-    try {
-        const user = await UserModel.findOne({ email: req.params.email });
-        if (!user) {
-            return res.status(404).json({ message: 'User not found' });
-        }
-        res.json({
-            firstname: user.firstname,
-            lastname: user.lastname,
-            email: user.email,
-            phone: user.phone,
-            role: user.role
-        });
-    } catch (error) {
-        console.error('Error fetching user:', error);
-        res.status(500).json({ message: 'Error fetching user data' });
-    }
-});
-
 // user information
 router.get('/user-info', (req, res) => {
     const token = req.cookies.token;
-
     if (!token) {
         return res.status(401).json({ error: "Unauthorized" });
     }
@@ -205,6 +184,82 @@ router.get('/user-info', (req, res) => {
             res.status(500).json({ error: "Internal server error" });
         }
     });
+});
+
+// Get user data by email
+router.get('/:email', verifyRole(['Patient', 'Doctor', 'Admin']), async (req, res) => {
+    try {
+        const user = await UserModel.findOne({ email: req.params.email });
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        res.json({
+            firstname: user.firstname,
+            lastname: user.lastname,
+            email: user.email,
+            phone: user.phone,
+            role: user.role
+        });
+    } catch (error) {
+        console.error('Error fetching user:', error);
+        res.status(500).json({ message: 'Error fetching user data' });
+    }
+});
+
+router.put('/:email', async (req, res) => {
+    const { email } = req.params;
+    const { firstname, lastname, phone } = req.body;
+
+    try {
+        const user = await UserModel.findOne({ email });
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        user.firstname = firstname ?? user.firstname;
+        user.lastname = lastname ?? user.lastname;
+        user.phone = phone ?? user.phone;
+
+        await user.save();
+        res.json({ message: 'Profile updated successfully' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Error updating profile' });
+    }
+});
+
+// Update user password (PUT /api/users/:email/password)
+router.put('/:email/password', async (req, res) => {
+    const { email } = req.params;
+    const { currentPassword, newPassword } = req.body;
+
+    try {
+        const user = await UserModel.findOne({ email });
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        if (!user.password) {
+            return res.status(400).json({ message: 'Password update not supported for Google users' });
+        }
+
+        const isMatch = await bcrypt.compare(currentPassword, user.password);
+
+        if (!isMatch) {
+            return res.status(400).json({ message: 'Current password is incorrect' });
+        }
+
+        const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+        user.password = hashedNewPassword;
+        await user.save();
+
+        res.json({ message: 'Password updated successfully' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Error updating password' });
+    }
 });
 
 module.exports = router; 

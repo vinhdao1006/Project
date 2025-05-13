@@ -1,6 +1,6 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-
 function Header() {
   const [user, setUser] = useState({ firstname: "...", lastname: "...", role: "..." });
   const location = useLocation();
@@ -17,26 +17,19 @@ function Header() {
   const activeRouteName = routeNames[location.pathname] || "Dashboard";
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await fetch("http://localhost:3001/api/users/user-info", {
-          method: "GET",
-          credentials: "include",
-        });
+  const fetchUserData = async () => {
+    try {
+      const response = await axios.get("http://localhost:3001/api/users/user-info", {
+        withCredentials: true,
+      });
+      setUser(response.data);
+    } catch (error) {
+      console.error("Error fetching user info:", error);
+    }
+  };
 
-        if (response.ok) {
-          const data = await response.json();
-          setUser(data);
-        } else {
-          console.error("Failed to fetch user info:", response.statusText);
-        }
-      } catch (error) {
-        console.error("Error fetching user info:", error);
-      }
-    };
-
-    fetchUserData();
-  }, []);
+  fetchUserData();
+}, []);
 
   return (
     <header className="flex items-center justify-between px-8 py-4">
