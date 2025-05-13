@@ -19,7 +19,7 @@ function Header() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await fetch("http://localhost:3001/user-info", {
+        const response = await fetch("http://localhost:3001/api/users/user-info", {
           method: "GET",
           credentials: "include",
         });

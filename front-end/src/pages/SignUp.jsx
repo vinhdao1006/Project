@@ -43,7 +43,7 @@ const SignUp = () => {
 
         try {
             // Create new user
-            const response = await axios.post('http://localhost:3001/register', {
+            const response = await axios.post('http://localhost:3001/api/users/register', {
                 firstname: formData.firstname,
                 lastname: formData.lastname,
                 email: formData.email,

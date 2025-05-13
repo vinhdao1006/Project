@@ -18,7 +18,7 @@ function SignIn() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:3001/login', {
+            const response = await axios.post('http://localhost:3001/api/users/login', {
                 email: email,
                 password: password
             });
@@ -41,12 +41,13 @@ function SignIn() {
     const handleGoogleSuccess = (credentialResponse) => {
         const { credential } = credentialResponse
 
-        axios.post('http://localhost:3001/google-login', { token: credential })
+        axios.post('http://localhost:3001/api/users/google-login', { token: credential })
         .then((response) => {
-            console.log(response.data)
             if (response.data.message === "Success") {
                 const token = response.data.jwtToken;
                 if (token) {
+                    localStorage.setItem('token', token);
+                    console.log('Google login success:', response.data);
                     handleRoleRedirect(token); 
                 } else {
                     console.error("Token is missing in the response");

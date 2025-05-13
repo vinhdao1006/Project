@@ -138,7 +138,7 @@ const Settings = () => {
                                     name="firstname"
                                     value={formData.firstname}
                                     onChange={handleChange}
-                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-bimec-green focus:ring-bimec-green"
+                                    className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-bimec-green focus:ring-bimec-green"
                                     required
                                 />
                             </div>
@@ -149,7 +149,7 @@ const Settings = () => {
                                     name="lastname"
                                     value={formData.lastname}
                                     onChange={handleChange}
-                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-bimec-green focus:ring-bimec-green"
+                                    className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-bimec-green focus:ring-bimec-green"
                                     required
                                 />
                             </div>
@@ -160,7 +160,7 @@ const Settings = () => {
                                     name="email"
                                     value={formData.email}
                                     disabled
-                                    className="mt-1 block w-full rounded-md border-gray-300 bg-gray-50 shadow-sm"
+                                    className="mt-1 p-2 block w-full rounded-md border-gray-300 bg-gray-50 shadow-sm"
                                 />
                             </div>
                             <div>
@@ -170,7 +170,7 @@ const Settings = () => {
                                     name="phone"
                                     value={formData.phone}
                                     onChange={handleChange}
-                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-bimec-green focus:ring-bimec-green"
+                                    className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-bimec-green focus:ring-bimec-green"
                                 />
                             </div>
                         </div>
@@ -185,7 +185,7 @@ const Settings = () => {
                                         name="currentPassword"
                                         value={formData.currentPassword}
                                         onChange={handleChange}
-                                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-bimec-green focus:ring-bimec-green"
+                                        className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-bimec-green focus:ring-bimec-green"
                                     />
                                 </div>
                                 <div>
@@ -195,7 +195,7 @@ const Settings = () => {
                                         name="newPassword"
                                         value={formData.newPassword}
                                         onChange={handleChange}
-                                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-bimec-green focus:ring-bimec-green"
+                                        className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-bimec-green focus:ring-bimec-green"
                                     />
                                 </div>
                                 <div>
@@ -205,7 +205,7 @@ const Settings = () => {
                                         name="confirmNewPassword"
                                         value={formData.confirmNewPassword}
                                         onChange={handleChange}
-                                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-bimec-green focus:ring-bimec-green"
+                                        className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-bimec-green focus:ring-bimec-green"
                                     />
                                 </div>
                             </div>
