@@ -7,31 +7,6 @@ import SideBar from './SideBar';
 import Header from './Header';
 
 const AdminDashboard = () => {
-    const [user, setUser] = useState({ name: "..." });
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await fetch('http://localhost:3001/user-info', {
-          method: 'GET',
-          credentials: 'include', 
-        });
-
-        if (response.ok) {
-            const data = await response.json();
-            setUser(data);
-        } 
-        else {   
-            console.error("Failed to fetch user info:", response.statusText);
-        }
-        } catch (error) {
-            console.error("Error fetching user info:", error);
-        }
-    };
-
-    fetchUserData();
-  }, []);
-
   return (
     <div className="grid grid-cols-12 min-h-screen bg-gray-100">
       {/* Sidebar */}

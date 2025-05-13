@@ -71,7 +71,7 @@ function SignIn() {
 
         const decodedToken = jwtDecode(token);
         const role = decodedToken.role; 
-
+        console.log('Decoded token:', decodedToken);
         if (role === 'Admin') {
             navigate('/admin/dashboard'); 
         } else if (role === 'Doctor') {
