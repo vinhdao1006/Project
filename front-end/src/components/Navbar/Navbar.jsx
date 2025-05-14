@@ -4,6 +4,20 @@ import axios from "axios";
 import { Menu, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 import { jwtDecode } from 'jwt-decode';
+import {
+  MagnifyingGlassIcon,
+  HomeIcon,
+  InformationCircleIcon,
+  BriefcaseIcon,
+  UserGroupIcon,
+  NewspaperIcon,
+  PhoneIcon,
+  UserIcon,
+  Cog6ToothIcon,
+  ArrowRightOnRectangleIcon,
+  Bars3Icon,
+  XMarkIcon
+} from '@heroicons/react/24/outline';
 
 const Navbar = () => {
   const location = useLocation();
@@ -14,6 +28,7 @@ const Navbar = () => {
   const [userName, setUserName] = useState("");
   const [userRole, setUserRole] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
+  const [searchFocused, setSearchFocused] = useState(false);
   const dropdownRef = useRef(null);
 
   useEffect(() => {
@@ -53,121 +68,123 @@ const Navbar = () => {
     navigate('/default/home');
   };
 
-  const handleProfileClick = () => {
-    navigate('/profile');
-  };
-
-  const handleSettingsClick = () => {
-    navigate('/settings');
-  };
-
   const isActive = (path) => location.pathname === path;
 
   const navLinks = [
-    { path: '/default/home', label: 'Home' },
-    { path: '/default/about-us', label: 'About' },
-    { path: '/default/services', label: 'Services' },
-    { path: '/default/doctors', label: 'Doctors' },
-    { path: '/default/news', label: 'News' },
-    { path: '/default/contact', label: 'Contact' },
+    { path: '/default/home', label: 'Home', icon: HomeIcon },
+    { path: '/default/about-us', label: 'About', icon: InformationCircleIcon },
+    { path: '/default/services', label: 'Services', icon: BriefcaseIcon },
+    { path: '/default/doctors', label: 'Doctors', icon: UserGroupIcon },
+    { path: '/default/news', label: 'News', icon: NewspaperIcon },
+    { path: '/default/contact', label: 'Contact', icon: PhoneIcon },
   ];
 
   return (
     <>
-      {/* This div acts as a spacer when navbar is fixed */}
-      <div className="h-16"></div>
+      {/* Spacer for fixed navbar */}
+      <div className="h-20"></div>
       
-      <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-white shadow-sm' : 'bg-white'
+      <header className={`fixed top-0 w-full z-50 transition-all duration-300 backdrop-blur-lg ${
+        isScrolled 
+          ? 'bg-white/95 shadow-lg border-b border-gray-100' 
+          : 'bg-white/90'
       }`}>
-        <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between h-16">
-            {/* Logo */}
-            <Link to="/default/home" className="text-2xl font-bold text-bimec-heavy-green">
-              BIMEC
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-20">
+            {/* Logo with Animation */}
+            <Link 
+              to="/default/home" 
+              className="group flex items-center space-x-2 transform transition-all duration-300 hover:scale-105"
+            >
+              <div className="w-10 h-10 bg-gradient-to-br from-bimec-green to-bimec-heavy-green rounded-lg flex items-center justify-center shadow-md group-hover:shadow-lg transition-shadow duration-300">
+                <span className="text-white font-bold text-lg">B</span>
+              </div>
+              <span className="text-2xl font-bold text-bimec-heavy-green">BIMEC</span>
             </Link>
 
             {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center space-x-8">
-              {navLinks.map((link) => (
+            <nav className="hidden lg:flex items-center space-x-1">
+              {navLinks.map((link, index) => (
                 <Link
                   key={link.path}
                   to={link.path}
-                  className={`text-sm font-medium transition-colors duration-200 relative
+                  className={`group relative px-4 py-2 text-sm font-medium transition-all duration-300 rounded-lg
                     ${isActive(link.path) 
                       ? 'text-bimec-green' 
-                      : 'text-gray-600 hover:text-bimec-heavy-green'
+                      : 'text-gray-700 hover:text-bimec-heavy-green'
                     }`}
+                  style={{ animationDelay: `${index * 50}ms` }}
                 >
-                  {link.label}
-                  {isActive(link.path) && (
-                    <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-bimec-green"></span>
-                  )}
+                  <span className="relative z-10">
+                    {link.label}
+                  </span>
+                  
+                  {/* Active/Hover Background */}
+                  <div className={`absolute inset-0 rounded-lg transition-all duration-300 ${
+                    isActive(link.path)
+                      ? 'bg-bimec-light-green scale-100 opacity-100'
+                      : 'bg-gray-100 scale-95 opacity-0 group-hover:scale-100 group-hover:opacity-100'
+                  }`} />
                 </Link>
               ))}
             </nav>
 
-            {/* Desktop Right Section with Search and Auth */}
+            {/* Desktop Right Section */}
             <div className="hidden lg:flex items-center space-x-4">
-              {/* Search Bar */}
-              <div className="relative">
+              {/* Animated Search Bar */}
+              <div className={`relative transition-all duration-300 ${
+                searchFocused ? 'w-64' : 'w-56'
+              }`}>
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-56 h-9 pl-4 pr-10 text-sm border border-gray-300 rounded-md focus:outline-none focus:border-bimec-green transition-colors duration-200"
+                  onFocus={() => setSearchFocused(true)}
+                  onBlur={() => setSearchFocused(false)}
+                  className="w-full h-10 pl-10 pr-4 text-sm border-2 border-gray-200 rounded-full focus:outline-none focus:border-bimec-green transition-all duration-300"
                   placeholder="Search..."
                 />
-                <button className="absolute right-2 top-1/2 -translate-y-1/2">
-                  <svg
-                    className="w-5 h-5 text-gray-400 hover:text-bimec-green transition-colors duration-200"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                    />
-                  </svg>
-                </button>
+                <MagnifyingGlassIcon className={`absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 transition-colors duration-300 ${
+                  searchFocused ? 'text-bimec-green' : 'text-gray-400'
+                }`} />
               </div>
 
               {/* Auth Section */}
               {isLoggedIn ? (
                 <Menu as="div" className="relative">
-                  <Menu.Button className="flex items-center space-x-2 text-gray-700 hover:text-bimec-heavy-green transition-colors duration-200">
-                    <div className="w-8 h-8 rounded-full bg-bimec-light-green flex items-center justify-center">
-                      <span className="text-sm font-medium text-bimec-heavy-green">
-                        {userName.charAt(0).toUpperCase()}
-                      </span>
+                  <Menu.Button className="group flex items-center space-x-3 px-4 py-2 rounded-full bg-gray-50 hover:bg-bimec-light-green transition-all duration-300">
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-bimec-green to-bimec-heavy-green flex items-center justify-center text-white font-medium shadow-sm group-hover:shadow-md transition-shadow duration-300">
+                      {userName.charAt(0).toUpperCase()}
                     </div>
-                    <span className="text-sm font-medium">{userName}</span>
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <span className="text-sm font-medium text-gray-700">{userName}</span>
+                    <svg className="w-4 h-4 text-gray-500 group-hover:rotate-180 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                     </svg>
                   </Menu.Button>
                   <Transition
                     as={Fragment}
-                    enter="transition ease-out duration-100"
+                    enter="transition ease-out duration-200"
                     enterFrom="transform opacity-0 scale-95"
                     enterTo="transform opacity-100 scale-100"
-                    leave="transition ease-in duration-75"
+                    leave="transition ease-in duration-150"
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                   >
-                    <Menu.Items className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <Menu.Items className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none overflow-hidden">
+                      <div className="px-4 py-3 border-b border-gray-100">
+                        <p className="text-sm font-medium text-gray-900">{userName}</p>
+                        <p className="text-xs text-gray-500">{userRole}</p>
+                      </div>
                       <Menu.Item>
                         {({ active }) => (
                           <Link
                             to="/profile"
-                            className={`block px-4 py-2 text-sm ${
+                            className={`flex items-center space-x-3 px-4 py-3 text-sm transition-colors duration-200 ${
                               active ? 'bg-bimec-light-green text-bimec-heavy-green' : 'text-gray-700'
                             }`}
                           >
-                            Profile
+                            <UserIcon className="w-5 h-5" />
+                            <span>Profile</span>
                           </Link>
                         )}
                       </Menu.Item>
@@ -175,26 +192,30 @@ const Navbar = () => {
                         {({ active }) => (
                           <Link
                             to="/settings"
-                            className={`block px-4 py-2 text-sm ${
+                            className={`flex items-center space-x-3 px-4 py-3 text-sm transition-colors duration-200 ${
                               active ? 'bg-bimec-light-green text-bimec-heavy-green' : 'text-gray-700'
                             }`}
                           >
-                            Settings
+                            <Cog6ToothIcon className="w-5 h-5" />
+                            <span>Settings</span>
                           </Link>
                         )}
                       </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <button
-                            onClick={handleLogout}
-                            className={`block w-full text-left px-4 py-2 text-sm ${
-                              active ? 'bg-bimec-light-green text-bimec-heavy-green' : 'text-gray-700'
-                            }`}
-                          >
-                            Logout
-                          </button>
-                        )}
-                      </Menu.Item>
+                      <div className="border-t border-gray-100">
+                        <Menu.Item>
+                          {({ active }) => (
+                            <button
+                              onClick={handleLogout}
+                              className={`flex items-center space-x-3 w-full px-4 py-3 text-sm transition-colors duration-200 ${
+                                active ? 'bg-red-50 text-red-600' : 'text-gray-700'
+                              }`}
+                            >
+                              <ArrowRightOnRectangleIcon className="w-5 h-5" />
+                              <span>Logout</span>
+                            </button>
+                          )}
+                        </Menu.Item>
+                      </div>
                     </Menu.Items>
                   </Transition>
                 </Menu>
@@ -202,13 +223,13 @@ const Navbar = () => {
                 <div className="flex items-center space-x-3">
                   <Link
                     to="/login"
-                    className="text-sm font-medium text-gray-600 hover:text-bimec-heavy-green transition-colors duration-200"
+                    className="text-sm font-medium text-gray-700 hover:text-bimec-heavy-green transition-colors duration-200"
                   >
                     Login
                   </Link>
                   <Link
                     to="/register"
-                    className="text-sm font-medium text-white bg-bimec-heavy-green px-4 py-2 rounded-md hover:bg-bimec-green transition-colors duration-200"
+                    className="text-sm font-medium text-white bg-gradient-to-r from-bimec-green to-bimec-heavy-green px-5 py-2.5 rounded-full hover:shadow-lg transform hover:scale-105 transition-all duration-300"
                   >
                     Sign Up
                   </Link>
@@ -218,137 +239,119 @@ const Navbar = () => {
 
             {/* Mobile Menu Button */}
             <button
-              className="lg:hidden p-2"
+              className="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
-              <svg
-                className="w-6 h-6 text-gray-600"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                {isMenuOpen ? (
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                ) : (
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
-                )}
-              </svg>
+              {isMenuOpen ? (
+                <XMarkIcon className="w-6 h-6 text-gray-700" />
+              ) : (
+                <Bars3Icon className="w-6 h-6 text-gray-700" />
+              )}
             </button>
           </div>
 
           {/* Mobile Menu */}
           <Transition
             show={isMenuOpen}
-            enter="transition ease-out duration-200"
-            enterFrom="opacity-0 -translate-y-1"
+            enter="transition ease-out duration-300"
+            enterFrom="opacity-0 -translate-y-4"
             enterTo="opacity-100 translate-y-0"
-            leave="transition ease-in duration-150"
+            leave="transition ease-in duration-200"
             leaveFrom="opacity-100 translate-y-0"
-            leaveTo="opacity-0 -translate-y-1"
+            leaveTo="opacity-0 -translate-y-4"
           >
             <div className="lg:hidden py-4 border-t border-gray-100">
               {/* Mobile Search */}
-              <div className="px-4 pb-3">
+              <div className="px-4 pb-4">
                 <div className="relative">
                   <input
                     type="text"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full h-9 pl-4 pr-10 text-sm border border-gray-300 rounded-md focus:outline-none focus:border-bimec-green transition-colors duration-200"
+                    className="w-full h-10 pl-10 pr-4 text-sm border-2 border-gray-200 rounded-full focus:outline-none focus:border-bimec-green transition-colors duration-200"
                     placeholder="Search..."
                   />
-                  <button className="absolute right-2 top-1/2 -translate-y-1/2">
-                    <svg
-                      className="w-5 h-5 text-gray-400"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                      />
-                    </svg>
-                  </button>
+                  <MagnifyingGlassIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                 </div>
               </div>
 
-              <nav className="flex flex-col space-y-3">
-                {navLinks.map((link) => (
+              <nav className="flex flex-col">
+                {navLinks.map((link, index) => (
                   <Link
                     key={link.path}
                     to={link.path}
-                    className={`px-4 py-2 text-sm font-medium rounded-md transition-colors duration-200
+                    className={`flex items-center space-x-3 px-4 py-3 text-sm font-medium transition-all duration-200
                       ${isActive(link.path) 
-                        ? 'text-bimec-green bg-bimec-light-green' 
-                        : 'text-gray-600 hover:text-bimec-heavy-green hover:bg-gray-50'
+                        ? 'text-bimec-green bg-bimec-light-green border-l-4 border-bimec-green' 
+                        : 'text-gray-700 hover:bg-gray-50'
                       }`}
                     onClick={() => setIsMenuOpen(false)}
+                    style={{ animationDelay: `${index * 50}ms` }}
                   >
-                    {link.label}
+                    <link.icon className="w-5 h-5" />
+                    <span>{link.label}</span>
                   </Link>
                 ))}
                 
                 {/* Mobile Auth Section */}
-                <div className="pt-3 border-t border-gray-100">
+                <div className="mt-4 pt-4 border-t border-gray-100">
                   {isLoggedIn ? (
                     <>
-                      <div className="px-4 py-2 text-sm font-medium text-gray-900">
-                        {userName}
+                      <div className="px-4 py-3">
+                        <div className="flex items-center space-x-3">
+                          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-bimec-green to-bimec-heavy-green flex items-center justify-center text-white font-medium">
+                            {userName.charAt(0).toUpperCase()}
+                          </div>
+                          <div>
+                            <p className="text-sm font-medium text-gray-900">{userName}</p>
+                            <p className="text-xs text-gray-500">{userRole}</p>
+                          </div>
+                        </div>
                       </div>
                       <Link
                         to="/profile"
-                        className="block px-4 py-2 text-sm text-gray-600 hover:text-bimec-heavy-green hover:bg-gray-50 rounded-md"
+                        className="flex items-center space-x-3 px-4 py-3 text-sm text-gray-700 hover:bg-gray-50"
                         onClick={() => setIsMenuOpen(false)}
                       >
-                        Profile
+                        <UserIcon className="w-5 h-5" />
+                        <span>Profile</span>
                       </Link>
                       <Link
                         to="/settings"
-                        className="block px-4 py-2 text-sm text-gray-600 hover:text-bimec-heavy-green hover:bg-gray-50 rounded-md"
+                        className="flex items-center space-x-3 px-4 py-3 text-sm text-gray-700 hover:bg-gray-50"
                         onClick={() => setIsMenuOpen(false)}
                       >
-                        Settings
+                        <Cog6ToothIcon className="w-5 h-5" />
+                        <span>Settings</span>
                       </Link>
                       <button
                         onClick={() => {
                           handleLogout();
                           setIsMenuOpen(false);
                         }}
-                        className="block w-full text-left px-4 py-2 text-sm text-gray-600 hover:text-bimec-heavy-green hover:bg-gray-50 rounded-md"
+                        className="flex items-center space-x-3 w-full px-4 py-3 text-sm text-red-600 hover:bg-red-50"
                       >
-                        Logout
+                        <ArrowRightOnRectangleIcon className="w-5 h-5" />
+                        <span>Logout</span>
                       </button>
                     </>
                   ) : (
-                    <>
+                    <div className="px-4 space-y-3">
                       <Link
                         to="/login"
-                        className="block px-4 py-2 text-sm text-gray-600 hover:text-bimec-heavy-green hover:bg-gray-50 rounded-md"
+                        className="block w-full text-center px-4 py-2 text-sm text-gray-700 border border-gray-300 rounded-full hover:bg-gray-50"
                         onClick={() => setIsMenuOpen(false)}
                       >
                         Login
                       </Link>
                       <Link
                         to="/register"
-                        className="block px-4 py-2 text-sm font-medium text-white bg-bimec-heavy-green rounded-md hover:bg-bimec-green transition-colors duration-200 mx-4 text-center"
+                        className="block w-full text-center px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-bimec-green to-bimec-heavy-green rounded-full"
                         onClick={() => setIsMenuOpen(false)}
                       >
                         Sign Up
                       </Link>
-                    </>
+                    </div>
                   )}
                 </div>
               </nav>
