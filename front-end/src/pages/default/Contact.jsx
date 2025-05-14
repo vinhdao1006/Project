@@ -174,7 +174,7 @@ const ContactSection = () => {
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
                         {/* Form Section */}
                         <div 
-                            className={`transform transition-all duration-1000 delay-300 ${
+                            className={`transform transition-all duration-300 delay-300 ${
                                 isVisible ? 'translate-x-0 opacity-100' : '-translate-x-20 opacity-0'
                             }`}
                         >
