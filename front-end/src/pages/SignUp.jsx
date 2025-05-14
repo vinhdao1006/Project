@@ -18,10 +18,42 @@ const SignUp = () => {
         role: 'Patient'
     });
     const [error, setError] = useState(null);
+    const [fieldErrors, setFieldErrors] = useState({});
     const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const navigate = useNavigate();
+
+    const validateEmail = (email) => {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
+    }
+
+    const validateForm = () => {
+        const errors = {};
+        
+        if (!formData.firstname.trim()) errors.firstname = 'First name is required';
+        if (!formData.lastname.trim()) errors.lastname = 'Last name is required';
+        if (!formData.email.trim()) {
+            errors.email = 'Email is required';
+        } else if (!validateEmail(formData.email)) {
+            errors.email = 'Please enter a valid email address';
+        }
+        if (!formData.phone.trim()) errors.phone = 'Phone number is required';
+        if (!formData.password) {
+            errors.password = 'Password is required';
+        } else if (formData.password.length < 6) {
+            errors.password = 'Password must be at least 6 characters';
+        }
+        if (!formData.confirmPassword) {
+            errors.confirmPassword = 'Please confirm your password';
+        } else if (formData.password !== formData.confirmPassword) {
+            errors.confirmPassword = 'Passwords do not match';
+        }
+        
+        setFieldErrors(errors);
+        return Object.keys(errors).length === 0;
+    }
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -29,19 +61,29 @@ const SignUp = () => {
             ...prev,
             [name]: value
         }));
+        
+        // Clear field error when user starts typing
+        if (fieldErrors[name]) {
+            setFieldErrors(prev => ({
+                ...prev,
+                [name]: ''
+            }));
+        }
+        
+        // Clear general error when user makes changes
+        if (error) setError(null);
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError(null);
-        setLoading(true);
-
-        // Validate passwords match
-        if (formData.password !== formData.confirmPassword) {
-            setError('Passwords do not match');
-            setLoading(false);
+        
+        // Validate form
+        if (!validateForm()) {
             return;
         }
+        
+        setLoading(true);
 
         try {
             // Create new user
@@ -64,7 +106,10 @@ const SignUp = () => {
             }
         } catch (err) {
             if (err.response?.data?.message === 'Email already exists') {
-                setError('Email already exists. Please use a different email or login.');
+                setError('This email is already registered. Please use a different email or login to your existing account.');
+                setFieldErrors({ email: 'Email already exists' });
+            } else if (err.response?.data?.message) {
+                setError(err.response.data.message);
             } else {
                 setError('Failed to create account. Please try again.');
             }
@@ -91,8 +136,8 @@ const SignUp = () => {
                     {/* Form Section */}
                     <div className="flex flex-col items-center lg:items-start flex-1 w-full">
                         <div className="w-full max-w-xl">
-                            <h1 className="font-bold text-3xl md:text-4xl mb-6 text-center lg:text-left text-gray-800">Sign Up</h1>
-                            <p className="font-normal text-sm md:text-base mb-8 text-center lg:text-left text-gray-500">
+                            <h1 className="font-bold text-3xl md:text-4xl mb-4 text-center lg:text-left text-gray-800">Sign Up</h1>
+                            <p className="font-normal text-sm md:text-base mb-9 text-center lg:text-left text-gray-500">
                                 Let's get all set up so you can access your personal account.
                             </p>
                             
@@ -153,9 +198,15 @@ const SignUp = () => {
                                             placeholder="Enter email"
                                             value={formData.email}
                                             onChange={handleChange}
-                                            className="w-full px-4 py-2.5 text-sm border-[1px] border-gray-400 rounded-sm bg-white 
-                                                     focus:outline-none focus:border-gray-400 transition-colors duration-200"
+                                            className={`w-full px-4 py-2.5 text-sm border-[1px] rounded-sm bg-white 
+                                                     focus:outline-none transition-colors duration-200
+                                                     ${fieldErrors.email 
+                                                       ? 'border-red-400 focus:border-red-500' 
+                                                       : 'border-gray-400 focus:border-gray-400'}`}
                                         />
+                                        {fieldErrors.email && (
+                                            <p className="text-red-500 text-xs mt-1">{fieldErrors.email}</p>
+                                        )}
                                     </div>
                                     <div className="relative">
                                         <label 
@@ -193,8 +244,11 @@ const SignUp = () => {
                                             placeholder="Enter password"
                                             value={formData.password}
                                             onChange={handleChange}
-                                            className="w-full px-4 py-2.5 pr-12 text-sm border-[1px] border-gray-400 rounded-sm bg-white 
-                                                     focus:outline-none focus:border-gray-400 transition-colors duration-200"
+                                            className={`w-full px-4 py-2.5 pr-12 text-sm border-[1px] rounded-sm bg-white 
+                                                     focus:outline-none transition-colors duration-200
+                                                     ${fieldErrors.password 
+                                                       ? 'border-red-400 focus:border-red-500' 
+                                                       : 'border-gray-400 focus:border-gray-400'}`}
                                         />
                                         <button
                                             type="button"
@@ -213,6 +267,9 @@ const SignUp = () => {
                                             )}
                                         </button>
                                     </div>
+                                    {fieldErrors.password && (
+                                        <p className="text-red-500 text-xs mt-1">{fieldErrors.password}</p>
+                                    )}
                                 </div>
                                 
                                 <div className="relative">
@@ -230,8 +287,11 @@ const SignUp = () => {
                                             placeholder="Confirm password"
                                             value={formData.confirmPassword}
                                             onChange={handleChange}
-                                            className="w-full px-4 py-2.5 pr-12 text-sm border-[1px] border-gray-400 rounded-sm bg-white 
-                                                     focus:outline-none focus:border-gray-400 transition-colors duration-200"
+                                            className={`w-full px-4 py-2.5 pr-12 text-sm border-[1px] rounded-sm bg-white 
+                                                     focus:outline-none transition-colors duration-200
+                                                     ${fieldErrors.confirmPassword 
+                                                       ? 'border-red-400 focus:border-red-500' 
+                                                       : 'border-gray-400 focus:border-gray-400'}`}
                                         />
                                         <button
                                             type="button"
@@ -250,6 +310,9 @@ const SignUp = () => {
                                             )}
                                         </button>
                                     </div>
+                                    {fieldErrors.confirmPassword && (
+                                        <p className="text-red-500 text-xs mt-1">{fieldErrors.confirmPassword}</p>
+                                    )}
                                 </div>
 
                                 {/* Terms and Conditions */}

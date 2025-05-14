@@ -11,12 +11,35 @@ function SignIn() {
     const [password, setPassword] = useState('')
     const [showPassword, setShowPassword] = useState(false)
     const [error, setError] = useState(null)
+    const [touched, setTouched] = useState({ email: false, password: false })
     const navigate = useNavigate()
 
     axios.defaults.withCredentials = true;
 
+    const validateEmail = (email) => {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
+    }
+
+    const handleBlur = (field) => {
+        setTouched({ ...touched, [field]: true });
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setError(null);
+
+        // Validate before submitting
+        if (!email || !password) {
+            setError('Please fill in all fields');
+            return;
+        }
+
+        if (!validateEmail(email)) {
+            setError('Please enter a valid email address');
+            return;
+        }
+
         try {
             const response = await axios.post('http://localhost:3001/api/users/login', {
                 email: email,
@@ -30,10 +53,15 @@ function SignIn() {
             }
             else {
                 console.log('Full response from backend:', response);
+                setError('Invalid email or password');
             }
         } catch (error) {
             console.error('Login error:', error);
-            setError('Invalid email or password');
+            if (error.response && error.response.status === 401) {
+                setError('Invalid email or password');
+            } else {
+                setError('Something went wrong. Please try again later.');
+            }
         }
     };
 
@@ -86,11 +114,11 @@ function SignIn() {
             <BimecHeader />
 
             <div className='flex items-center justify-center min-h-[calc(100vh-120px)]'>
-                <div className="flex flex-col lg:flex-row items-center gap-6 lg:gap-12 w-full max-w-4xl">
+                <div className="flex flex-col lg:flex-row items-center gap-6 lg:gap-12 w-full max-w-3xl">
                     {/* Form Section */}
                     <div className="flex flex-col items-center lg:items-start flex-1 w-full">
                         <div className="w-full max-w-md">
-                            <h1 className="font-bold text-3xl md:text-4xl mb-3 text-center lg:text-left text-gray-800">Login</h1>
+                            <h1 className="font-bold text-3xl md:text-4xl mb-4 text-center lg:text-left text-gray-800">Login</h1>
                             <p className="font-normal text-sm md:text-base mb-9 text-center lg:text-left text-gray-500">
                                 Login to access your BiMec account.
                             </p>
@@ -110,7 +138,7 @@ function SignIn() {
                                         placeholder="Enter your email"
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
-                                        className="w-full px-4 py-2.5 text-sm border-[1px] border-gray-400 rounded-sm bg-white 
+                                        className="w-full px-4 py-2.5 text-sm border-2 border-gray-300 rounded-md bg-white 
                                                  focus:outline-none focus:border-gray-400 transition-colors duration-200"
                                     />
                                 </div>
@@ -130,7 +158,7 @@ function SignIn() {
                                             placeholder="Enter your password"
                                             value={password}
                                             onChange={(e) => setPassword(e.target.value)}
-                                            className="w-full px-4 py-2.5 pr-12 text-sm border-[1px] border-gray-400 rounded-sm bg-white 
+                                            className="w-full px-4 py-2.5 pr-12 text-sm border-2 border-gray-300 rounded-md bg-white 
                                                      focus:outline-none focus:border-gray-400 transition-colors duration-200"
                                         />
                                         <button
@@ -179,7 +207,7 @@ function SignIn() {
                                 {/* Submit Button */}
                                 <button
                                     type="submit"
-                                    className="w-full bg-[#285430] text-white py-2.5 rounded-lg font-medium 
+                                    className="w-full bg-[#285430] text-white py-2.5 rounded-sm font-medium 
                                              hover:bg-[#1e3e22] focus:outline-none focus:ring-4 focus:ring-green-300 
                                              transition-colors duration-200"
                                 >
@@ -216,7 +244,7 @@ function SignIn() {
                     </div>
                     
                     {/* Image Section */}
-                    <div className="hidden lg:block flex-1 w-full max-w-sm">
+                    <div className="hidden lg:block flex-1 w-full max-w-sm ml-auto">
                         <img 
                             className='w-full h-auto' 
                             src={Login_img} 
