@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Signup from '../assets/image/Signup.png'
 import Google_icon from '../assets/icon/icon_google.png'
 import axios from 'axios'
@@ -22,7 +22,14 @@ const SignUp = () => {
     const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [isVisible, setIsVisible] = useState(false);
+    const [isImageLoaded, setIsImageLoaded] = useState(false);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        // Trigger entrance animations
+        setIsVisible(true);
+    }, []);
 
     const validateEmail = (email) => {
         const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -124,26 +131,41 @@ const SignUp = () => {
 
             <div className='flex items-center justify-center min-h-[calc(100vh-100px)]'>
                 <div className="flex flex-col lg:flex-row items-center gap-6 lg:gap-12 w-full max-w-5xl">
-                    {/* Image Section - Left on desktop */}
-                    <div className="hidden lg:block flex-1 w-full max-w-xs mr-auto">
+                    {/* Image Section - Left on desktop with animation */}
+                    <div className={`hidden lg:block flex-1 w-full max-w-xs mr-auto transform transition-all duration-1000 delay-300 ${
+                        isVisible ? 'translate-x-0 opacity-100' : '-translate-x-20 opacity-0'
+                    }`}>
                         <img 
-                            className='w-full h-auto' 
+                            className={`w-full h-auto transform transition-all duration-700 ${
+                                isImageLoaded ? 'scale-100 opacity-100' : 'scale-95 opacity-0'
+                            }`}
                             src={Signup} 
-                            alt='Sign up illustration' 
+                            alt='Sign up illustration'
+                            onLoad={() => setIsImageLoaded(true)}
                         />
                     </div>
 
-                    {/* Form Section */}
-                    <div className="flex flex-col items-center lg:items-start flex-1 w-full">
+                    {/* Form Section with animations */}
+                    <div className={`flex flex-col items-center lg:items-start flex-1 w-full transform transition-all duration-1000 ${
+                        isVisible ? 'translate-x-0 opacity-100' : 'translate-x-20 opacity-0'
+                    }`}>
                         <div className="w-full max-w-xl">
-                            <h1 className="font-bold text-3xl md:text-4xl mb-4 text-center lg:text-left text-gray-800">Sign Up</h1>
-                            <p className="font-normal text-sm md:text-base mb-9 text-center lg:text-left text-gray-500">
+                            <h1 className={`font-bold text-3xl md:text-4xl mb-4 text-center lg:text-left text-gray-800 transform transition-all duration-700 delay-200 ${
+                                isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+                            }`}>
+                                Sign Up
+                            </h1>
+                            <p className={`font-normal text-sm md:text-base mb-9 text-center lg:text-left text-gray-500 transform transition-all duration-700 delay-300 ${
+                                isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+                            }`}>
                                 Let's get all set up so you can access your personal account.
                             </p>
                             
                             <form className="w-full space-y-6" onSubmit={handleSubmit}>
-                                {/* Name Fields */}
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                {/* Name Fields with animation */}
+                                <div className={`grid grid-cols-1 md:grid-cols-2 gap-4 transform transition-all duration-700 delay-400 ${
+                                    isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+                                }`}>
                                     <div className="relative">
                                         <label 
                                             className="absolute -top-2 left-3 px-1 text-xs font-medium text-gray-500 bg-white z-10" 
@@ -158,8 +180,8 @@ const SignUp = () => {
                                             placeholder="Enter first name"
                                             value={formData.firstname}
                                             onChange={handleChange}
-                                            className="w-full px-4 py-2.5 text-sm border-[1px] border-gray-400 rounded-sm bg-white 
-                                                     focus:outline-none focus:border-gray-400 transition-colors duration-200"
+                                            className="w-full px-4 py-2.5 text-sm border-2 border-gray-300 rounded-md bg-white 
+                                                     focus:outline-none focus:border-bimec-green transition-all duration-200 hover:border-gray-400"
                                         />
                                     </div>
                                     <div className="relative">
@@ -176,14 +198,16 @@ const SignUp = () => {
                                             placeholder="Enter last name"
                                             value={formData.lastname}
                                             onChange={handleChange}
-                                            className="w-full px-4 py-2.5 text-sm border-[1px] border-gray-400 rounded-sm bg-white 
-                                                     focus:outline-none focus:border-gray-400 transition-colors duration-200"
+                                            className="w-full px-4 py-2.5 text-sm border-2 border-gray-300 rounded-md bg-white 
+                                                     focus:outline-none focus:border-bimec-green transition-all duration-200 hover:border-gray-400"
                                         />
                                     </div>
                                 </div>
 
-                                {/* Email and Phone Fields */}
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                {/* Email and Phone Fields with animation */}
+                                <div className={`grid grid-cols-1 md:grid-cols-2 gap-4 transform transition-all duration-700 delay-500 ${
+                                    isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+                                }`}>
                                     <div className="relative">
                                         <label 
                                             className="absolute -top-2 left-3 px-1 text-xs font-medium text-gray-500 bg-white z-10" 
@@ -198,14 +222,14 @@ const SignUp = () => {
                                             placeholder="Enter email"
                                             value={formData.email}
                                             onChange={handleChange}
-                                            className={`w-full px-4 py-2.5 text-sm border-[1px] rounded-sm bg-white 
-                                                     focus:outline-none transition-colors duration-200
+                                            className={`w-full px-4 py-2.5 text-sm border-2 rounded-md bg-white 
+                                                     focus:outline-none transition-all duration-200 hover:border-gray-400
                                                      ${fieldErrors.email 
                                                        ? 'border-red-400 focus:border-red-500' 
-                                                       : 'border-gray-400 focus:border-gray-400'}`}
+                                                       : 'border-gray-300 focus:border-bimec-green'}`}
                                         />
                                         {fieldErrors.email && (
-                                            <p className="text-red-500 text-xs mt-1">{fieldErrors.email}</p>
+                                            <p className="text-red-500 text-xs mt-1 animate-shake">{fieldErrors.email}</p>
                                         )}
                                     </div>
                                     <div className="relative">
@@ -222,14 +246,16 @@ const SignUp = () => {
                                             placeholder="Enter phone number"
                                             value={formData.phone}
                                             onChange={handleChange}
-                                            className="w-full px-4 py-2.5 text-sm border-[1px] border-gray-400 rounded-sm bg-white 
-                                                     focus:outline-none focus:border-gray-400 transition-colors duration-200"
+                                            className="w-full px-4 py-2.5 text-sm border-2 border-gray-300 rounded-md bg-white 
+                                                     focus:outline-none focus:border-bimec-green transition-all duration-200 hover:border-gray-400"
                                         />
                                     </div>
                                 </div>
 
-                                {/* Password Fields */}
-                                <div className="relative">
+                                {/* Password Fields with animation */}
+                                <div className={`relative transform transition-all duration-700 delay-600 ${
+                                    isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+                                }`}>
                                     <label 
                                         className="absolute -top-2 left-3 px-1 text-xs font-medium text-gray-500 bg-white z-10" 
                                         htmlFor="password"
@@ -244,16 +270,16 @@ const SignUp = () => {
                                             placeholder="Enter password"
                                             value={formData.password}
                                             onChange={handleChange}
-                                            className={`w-full px-4 py-2.5 pr-12 text-sm border-[1px] rounded-sm bg-white 
-                                                     focus:outline-none transition-colors duration-200
+                                            className={`w-full px-4 py-2.5 pr-12 text-sm border-2 rounded-md bg-white 
+                                                     focus:outline-none transition-all duration-200 hover:border-gray-400
                                                      ${fieldErrors.password 
                                                        ? 'border-red-400 focus:border-red-500' 
-                                                       : 'border-gray-400 focus:border-gray-400'}`}
+                                                       : 'border-gray-300 focus:border-bimec-green'}`}
                                         />
                                         <button
                                             type="button"
                                             onClick={() => setShowPassword(!showPassword)}
-                                            className="absolute inset-y-0 right-3 flex items-center text-gray-400 hover:text-gray-600"
+                                            className="absolute inset-y-0 right-3 flex items-center text-gray-400 hover:text-gray-600 transition-transform duration-200 hover:scale-110"
                                         >
                                             {showPassword ? (
                                                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -268,11 +294,13 @@ const SignUp = () => {
                                         </button>
                                     </div>
                                     {fieldErrors.password && (
-                                        <p className="text-red-500 text-xs mt-1">{fieldErrors.password}</p>
+                                        <p className="text-red-500 text-xs mt-1 animate-shake">{fieldErrors.password}</p>
                                     )}
                                 </div>
                                 
-                                <div className="relative">
+                                <div className={`relative transform transition-all duration-700 delay-700 ${
+                                    isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+                                }`}>
                                     <label 
                                         className="absolute -top-2 left-3 px-1 text-xs font-medium text-gray-500 bg-white z-10" 
                                         htmlFor="confirmPassword"
@@ -287,16 +315,16 @@ const SignUp = () => {
                                             placeholder="Confirm password"
                                             value={formData.confirmPassword}
                                             onChange={handleChange}
-                                            className={`w-full px-4 py-2.5 pr-12 text-sm border-[1px] rounded-sm bg-white 
-                                                     focus:outline-none transition-colors duration-200
+                                            className={`w-full px-4 py-2.5 pr-12 text-sm border-2 rounded-md bg-white 
+                                                     focus:outline-none transition-all duration-200 hover:border-gray-400
                                                      ${fieldErrors.confirmPassword 
                                                        ? 'border-red-400 focus:border-red-500' 
-                                                       : 'border-gray-400 focus:border-gray-400'}`}
+                                                       : 'border-gray-300 focus:border-bimec-green'}`}
                                         />
                                         <button
                                             type="button"
                                             onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                                            className="absolute inset-y-0 right-3 flex items-center text-gray-400 hover:text-gray-600"
+                                            className="absolute inset-y-0 right-3 flex items-center text-gray-400 hover:text-gray-600 transition-transform duration-200 hover:scale-110"
                                         >
                                             {showConfirmPassword ? (
                                                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -311,59 +339,74 @@ const SignUp = () => {
                                         </button>
                                     </div>
                                     {fieldErrors.confirmPassword && (
-                                        <p className="text-red-500 text-xs mt-1">{fieldErrors.confirmPassword}</p>
+                                        <p className="text-red-500 text-xs mt-1 animate-shake">{fieldErrors.confirmPassword}</p>
                                     )}
                                 </div>
 
-                                {/* Terms and Conditions */}
-                                <div className="flex items-start">
+                                {/* Terms and Conditions with animation */}
+                                <div className={`flex items-start transform transition-all duration-700 delay-800 ${
+                                    isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+                                }`}>
                                     <input
                                         type="checkbox"
                                         id="terms"
-                                        className="h-4 w-4 mt-0.5 border-gray-300 rounded focus:ring-2 focus:ring-green-500"
+                                        className="h-4 w-4 mt-0.5 border-gray-300 rounded focus:ring-2 focus:ring-bimec-green transition-all duration-200"
                                     />
                                     <label htmlFor="terms" className="ml-2 text-sm text-gray-700">
-                                        I agree to all the <a className="text-[#285430] hover:text-[#1e3e22]" href='#'>Terms</a> and <a className="text-[#FF8682] hover:text-[#ff6b6b]" href='#'>Privacy Policies</a>
+                                        I agree to all the <a className="text-bimec-heavy-green hover:text-bimec-green transition-colors duration-200" href='#'>Terms</a> and <a className="text-[#FF8682] hover:text-[#ff6b6b] transition-colors duration-200" href='#'>Privacy Policies</a>
                                     </label>
                                 </div>
 
-                                {/* Error message */}
+                                {/* Error message with animation */}
                                 {error && (
-                                    <div className="bg-red-100 border border-red-400 text-red-700 px-3 py-2 rounded-md text-sm">
+                                    <div className="bg-red-100 border border-red-400 text-red-700 px-3 py-2 rounded-md text-sm transform transition-all duration-300 animate-shake">
                                         {error}
                                     </div>
                                 )}
 
-                                {/* Submit Button */}
+                                {/* Submit Button with animation */}
                                 <button
                                     type="submit"
                                     disabled={loading}
-                                    className="w-full bg-[#285430] text-white py-2.5 rounded-lg font-medium 
-                                             hover:bg-[#1e3e22] focus:outline-none focus:ring-4 focus:ring-green-300 
-                                             transition-colors duration-200 disabled:bg-gray-400"
+                                    className={`w-full bg-bimec-heavy-green text-white py-2.5 rounded-lg font-medium 
+                                             hover:bg-bimec-green focus:outline-none focus:ring-4 focus:ring-green-300 
+                                             transition-all duration-200 transform hover:scale-[1.02] hover:shadow-lg 
+                                             disabled:bg-gray-400 disabled:hover:scale-100 ${
+                                        isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+                                    }`}
+                                    style={{ transitionDelay: '900ms' }}
                                 >
                                     {loading ? 'Creating Account...' : 'Create Account'}
                                 </button>
 
-                                {/* Login Link */}
-                                <p className="text-center text-sm">
+                                {/* Login Link with animation */}
+                                <p className={`text-center text-sm transform transition-all duration-700 delay-[1000ms] ${
+                                    isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+                                }`}>
                                     Already have an account?{' '}
-                                    <a className="text-[#FF8682] hover:text-[#ff6b6b] font-medium" href='/login'>
+                                    <a className="text-[#FF8682] hover:text-[#ff6b6b] font-medium transition-colors duration-200" href='/login'>
                                         Login
                                     </a>
                                 </p>
 
-                                {/* Divider */}
-                                <div className="flex items-center my-4">
+                                {/* Divider with animation */}
+                                <div className={`flex items-center my-4 transform transition-all duration-700 delay-[1100ms] ${
+                                    isVisible ? 'scale-x-100 opacity-100' : 'scale-x-0 opacity-0'
+                                }`}>
                                     <hr className="flex-grow border-gray-300" />
                                     <span className="mx-3 text-gray-500 text-sm">Or Sign up with</span>
                                     <hr className="flex-grow border-gray-300" />
                                 </div>
 
-                                {/* Google Button */}
+                                {/* Google Button with animation */}
                                 <button
                                     type="button"
-                                    className="w-full bg-white border border-gray-300 text-gray-700 py-2.5 px-4 rounded-lg font-medium hover:bg-gray-50 flex items-center justify-center gap-2"
+                                    className={`w-full bg-white border border-gray-300 text-gray-700 py-2.5 px-4 rounded-lg font-medium 
+                                             hover:bg-gray-50 flex items-center justify-center gap-2 
+                                             transition-all duration-200 transform hover:scale-[1.02] hover:shadow-md ${
+                                        isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+                                    }`}
+                                    style={{ transitionDelay: '1200ms' }}
                                 >
                                     <img src={Google_icon} alt="Google" className="w-5 h-5" />
                                     {/* Sign up with Google */}
@@ -373,6 +416,25 @@ const SignUp = () => {
                     </div>
                 </div>
             </div>
+
+            {/* Custom animation for error shake */}
+            <style jsx>{`
+                @keyframes shake {
+                    0%, 100% {
+                        transform: translateX(0);
+                    }
+                    10%, 30%, 50%, 70%, 90% {
+                        transform: translateX(-5px);
+                    }
+                    20%, 40%, 60%, 80% {
+                        transform: translateX(5px);
+                    }
+                }
+
+                .animate-shake {
+                    animation: shake 0.5s ease-in-out;
+                }
+            `}</style>
         </div>
     )
 }
