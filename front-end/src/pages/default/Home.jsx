@@ -18,194 +18,196 @@ function Home() {
   axios.defaults.withCredentials = true;
 
   return (
-    <div className="overflow-x-hidden overflow-y-auto">
+    <div className="min-h-screen bg-white">
       {/* Navbar */}
       <Navbar />
 
       {/* Hero Section */}
-      <div className="w-full relative">
-        <img src={Home_physician} className="w-full h-auto" alt="Hero" />
-        <div className="absolute top-0 left-0 w-full h-full flex flex-col justify-center px-6 sm:px-12 lg:px-32">
-          {/* Nội dung */}
-          <div className="flex flex-col items-start">
-            <h4 className="font-bold text-lg sm:text-xl lg:text-2xl font-yeseva text-bimec-green">
-              CARING FOR LIFE
-            </h4>
-            <h1 className="font-semibold text-3xl sm:text-5xl lg:text-6xl font-yeseva text-bimec-heavy-green mt-4">
-              Leading The Way <br /> in Medical Excellence
-            </h1>
-          </div>
-          {/* Buttons Section */}
-          <div className="mt-6 xl:mt-10">
-            <div className="grid grid-cols-3 md:grid-cols-3 xl:grid-cols-1 gap-2 md:gap-4 justify-center xl:gap-8">
-              {/* Our Services Button */}
-              <div className="bg-white h-8 md:h-12 lg:h-20 rounded-lg flex justify-between items-center w-30 md:w-50 lg:w-72 xl:ml-10 border border-bimec-green bg-opacity-70 backdrop-blur-lg border-opacity-30 transform transition-transform duration-300 group-hover:scale-110 group">
-                <button
-                  onClick={() => navigate("/default/services")}
-                  className="w-full h-full flex items-center justify-between px-2 lg:px-8 md:px-4"
-                >
-                  <p className="text-xs md:text-lg lg:text-xl text-bimec-green font-sans">
-                    Our Services
-                  </p>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    className="w-5 h-5 sm:w-8 sm:h-8 text-bimec-green transition-transform duration-500 group-hover:transform group-hover:translate-x-2"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
-                    />
-                  </svg>
-                </button>
-              </div>
-              {/* Book Appointment Button */}
-              <div className="bg-bimec-heavy-green h-8 xl:h-20 md:h-12 lg:h-20 rounded-lg flex justify-between items-center cursor-pointer w-30 md:w-50 xl:w-72 xl:ml-10 bg-opacity-90 backdrop-blur-lg border-opacity-30 transform transition-transform duration-300 group-hover:scale-110 group">
+      <section className="relative h-screen">
+        <img src={Home_physician} className="w-full h-full object-cover" alt="Hero" />
+        <div className="absolute inset-0 bg-gradient-to-r from-white/60 to-transparent"></div>
+        
+        <div className="absolute inset-0 flex items-center px-4 md:px-8 lg:px-16">
+          <div className="max-w-6xl mx-auto w-full">
+            <div className="max-w-xl">
+              <p className="text-bimec-green font-medium text-sm tracking-wider uppercase mb-3">
+                Caring for Life
+              </p>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-light text-bimec-heavy-green leading-tight">
+                Leading The Way <br /> 
+                in Medical Excellence
+              </h1>
+              
+              {/* Action Buttons */}
+              <div className="mt-10 space-y-4">
                 <button
                   onClick={() => navigate("/default/booking")}
-                  className="w-full h-full flex items-center justify-between px-2 xl:px-8 md:px-4"
+                  className="group flex items-center justify-between w-full md:w-auto px-6 py-4 bg-bimec-heavy-green text-white rounded-lg hover:bg-bimec-green transition-colors duration-300"
                 >
-                  <p className="text-xs md:text-base lg:text-xl text-white font-sans">
-                    Book an Appointment
-                  </p>
+                  <span className="text-sm md:text-base font-medium mr-8">Book an Appointment</span>
                   <svg
-                    xmlns="http://www.w3.org/2000/svg"
+                    className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-200"
                     fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
                     stroke="currentColor"
-                    className="w-5 h-5 sm:w-8 sm:h-8 text-white transition-transform duration-500 group-hover:transform group-hover:translate-x-2"
+                    viewBox="0 0 24 24"
                   >
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z"
+                      strokeWidth={2}
+                      d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
                     />
                   </svg>
                 </button>
-              </div>
-              {/* Find Doctors Button */}
-              <div className="bg-bimec-green h-8 lg:h-20 md:h-12 rounded-lg flex justify-between items-center w-30 md:w-48 lg:w-72 xl:ml-10 bg-opacity-90 backdrop-blur-lg border-opacity-30 transition-transform duration-300 group-hover:scale-110 group">
-                <button
-                  onClick={() => navigate("/default/doctors")}
-                  className="w-full h-full flex items-center justify-between px-2 lg:px-8 md:px-4"
-                >
-                  <p className="text-xs md:text-lg lg:text-xl text-white font-sans">
-                    Find doctors
-                  </p>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    className="w-5 h-5 sm:w-8 sm:h-8 text-white transition-transform duration-500 group-hover:transform group-hover:translate-x-2"
+                
+                <div className="flex gap-4">
+                  <button
+                    onClick={() => navigate("/default/services")}
+                    className="group flex items-center px-6 py-3 bg-white/90 backdrop-blur-sm text-bimec-green border border-bimec-green rounded-lg hover:bg-bimec-light-green transition-colors duration-300"
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M4.5 17H4a1 1 0 0 1-1-1 3 3 0 0 1 3-3h1m0-3.05A2.5 2.5 0 1 1 9 5.5M19.5 17h.5a1 1 0 0 0 1-1 3 3 0 0 0-3-3h-1m0-3.05a2.5 2.5 0 1 0-2-4.45m.5 13.5h-7a1 1 0 0 1-1-1 3 3 0 0 1 3-3h3a3 3 0 0 1 3 3 1 1 0 0 1-1 1Zm-1-9.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z"
-                    />
-                  </svg>
-                </button>
+                    <span className="text-sm font-medium mr-3">Our Services</span>
+                    <svg
+                      className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M9 5l7 7-7 7"
+                      />
+                    </svg>
+                  </button>
+                  
+                  <button
+                    onClick={() => navigate("/default/doctors")}
+                    className="group flex items-center px-6 py-3 bg-white/90 backdrop-blur-sm text-bimec-green border border-bimec-green rounded-lg hover:bg-bimec-light-green transition-colors duration-300"
+                  >
+                    <span className="text-sm font-medium mr-3">Find Doctors</span>
+                    <svg
+                      className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M9 5l7 7-7 7"
+                      />
+                    </svg>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      {/* Welcome Section */}
-      <div className="mt-16 sm:mt-32 flex flex-col items-center w-full px-6 sm:px-12 lg:px-32">
-        <h4 className="text-bimec-green font-bold font-sans text-lg sm:text-xl">
-          WELCOME TO BIMEC
-        </h4>
-        <ReactTyped
-          className="text-bimec-heavy-green font-bold font-yeseva text-2xl sm:text-4xl lg:text-5xl mt-4"
-          strings={[
-            "A Great Place to Receive Care",
-            "Your Health, Our Commitment",
-            "Caring for You, Like Family",
-          ]}
-          typeSpeed={200}
-          backSpeed={220}
-          loop
-        />
-        <p className="w-full sm:w-3/4 lg:w-1/2 text-center mt-6 text-sm sm:text-base lg:text-lg">
-          "At BIMEC, we are dedicated to providing compassionate, high-quality
-          care to every patient. With a team of experienced doctors, nurses, and
-          healthcare professionals, we focus on your health and well-being every
-          step of the way. Whether you're seeking preventive care, specialized
-          treatment, or emergency services, we prioritize your comfort and
-          trust. Our commitment is to treat you like family, ensuring that your
-          health is in the best hands possible."
-        </p>
-        <a
-          className="mt-6 text-bimec-green hover:underline flex items-center text-sm sm:text-base"
-          href="/about-us"
-        >
-          Learn More
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth="1.5"
-            stroke="currentColor"
-            className="w-4 h-4 sm:w-5 sm:h-5 ml-2"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
-            />
-          </svg>
-        </a>
-      </div>
+      </section>
 
-      {/* Doctors Section */}
-      <div className="mt-16 sm:mt-32 flex flex-col items-center w-full">
-        <img
-          src={BlackDoctors1}
-          alt="Doctors"
-          className="w-full sm:w-3/4 lg:w-1/2"
-        />
-      </div>
+      {/* Welcome Section */}
+      <section className="py-20 px-4">
+        <div className="max-w-4xl mx-auto text-center">
+          <p className="text-bimec-green font-medium text-sm tracking-wider uppercase mb-4">
+            Welcome to BIMEC
+          </p>
+          
+          <div className="h-20 mb-8">
+            <ReactTyped
+              className="text-3xl md:text-4xl lg:text-5xl font-light text-bimec-heavy-green"
+              strings={[
+                "A Great Place to Receive Care",
+                "Your Health, Our Commitment",
+                "Caring for You, Like Family",
+              ]}
+              typeSpeed={50}
+              backSpeed={30}
+              loop
+            />
+          </div>
+          
+          <p className="text-gray-600 leading-relaxed max-w-3xl mx-auto mb-8">
+            At BIMEC, we are dedicated to providing compassionate, high-quality
+            care to every patient. With a team of experienced doctors, nurses, and
+            healthcare professionals, we focus on your health and well-being every
+            step of the way. Whether you're seeking preventive care, specialized
+            treatment, or emergency services, we prioritize your comfort and
+            trust. Our commitment is to treat you like family, ensuring that your
+            health is in the best hands possible.
+          </p>
+          
+          <a
+            href="/default/about-us"
+            className="inline-flex items-center text-bimec-green font-medium hover:text-bimec-heavy-green transition-colors duration-200"
+          >
+            Learn More
+            <svg
+              className="w-4 h-4 ml-2"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 5l7 7-7 7"
+              />
+            </svg>
+          </a>
+        </div>
+      </section>
+
+      {/* Doctors Image Section */}
+      <section className="py-16 px-4">
+        <div className="max-w-5xl mx-auto">
+          <img
+            src={BlackDoctors1}
+            alt="Our Medical Team"
+            className="w-full rounded-lg shadow-sm"
+          />
+        </div>
+      </section>
 
       {/* Services Section */}
-      <div className="mt-16 sm:mt-32 w-full px-6 sm:px-12 lg:px-32">
-        <ServicesHeader />
-      </div>
+      <section className="py-16 px-4 bg-gray-50">
+        <div className="max-w-6xl mx-auto">
+          <ServicesHeader />
+        </div>
+      </section>
 
       {/* Specialties Section */}
-      <div className="mt-8 sm:mt-16 w-full px-6 sm:px-12 lg:px-32">
-        <Specialties />
-      </div>
+      <section className="py-16 px-4">
+        <div className="max-w-6xl mx-auto">
+          <Specialties />
+        </div>
+      </section>
 
-      {/* Slider Doctors Section */}
-      <div className="mt-8 sm:mt-16 w-full px-6 sm:px-12 lg:px-32">
-        <div className="max-w-5xl mx-auto">
+      {/* Doctors Slider Section */}
+      <section className="py-16 px-4 bg-gray-50">
+        <div className="max-w-6xl mx-auto">
           <SliderDoctors />
         </div>
-      </div>
+      </section>
 
       {/* News Section */}
-      <div className="mt-8 sm:mt-16 w-full px-6 sm:px-12 lg:px-32">
-        <div className="max-w-5xl mx-auto">
+      <section className="py-16 px-4">
+        <div className="max-w-6xl mx-auto">
           <NewsSlider />
         </div>
-      </div>
+      </section>
 
       {/* Contact Section */}
-      <div className="mt-8 sm:mt-16 w-full px-6 sm:px-12 lg:px-32">
-        <Contact />
-      </div>
+      <section className="py-16 px-4 bg-gray-50">
+        <div className="max-w-6xl mx-auto">
+          <Contact />
+        </div>
+      </section>
 
       {/* Footer */}
-      <div className="mt-8 sm:mt-16 w-full">
-        <Footer />
-      </div>
+      <Footer />
 
       {/* Floating Button Group */}
       <FloatButtonGroup />
