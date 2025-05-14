@@ -390,7 +390,7 @@ const Settings = () => {
                 .coolinput input[type="password"].input {
                     padding: 11px 10px;
                     font-size: 0.875rem;
-                    border: 2px #5f8d4d solid;
+                    border: 1px #5f8d4d solid;
                     border-radius: 8px;
                     background: #ffffff;
                     transition: all 0.3s ease;
