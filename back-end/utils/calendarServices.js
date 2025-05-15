@@ -28,13 +28,28 @@ async function createEvent({ summary, description, start, end }) {
 }
 
 async function listEvents(startTime, endTime) {
+  const now = new Date();
+
+  const timeMin = startTime
+    ? new Date(startTime).toISOString()
+    : new Date(now.setFullYear(now.getFullYear() - 1)).toISOString(); 
+
+  const timeMax = endTime
+    ? new Date(endTime).toISOString()
+    : new Date(now.setFullYear(now.getFullYear() + 2)).toISOString(); 
+
+  // console.log("Fetching Google Calendar events from:", timeMin, "to:", timeMax);s
+
   const res = await calendar.events.list({
     calendarId,
-    timeMin: new Date(startTime).toISOString(),
-    timeMax: new Date(endTime).toISOString(),
+    timeMin,
+    timeMax,
     singleEvents: true,
     orderBy: "startTime",
+    maxResults: 2500, 
   });
+
+  // console.log(`✅ Google returned ${res.data.items.length} events`);
 
   return res.data.items;
 }

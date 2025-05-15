@@ -14,6 +14,7 @@ router.post("/events", async (req, res) => {
 
 router.get("/events", async (req, res) => {
   try {
+    // console.log("📥 [GET] /api/calendar/events", req.query);
     const { start, end } = req.query;
     const events = await listEvents(start, end);
     res.json(events);

@@ -56,15 +56,19 @@ const staticEvents = [
   },
 ];
 
-// CSS tùy chỉnh cho FullCalendar
+// Add z-index
 const calendarStyles = `
   .fc {
     font-family: 'Inter', sans-serif;
+    position: relative;
+    z-index: 1;
   }
   .fc .fc-toolbar {
     padding: 10px;
     border-radius: 8px;
     margin-bottom: 20px;
+    position: relative;
+    z-index: 2;
   }
   .fc .fc-toolbar-title {
     font-size: 1.5rem;
@@ -77,6 +81,8 @@ const calendarStyles = `
     padding: 6px 12px !important;
     color: #6B7280 !important;
     margin: 10px;
+    position: relative;
+    z-index: 2;
   }
   .fc .fc-button:hover {
     background-color: #F9FAFB !important;
@@ -119,6 +125,8 @@ const calendarStyles = `
     padding: 4px 6px !important;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
     transition: background-color 0.2s ease !important;
+    position: relative;
+    z-index: 3;
   }
   .fc .fc-event:hover {
     filter: brightness(95%) !important;
@@ -154,6 +162,14 @@ const calendarStyles = `
   .fc .fc-event-room i,
   .fc .fc-event-time i {
     font-size: 0.7rem;
+  }
+  /* Đảm bảo calendar content không che dropdown */
+  .fc-scrollgrid,
+  .fc-view-harness,
+  .fc-daygrid,
+  .fc-timegrid {
+    position: relative;
+    z-index: 1;
   }
 `;
 
@@ -203,10 +219,10 @@ function DoctorSchedule() {
     <div className="flex min-h-screen max-w-screen mx-auto">
       <style>{calendarStyles}</style>
       <Sidebar />
-      <main className="flex-1 flex flex-col bg-white">
+      <main className="flex-1 flex flex-col bg-white relative">
         <Header />
-        <section className="flex-1 overflow-auto p-3 bg-[#F9FAFB]">
-          <div className="bg-white rounded-xl shadow-sm p-3">
+        <section className="flex-1 overflow-auto p-3 bg-[#F9FAFB] relative z-10">
+          <div className="bg-white rounded-xl shadow-sm p-3 relative">
             <FullCalendar
               plugins={[dayGridPlugin, timeGridPlugin]}
               initialView="timeGridWeek"
