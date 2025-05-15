@@ -54,7 +54,7 @@ function Header() {
     setIsLoggedIn(false);
     setUserName("");
     setUserRole("");
-    navigate('/signin');
+    navigate('/login');
   };
 
   return (
