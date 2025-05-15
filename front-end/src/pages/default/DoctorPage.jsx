@@ -47,7 +47,6 @@ function DoctorPage() {
             try {
                 const response = await axios.get('http://localhost:3001/api/doctors');
 
-                console.log(response.data)
                 setDoctors(response.data);     
                 setLoading(false);
             } catch (err) {
