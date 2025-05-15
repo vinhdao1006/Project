@@ -1,4 +1,3 @@
-// Header.jsx
 import React, { useEffect, useState, Fragment } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -58,7 +57,7 @@ function Header() {
   };
 
   return (
-    <header className="flex items-center justify-between px-8 py-5 bg-white border-b border-gray-100">
+    <header className="relative z-50 flex items-center justify-between px-8 py-5 bg-white border-b border-gray-100">
       <div className="flex items-center gap-6">
         <h1 className="text-2xl font-bold text-gray-900">{activeRouteName}</h1>
       </div>
@@ -106,7 +105,7 @@ function Header() {
               leaveFrom="transform opacity-100 scale-100"
               leaveTo="transform opacity-0 scale-95"
             >
-              <Menu.Items className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none overflow-hidden">
+              <Menu.Items className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none overflow-hidden z-[100]">
                 <div className="px-4 py-3 border-b border-gray-100">
                   <p className="text-sm font-medium text-gray-900">{userName}</p>
                   <p className="text-xs text-gray-500">{userRole}</p>
