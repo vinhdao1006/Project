@@ -18,29 +18,51 @@ function DoctorPage() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    // useEffect(() => {
+    //     // Initial page load animation
+    //     setIsVisible(true);
+
+    //     // Intersection Observer for card animations
+    //     const observer = new IntersectionObserver(
+    //         (entries) => {
+    //             entries.forEach((entry) => {
+    //                 if (entry.isIntersecting) {
+    //                     setVisibleCards(prev => new Set(prev).add(entry.target.dataset.cardId));
+    //                 }
+    //             });
+    //         },
+    //         { threshold: 0.1 }
+    //     );
+
+    //     const cards = document.querySelectorAll('.doctor-card');
+    //     cards.forEach((card) => observer.observe(card));
+
+    //     return () => {
+    //         cards.forEach((card) => observer.unobserve(card));
+    //     };
+    // }, []);
+
     useEffect(() => {
-        // Initial page load animation
         setIsVisible(true);
-
-        // Intersection Observer for card animations
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        setVisibleCards(prev => new Set(prev).add(entry.target.dataset.cardId));
-                    }
-                });
-            },
-            { threshold: 0.1 }
-        );
-
-        const cards = document.querySelectorAll('.doctor-card');
-        cards.forEach((card) => observer.observe(card));
-
-        return () => {
-            cards.forEach((card) => observer.unobserve(card));
-        };
-    }, []);
+        if (!loading && doctors.length > 0) {
+            const observer = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            setVisibleCards(prev => new Set(prev).add(entry.target.dataset.cardId));
+                        }
+                    });
+                },
+                { threshold: 0.1 }
+            );
+    
+            const cards = document.querySelectorAll('.doctor-card');
+            cards.forEach((card) => observer.observe(card));
+    
+            return () => cards.forEach((card) => observer.unobserve(card));
+        }
+    }, [loading, doctors]);
+    
 
     useEffect(() => {
         const fetchDoctors = async () => {
