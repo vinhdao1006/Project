@@ -1,56 +1,54 @@
+// Sidebar.jsx
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { ClipboardList, Users, Calendar } from 'lucide-react';
 import BimecLogo from '../../assets/icon/Bimec_logo.png';
 
 function Sidebar() {
+  const navItems = [
+    { path: "/doctor/appointments", label: "Appointments", icon: ClipboardList },
+    { path: "/doctor/patients", label: "Patients", icon: Users },
+    { path: "/doctor/schedule", label: "Schedule", icon: Calendar },
+  ];
+
   return (
-    <aside className="w-[200px] bg-white border-r border-gray-200 flex flex-col">
-      <div className="flex items-center gap-2 px-6 py-6 border-gray-200">
+    <aside className="w-64 bg-white border-r border-bimec-gray/20 flex flex-col h-screen">
+      <div className="flex items-center gap-3 px-6 py-7">
         <img
           alt="BIMEC logo"
-          className="w-6 h-6"
+          className="w-8 h-8"
           src={BimecLogo}
-          width="24"
-          height="24"
+          width="32"
+          height="32"
         />
-        <span className="font-extrabold text-xl text-[#2F4F2F] select-none">
+        <span className="font-bold text-xl text-bimec-heavy-green tracking-tight">
           BIMEC
         </span>
       </div>
-      <nav className="flex flex-col mt-6 space-y-1 px-2">
-        <NavLink
-          to="/doctor/appointments"
-          className={({ isActive }) =>
-            isActive
-              ? "flex items-center gap-3 px-4 py-3 rounded-xl text-[#698C55] bg-[#E6F6FF] backdrop-blur-md font-semibold select-none"
-              : "flex items-center gap-3 px-4 py-3 rounded-xl text-gray-500 hover:text-gray-700 hover:bg-gray-100 transition"
-          }
-        >
-          <i className="far fa-clipboard text-lg"></i>
-          <span className="text-sm font-bold select-none">Appointments</span>
-        </NavLink>
-        <NavLink
-          to="/doctor/patients"
-          className={({ isActive }) =>
-            isActive
-              ? "flex items-center gap-3 px-4 py-3 rounded-xl text-[#698C55] bg-[#E6F6FF] backdrop-blur-md font-semibold select-none"
-              : "flex items-center gap-3 px-4 py-3 rounded-xl text-gray-500 hover:text-gray-700 hover:bg-gray-100 transition"
-          }
-        >
-          <i className="fas fa-users text-lg"></i>
-          <span className="text-sm font-bold select-none">Patients</span>
-        </NavLink>
-        <NavLink
-          to="/doctor/schedule"
-          className={({ isActive }) =>
-            isActive
-              ? "flex items-center gap-3 px-4 py-3 rounded-xl text-[#698C55] bg-[#E6F6FF] backdrop-blur-md font-semibold select-none"
-              : "flex items-center gap-3 px-4 py-3 rounded-xl text-gray-500 hover:text-gray-700 hover:bg-gray-100 transition"
-          }
-        >
-          <i className="far fa-calendar-alt text-lg"></i>
-          <span className="text-sm font-bold select-none">Schedule</span>
-        </NavLink>
+      
+      <nav className="flex flex-col mt-2 space-y-1 px-3">
+        {navItems.map((item) => {
+          const Icon = item.icon;
+          
+          return (
+            <NavLink
+              key={item.path}
+              to={item.path}
+              className={({ isActive }) => `
+                flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200
+                ${isActive 
+                  ? "bg-bimec-light-green text-bimec-green shadow-sm" 
+                  : "text-bimec-black/70 hover:bg-bimec-light-green/50 hover:text-bimec-heavy-green"
+                }
+              `}
+            >
+              <Icon className="w-5 h-5" />
+              <span className={`text-sm font-medium`}>
+                {item.label}
+              </span>
+            </NavLink>
+          );
+        })}
       </nav>
     </aside>
   );
