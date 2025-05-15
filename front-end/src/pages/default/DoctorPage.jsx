@@ -8,86 +8,15 @@ import img_doctor2 from "../../assets/image/sliderDoctor2.png";
 import img_doctor3 from "../../assets/image/sliderDoctor3.png";
 import FloatButtonGroup from '../../components/utils/FloatButtonGroup';
 import DoctorSearch from '../../components/utils/DoctorSearch';
-
-const doctors = [
-    {
-        id: 1,
-        name: "Dr. Nguyen Van An",
-        specialty: "Neurology",
-        experience: "15 years",
-        image: img_doctor1,
-        social: {
-            linkedin: "#",
-            instagram: "#",
-            facebook: "#",
-        },
-    },
-    {
-        id: 2,
-        name: "Dr. Tran Thi Mai",
-        specialty: "Cardiology",
-        experience: "12 years",
-        image: img_doctor2,
-        social: {
-            linkedin: "#",
-            instagram: "#",
-            facebook: "#",
-        },
-    },
-    {
-        id: 3,
-        name: "Dr. Le Hoang Nam",
-        specialty: "Dermatology",
-        experience: "10 years",
-        image: img_doctor3,
-        social: {
-            linkedin: "#",
-            instagram: "#",
-            facebook: "#",
-        },
-    },
-    {
-        id: 4,
-        name: "Dr. Pham Minh Duc",
-        specialty: "Pediatrics",
-        experience: "18 years",
-        image: img_doctor1,
-        social: {
-            linkedin: "#",
-            instagram: "#",
-            facebook: "#",
-        },
-    },
-    {
-        id: 5,
-        name: "Dr. Hoang Thi Lan",
-        specialty: "Obstetrics",
-        experience: "20 years",
-        image: img_doctor2,
-        social: {
-            linkedin: "#",
-            instagram: "#",
-            facebook: "#",
-        },
-    },
-    {
-        id: 6,
-        name: "Dr. Vu Quoc Huy",
-        specialty: "Orthopedics",
-        experience: "8 years",
-        image: img_doctor3,
-        social: {
-            linkedin: "#",
-            instagram: "#",
-            facebook: "#",
-        },
-    },
-];
+import axios from 'axios';
 
 function DoctorPage() {
     const [isVisible, setIsVisible] = useState(false);
     const [visibleCards, setVisibleCards] = useState(new Set());
     const [hoveredCard, setHoveredCard] = useState(null);
+    const [doctors, setDoctors] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         // Initial page load animation
@@ -112,6 +41,52 @@ function DoctorPage() {
             cards.forEach((card) => observer.unobserve(card));
         };
     }, []);
+
+    useEffect(() => {
+        const fetchDoctors = async () => {
+            try {
+                const response = await axios.get('http://localhost:3001/api/doctors');
+
+                console.log(response.data)
+                setDoctors(response.data);     
+                setLoading(false);
+            } catch (err) {
+                console.error('Error fetching doctors:', err);
+                setError('Failed to load doctors. Please try again later.');
+                setLoading(false);
+            }
+        };
+
+        fetchDoctors();
+    }, []);
+
+    // Function to get a random doctor image
+    const getRandomDoctorImage = () => {
+        const images = [img_doctor1, img_doctor2, img_doctor3];
+        return images[Math.floor(Math.random() * images.length)];
+    };
+
+    if (loading) {
+        return (
+            <div className="min-h-screen bg-white">
+                <Navbar />
+                <div className="flex items-center justify-center h-64">
+                    <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-bimec-green"></div>
+                </div>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="min-h-screen bg-white">
+                <Navbar />
+                <div className="flex items-center justify-center h-64">
+                    <p className="text-red-500">{error}</p>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="min-h-screen bg-white overflow-x-hidden">
@@ -175,42 +150,42 @@ function DoctorPage() {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {doctors.map((doctor, index) => (
                             <div
-                                key={doctor.id}
-                                data-card-id={doctor.id}
+                                key={doctor._id}
+                                data-card-id={doctor._id}
                                 className={`doctor-card group transform transition-all duration-700 ${
-                                    visibleCards.has(doctor.id.toString()) 
+                                    visibleCards.has(doctor._id.toString()) 
                                         ? 'translate-y-0 opacity-100' 
                                         : 'translate-y-20 opacity-0'
                                 }`}
                                 style={{ transitionDelay: `${index * 100}ms` }}
-                                onMouseEnter={() => setHoveredCard(doctor.id)}
+                                onMouseEnter={() => setHoveredCard(doctor._id)}
                                 onMouseLeave={() => setHoveredCard(null)}
                             >
                                 <div className="bg-white border border-gray-100 rounded-lg overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
                                     <div className="relative overflow-hidden aspect-w-3 aspect-h-4">
                                         <img
-                                            src={doctor.image}
-                                            alt={doctor.name}
+                                            src={getRandomDoctorImage()}
+                                            alt={`Dr. ${doctor.firstname} ${doctor.lastname}`}
                                             className={`w-full h-72 object-cover transform transition-transform duration-700 ${
-                                                hoveredCard === doctor.id ? 'scale-110' : 'scale-100'
+                                                hoveredCard === doctor._id ? 'scale-110' : 'scale-100'
                                             }`}
                                         />
                                         {/* Overlay with animation */}
                                         <div 
                                             className={`absolute inset-0 bg-gradient-to-t from-bimec-heavy-green/70 to-transparent transition-opacity duration-500 ${
-                                                hoveredCard === doctor.id ? 'opacity-100' : 'opacity-0'
+                                                hoveredCard === doctor._id ? 'opacity-100' : 'opacity-0'
                                             }`}
                                         />
                                     </div>
                                     <div className="p-6">
                                         <h3 className="text-lg font-medium text-bimec-heavy-green mb-1 transition-all duration-300">
-                                            {doctor.name}
+                                            Dr. {doctor.firstname} {doctor.lastname}
                                         </h3>
                                         <p className="text-sm text-bimec-green mb-1">
                                             {doctor.specialty}
                                         </p>
                                         <p className="text-xs text-gray-500 mb-4">
-                                            {doctor.experience} experience
+                                            {doctor.experience} years experience
                                         </p>
                                         
                                         {/* Social Icons with Stagger Animation */}
@@ -218,11 +193,11 @@ function DoctorPage() {
                                             {['linkedin', 'instagram', 'facebook'].map((social, idx) => (
                                                 <a
                                                     key={social}
-                                                    href={doctor.social[social]}
+                                                    href="#"
                                                     target="_blank"
                                                     rel="noopener noreferrer"
                                                     className={`p-2 rounded-full bg-gray-100 text-gray-600 hover:bg-bimec-light-green hover:text-bimec-green transform transition-all duration-300 hover:scale-110 ${
-                                                        hoveredCard === doctor.id ? 'translate-y-0' : 'translate-y-2'
+                                                        hoveredCard === doctor._id ? 'translate-y-0' : 'translate-y-2'
                                                     }`}
                                                     style={{ transitionDelay: `${idx * 50}ms` }}
                                                 >

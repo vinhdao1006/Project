@@ -183,11 +183,11 @@ async function initializeSpecialties() {
 
         // Verify the insertion
         const count = await SpecialtyModel.countDocuments();
-        console.log(`Total specialties in database: ${count}`);
+        //console.log(`Total specialties in database: ${count}`);
 
         // List all specialties
         const specialties = await SpecialtyModel.find();
-        console.log('Current specialties in database:', specialties);
+        //console.log('Current specialties in database:', specialties);
 
     } catch (error) {
         console.error('Error initializing specialties:', error);

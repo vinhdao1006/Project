@@ -63,12 +63,25 @@ app.get('/api/specialties', async (req, res) => {
     }
 });
 
+// get doctors
+app.get('/api/doctors', async (req, res) => {
+    try 
+    {
+        const doctors = await DoctorModel.find()
+        res.json(doctors)
+    } catch (error)
+    {
+        res.status(500).json({ error: error.message})
+    }
+})
 // Get doctors by specialty
 app.get('/api/doctors/:specialtyId', async (req, res) => {
     try {
-        const a = await SpecialtyModel.find()
-        for (var i = 0; i < a.length; ++i)
-            console.log(a[i])
+        // use this code to print list of specialties when trying to debug  
+        // const a = await SpecialtyModel.find()
+        // for (var i = 0; i < a.length; ++i)
+        //     console.log(a[i])
+
         const doctors = await DoctorModel.find({ specialty: req.params.specialtyId })
             .populate('userId', 'firstname lastname')
             .populate('specialty', 'name');

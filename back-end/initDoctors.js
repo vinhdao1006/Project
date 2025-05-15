@@ -10,89 +10,285 @@ const SpecialtyModel = require('./models/specialty');
 
 const testDoctors = [
     {
-        firstname: "John",
-        lastname: "Smith",
-        email: "john.smith@example.com",
-        phone: "1234567890",
-        password: "password123",
-        role: "Doctor",
-        specialty: "Neurology",
-        consultationFee: 150,
-        experience: "15 years",
-        languages: ["English", "Spanish"],
-        title: "Dr.",
-        degree: "MD, PhD",
-        availability: [
-            { day: "Monday", startTime: "09:00", endTime: "17:00" },
-            { day: "Wednesday", startTime: "09:00", endTime: "17:00" },
-            { day: "Friday", startTime: "09:00", endTime: "17:00" }
-        ]
+      "firstname": "John",
+      "lastname": "Smith",
+      "email": "john.smith@example.com",
+      "phone": "0800111222",
+      "password": "password123",
+      "role": "Doctor",
+      "specialty": "Internal Medicine",
+      "consultationFee": 180,
+      "experience": "14 years",
+      "languages": ["English"],
+      "title": "Dr.",
+      "degree": "MD",
+      "availability": [
+        { "day": "Monday", "startTime": "09:00", "endTime": "17:00" },
+        { "day": "Thursday", "startTime": "09:00", "endTime": "17:00" }
+      ]
     },
     {
-        firstname: "Sarah",
-        lastname: "Johnson",
-        email: "sarah.johnson@example.com",
-        phone: "2345678901",
-        password: "password123",
-        role: "Doctor",
-        specialty: "Cardiology",
-        consultationFee: 200,
-        experience: "20 years",
-        languages: ["English", "French"],
-        title: "Dr.",
-        degree: "MD",
-        availability: [
-            { day: "Tuesday", startTime: "09:00", endTime: "17:00" },
-            { day: "Thursday", startTime: "09:00", endTime: "17:00" }
-        ]
+      "firstname": "Emily",
+      "lastname": "Johnson",
+      "email": "emily.johnson@example.com",
+      "phone": "0800222333",
+      "password": "password123",
+      "role": "Doctor",
+      "specialty": "Pediatrics",
+      "consultationFee": 190,
+      "experience": "11 years",
+      "languages": ["English", "Spanish"],
+      "title": "Dr.",
+      "degree": "MD",
+      "availability": [
+        { "day": "Tuesday", "startTime": "10:00", "endTime": "18:00" },
+        { "day": "Friday", "startTime": "10:00", "endTime": "18:00" }
+      ]
     },
     {
-        firstname: "Michael",
-        lastname: "Chen",
-        email: "michael.chen@example.com",
-        phone: "3456789012",
-        password: "password123",
-        role: "Doctor",
-        specialty: "Ophthalmology",
-        consultationFee: 175,
-        experience: "12 years",
-        languages: ["English", "Chinese", "Japanese"],
-        title: "Dr.",
-        degree: "MD",
-        availability: [
-            { day: "Monday", startTime: "10:00", endTime: "18:00" },
-            { day: "Wednesday", startTime: "10:00", endTime: "18:00" },
-            { day: "Friday", startTime: "10:00", endTime: "18:00" }
-        ]
+      "firstname": "William",
+      "lastname": "Brown",
+      "email": "william.brown@example.com",
+      "phone": "0800333444",
+      "password": "password123",
+      "role": "Doctor",
+      "specialty": "Cardiology",
+      "consultationFee": 220,
+      "experience": "17 years",
+      "languages": ["English"],
+      "title": "Dr.",
+      "degree": "MD, PhD",
+      "availability": [
+        { "day": "Monday", "startTime": "08:00", "endTime": "16:00" },
+        { "day": "Wednesday", "startTime": "08:00", "endTime": "16:00" }
+      ]
     },
     {
-        firstname: "Emily",
-        lastname: "Brown",
-        email: "emily.brown@example.com",
-        phone: "4567890123",
-        password: "password123",
-        role: "Doctor",
-        specialty: "Dermatology",
-        consultationFee: 160,
-        experience: "10 years",
-        languages: ["English"],
-        title: "Dr.",
-        degree: "MD",
-        availability: [
-            { day: "Tuesday", startTime: "09:00", endTime: "17:00" },
-            { day: "Thursday", startTime: "09:00", endTime: "17:00" },
-            { day: "Saturday", startTime: "09:00", endTime: "13:00" }
-        ]
+      "firstname": "Olivia",
+      "lastname": "Davis",
+      "email": "olivia.davis@example.com",
+      "phone": "0800444555",
+      "password": "password123",
+      "role": "Doctor",
+      "specialty": "Dermatology",
+      "consultationFee": 200,
+      "experience": "9 years",
+      "languages": ["English"],
+      "title": "Dr.",
+      "degree": "MD",
+      "availability": [
+        { "day": "Wednesday", "startTime": "10:00", "endTime": "18:00" },
+        { "day": "Saturday", "startTime": "09:00", "endTime": "13:00" }
+      ]
+    },
+    {
+      "firstname": "James",
+      "lastname": "Miller",
+      "email": "james.miller@example.com",
+      "phone": "0800555666",
+      "password": "password123",
+      "role": "Doctor",
+      "specialty": "Endocrinology",
+      "consultationFee": 210,
+      "experience": "12 years",
+      "languages": ["English", "German"],
+      "title": "Dr.",
+      "degree": "MD",
+      "availability": [
+        { "day": "Tuesday", "startTime": "08:00", "endTime": "16:00" },
+        { "day": "Thursday", "startTime": "08:00", "endTime": "16:00" }
+      ]
+    },
+    {
+      "firstname": "Sophia",
+      "lastname": "Wilson",
+      "email": "sophia.wilson@example.com",
+      "phone": "0800666777",
+      "password": "password123",
+      "role": "Doctor",
+      "specialty": "Obstetrics and Gynecology",
+      "consultationFee": 195,
+      "experience": "10 years",
+      "languages": ["English", "French"],
+      "title": "Dr.",
+      "degree": "MD",
+      "availability": [
+        { "day": "Monday", "startTime": "10:00", "endTime": "18:00" },
+        { "day": "Thursday", "startTime": "10:00", "endTime": "18:00" }
+      ]
+    },
+    {
+      "firstname": "Michael",
+      "lastname": "Moore",
+      "email": "michael.moore@example.com",
+      "phone": "0800777888",
+      "password": "password123",
+      "role": "Doctor",
+      "specialty": "Psychiatry",
+      "consultationFee": 230,
+      "experience": "20 years",
+      "languages": ["English"],
+      "title": "Dr.",
+      "degree": "MD",
+      "availability": [
+        { "day": "Tuesday", "startTime": "13:00", "endTime": "17:00" },
+        { "day": "Friday", "startTime": "13:00", "endTime": "17:00" }
+      ]
+    },
+    {
+      "firstname": "Isabella",
+      "lastname": "Taylor",
+      "email": "isabella.taylor@example.com",
+      "phone": "0800888999",
+      "password": "password123",
+      "role": "Doctor",
+      "specialty": "Ophthalmology",
+      "consultationFee": 185,
+      "experience": "8 years",
+      "languages": ["English"],
+      "title": "Dr.",
+      "degree": "MD",
+      "availability": [
+        { "day": "Wednesday", "startTime": "08:00", "endTime": "16:00" },
+        { "day": "Friday", "startTime": "08:00", "endTime": "16:00" }
+      ]
+    },
+    {
+      "firstname": "Daniel",
+      "lastname": "Anderson",
+      "email": "daniel.anderson@example.com",
+      "phone": "0800999000",
+      "password": "password123",
+      "role": "Doctor",
+      "specialty": "Otorhinolaryngology (ENT)",
+      "consultationFee": 200,
+      "experience": "13 years",
+      "languages": ["English", "Spanish"],
+      "title": "Dr.",
+      "degree": "MD",
+      "availability": [
+        { "day": "Monday", "startTime": "08:00", "endTime": "16:00" },
+        { "day": "Thursday", "startTime": "08:00", "endTime": "16:00" }
+      ]
+    },
+    {
+      "firstname": "Charlotte",
+      "lastname": "Thomas",
+      "email": "charlotte.thomas@example.com",
+      "phone": "0800111333",
+      "password": "password123",
+      "role": "Doctor",
+      "specialty": "Gastroenterology",
+      "consultationFee": 215,
+      "experience": "14 years",
+      "languages": ["English"],
+      "title": "Dr.",
+      "degree": "MD",
+      "availability": [
+        { "day": "Tuesday", "startTime": "09:00", "endTime": "17:00" },
+        { "day": "Friday", "startTime": "09:00", "endTime": "17:00" }
+      ]
+    },
+    {
+      "firstname": "David",
+      "lastname": "Jackson",
+      "email": "david.jackson@example.com",
+      "phone": "0800222444",
+      "password": "password123",
+      "role": "Doctor",
+      "specialty": "Internal Medicine",
+      "consultationFee": 185,
+      "experience": "9 years",
+      "languages": ["English"],
+      "title": "Dr.",
+      "degree": "MD",
+      "availability": [
+        { "day": "Monday", "startTime": "10:00", "endTime": "18:00" },
+        { "day": "Wednesday", "startTime": "10:00", "endTime": "18:00" }
+      ]
+    },
+    {
+      "firstname": "Grace",
+      "lastname": "White",
+      "email": "grace.white@example.com",
+      "phone": "0800333555",
+      "password": "password123",
+      "role": "Doctor",
+      "specialty": "Pediatrics",
+      "consultationFee": 175,
+      "experience": "7 years",
+      "languages": ["English", "Italian"],
+      "title": "Dr.",
+      "degree": "MD",
+      "availability": [
+        { "day": "Wednesday", "startTime": "09:00", "endTime": "17:00" },
+        { "day": "Saturday", "startTime": "08:00", "endTime": "14:00" }
+      ]
+    },
+    {
+      "firstname": "Matthew",
+      "lastname": "Harris",
+      "email": "matthew.harris@example.com",
+      "phone": "0800444666",
+      "password": "password123",
+      "role": "Doctor",
+      "specialty": "Cardiology",
+      "consultationFee": 225,
+      "experience": "18 years",
+      "languages": ["English"],
+      "title": "Dr.",
+      "degree": "MD",
+      "availability": [
+        { "day": "Tuesday", "startTime": "08:00", "endTime": "16:00" },
+        { "day": "Thursday", "startTime": "08:00", "endTime": "16:00" }
+      ]
+    },
+    {
+      "firstname": "Chloe",
+      "lastname": "Martin",
+      "email": "chloe.martin@example.com",
+      "phone": "0800555777",
+      "password": "password123",
+      "role": "Doctor",
+      "specialty": "Dermatology",
+      "consultationFee": 195,
+      "experience": "11 years",
+      "languages": ["English"],
+      "title": "Dr.",
+      "degree": "MD",
+      "availability": [
+        { "day": "Monday", "startTime": "09:00", "endTime": "17:00" },
+        { "day": "Thursday", "startTime": "09:00", "endTime": "17:00" }
+      ]
+    },
+    {
+      "firstname": "Ethan",
+      "lastname": "Thompson",
+      "email": "ethan.thompson@example.com",
+      "phone": "0800666888",
+      "password": "password123",
+      "role": "Doctor",
+      "specialty": "Psychiatry",
+      "consultationFee": 230,
+      "experience": "16 years",
+      "languages": ["English", "French"],
+      "title": "Dr.",
+      "degree": "MD",
+      "availability": [
+        { "day": "Wednesday", "startTime": "13:00", "endTime": "17:00" },
+        { "day": "Friday", "startTime": "13:00", "endTime": "17:00" }
+      ]
     }
-];
+  ]
+  
 
 async function initializeDoctors() {
     try {
         // Clear existing doctors and their user accounts
         const existingDoctors = await DoctorModel.find();
-        for (const doctor of existingDoctors) {
-            await UserModel.findByIdAndDelete(doctor.userId);
-        }
+        // for (const doctor of existingDoctors) {
+        //     await UserModel.findByIdAndDelete(doctor.userId);
+        // }
         await DoctorModel.deleteMany({});
         console.log('Cleared existing doctors');
 
@@ -105,23 +301,26 @@ async function initializeDoctors() {
                 continue;
             }
 
-            // Create user account
-            const hashedPassword = require('bcrypt').hashSync(doctorData.password, 10);
-            const user = new UserModel({
-                firstname: doctorData.firstname,
-                lastname: doctorData.lastname,
-                email: doctorData.email,
-                phone: doctorData.phone,
-                password: hashedPassword,
-                role: doctorData.role
-            });
-            await user.save();
-            console.log(`Created user account for Dr. ${doctorData.firstname} ${doctorData.lastname}`);
+            // // Create user account
+            // const hashedPassword = require('bcrypt').hashSync(doctorData.password, 10);
+            // const user = new UserModel({
+            //     firstname: doctorData.firstname,
+            //     lastname: doctorData.lastname,
+            //     email: doctorData.email,
+            //     phone: doctorData.phone,
+            //     password: hashedPassword,
+            //     role: doctorData.role
+            // });
+            // await user.save();
+            // console.log(`Created user account for Dr. ${doctorData.firstname} ${doctorData.lastname}`);
 
             // Create doctor profile
             const doctor = new DoctorModel({
-                userId: user._id,
-                specialty: specialty._id,
+                //userId: user._id,
+                firstname: doctorData.firstname,
+                lastname: doctorData.lastname,
+                email: doctorData.email,
+                specialty: specialty.name,
                 consultationFee: doctorData.consultationFee,
                 experience: doctorData.experience,
                 languages: doctorData.languages,
@@ -139,7 +338,7 @@ async function initializeDoctors() {
 
         // List all doctors with their details
         const doctors = await DoctorModel.find()
-            .populate('userId', 'firstname lastname email')
+            .populate('firstname', 'lastname')
             .populate('specialty', 'name');
         console.log('Current doctors in database:', JSON.stringify(doctors, null, 2));
 
