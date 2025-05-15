@@ -72,7 +72,7 @@ const Contact = () => {
               className={`group block p-6 rounded-lg border-bimec-gray transition-all duration-300 hover:shadow-sm
                          ${item.accent 
                            ? 'border border-bimec-red hover:border-bimec-red' 
-                           : 'border border-transparent hover:border-bimec-heavy-green'}`}
+                           : 'border border-gray hover:border-bimec-heavy-green'}`}
             >
               {/* Icon */}
               <div className={`mb-4 transition-colors duration-300
