@@ -3,8 +3,23 @@ const connection = require("./db");
 const express = require("express");
 const app = express();
 const path = require("path");
+const initDoctors = require("./initDoctors")
+const initSpecialties = require("./initSpecialties")
 
-connection(); // Connect to MongoDB
+// Initialize database and data
+async function initializeApp() {
+    try {
+        await connection(); // Connect to MongoDB
+        await initSpecialties.initializeSpecialties();
+        await initDoctors.initializeDoctors();
+        console.log('Database initialization completed');
+    } catch (error) {
+        console.error('Error during initialization:', error);
+        process.exit(1);
+    }
+}
+
+initializeApp();
 
 const port = process.env.PORT || 3001;
 app.listen(port, console.log(`Server is running on port ${port}...`));
@@ -48,9 +63,25 @@ app.get('/api/specialties', async (req, res) => {
     }
 });
 
+// get doctors
+app.get('/api/doctors', async (req, res) => {
+    try 
+    {
+        const doctors = await DoctorModel.find()
+        res.json(doctors)
+    } catch (error)
+    {
+        res.status(500).json({ error: error.message})
+    }
+})
 // Get doctors by specialty
 app.get('/api/doctors/:specialtyId', async (req, res) => {
     try {
+        // use this code to print list of specialties when trying to debug  
+        // const a = await SpecialtyModel.find()
+        // for (var i = 0; i < a.length; ++i)
+        //     console.log(a[i])
+
         const doctors = await DoctorModel.find({ specialty: req.params.specialtyId })
             .populate('userId', 'firstname lastname')
             .populate('specialty', 'name');
