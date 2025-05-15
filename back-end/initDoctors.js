@@ -4,9 +4,9 @@ const DoctorModel = require('./models/doctor');
 const SpecialtyModel = require('./models/specialty');
 
 // Connect to MongoDB
-mongoose.connect("mongodb+srv://vinhdao1006:VinhDao1006@cluster0.yfwoj.mongodb.net/user")
-    .then(() => console.log('Connected to MongoDB'))
-    .catch(err => console.error('MongoDB connection error:', err));
+// mongoose.connect("mongodb+srv://vinhdao1006:VinhDao1006@cluster0.yfwoj.mongodb.net/user")
+//     .then(() => console.log('Connected to MongoDB'))
+//     .catch(err => console.error('MongoDB connection error:', err));
 
 const testDoctors = [
     {
@@ -145,10 +145,8 @@ async function initializeDoctors() {
 
     } catch (error) {
         console.error('Error initializing doctors:', error);
-    } finally {
-        mongoose.disconnect();
-        console.log('Disconnected from MongoDB');
+        throw error;
     }
 }
 
-initializeDoctors(); 
+module.exports = { initializeDoctors }; 
