@@ -105,19 +105,6 @@ function Sidebar() {
         })}
       </nav>
 
-      {/* Decorative animated footer */}
-      <div 
-        className="mt-auto border-t border-gray-100 py-4 px-6 text-xs text-gray-400 flex justify-between items-center"
-        style={{ 
-          opacity: isHovered ? 0.9 : 0.5,
-          transform: `translateY(${isHovered ? '0' : '4px'})`,
-          transition: 'opacity 0.5s ease, transform 0.5s ease'
-        }}
-      >
-        <span>BIMEC Health</span>
-        <span>v1.0.2</span>
-      </div>
-
       {/* Global CSS for animations */}
       <style jsx>{`
         @keyframes pulse {
