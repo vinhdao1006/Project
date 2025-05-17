@@ -75,15 +75,15 @@ app.get('/api/doctors', async (req, res) => {
     }
 })
 // Get doctors by specialty
-app.get('/api/doctors/:specialtyId', async (req, res) => {
+app.get('/api/doctors/:specialty', async (req, res) => {
     try {
-        // use this code to print list of specialties when trying to debug  
-        // const a = await SpecialtyModel.find()
-        // for (var i = 0; i < a.length; ++i)
-        //     console.log(a[i])
+        //use this code to print list of specialties when trying to debug  
+        const a = await SpecialtyModel.find()
+        for (var i = 0; i < a.length; ++i)
+            console.log(a[i])
 
-        const doctors = await DoctorModel.find({ specialty: req.params.specialtyId })
-            .populate('userId', 'firstname lastname')
+        const doctors = await DoctorModel.find({ specialty: req.params.specialty })
+            .populate('firstname lastname')
             .populate('specialty', 'name');
         res.json(doctors);
     } catch (error) {

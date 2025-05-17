@@ -250,7 +250,7 @@ function BookingPage() {
                         <option value="">Select Specialty</option>
                         {specialties &&
                           specialties.map((specialty) => (
-                            <option key={specialty._id} value={specialty._id}>
+                            <option key={specialty._id} value={specialty.name}>
                               {specialty.name}
                             </option>
                           ))}
@@ -304,8 +304,8 @@ function BookingPage() {
                         </option>
                         {doctors.map((doctor) => (
                           <option key={doctor._id} value={doctor._id}>
-                            Dr. {doctor.userId.firstname}{" "}
-                            {doctor.userId.lastname}
+                            Dr. {doctor.firstname}{" "}
+                            {doctor.lastname}
                           </option>
                         ))}
                       </select>
