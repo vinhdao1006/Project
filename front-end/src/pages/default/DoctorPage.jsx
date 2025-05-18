@@ -65,21 +65,36 @@ function DoctorPage() {
     
 
     useEffect(() => {
-        const fetchDoctors = async () => {
-            try {
-                const response = await axios.get('http://localhost:3001/api/doctors');
-
-                setDoctors(response.data);     
-                setLoading(false);
-            } catch (err) {
-                console.error('Error fetching doctors:', err);
-                setError('Failed to load doctors. Please try again later.');
-                setLoading(false);
-            }
-        };
-
         fetchDoctors();
     }, []);
+
+    const fetchDoctors = async () => {
+        try {
+            const response = await axios.get('http://localhost:3001/api/doctors');
+            setDoctors(response.data);     
+            setLoading(false);
+        } catch (err) {
+            console.error('Error fetching doctors:', err);
+            setError('Failed to load doctors. Please try again later.');
+            setLoading(false);
+        }
+    };
+
+    const handleSearch = async (searchParams) => {
+        setLoading(true);
+        try {
+            console.log("handleSearch called in DoctorPage.jsx")
+            const response = await axios.get('http://localhost:3001/api/doctors/search', {
+                params: searchParams
+            });
+            setDoctors(response.data);
+            setLoading(false);
+        } catch (err) {
+            console.error('Error searching doctors:', err);
+            setError('Failed to search doctors. Please try again later.');
+            setLoading(false);
+        }
+    };
 
     // Function to get a random doctor image
     const getRandomDoctorImage = () => {
@@ -146,7 +161,7 @@ function DoctorPage() {
                 }`}
             >
                 <div className="max-w-6xl mx-auto">
-                    <DoctorSearch />
+                    <DoctorSearch onSearch={handleSearch} />
                 </div>
             </section>
 

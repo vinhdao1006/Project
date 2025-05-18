@@ -328,13 +328,13 @@ async function initializeDoctors() {
         }
 
         // Verify the insertion
-        const count = await DoctorModel.countDocuments();
+        // const count = await DoctorModel.countDocuments();
         // console.log(`Total doctors in database: ${count}`);
 
         // List all doctors with their details
-        const doctors = await DoctorModel.find()
-            .populate('firstname', 'lastname')
-            .populate('specialty', 'name');
+        // const doctors = await DoctorModel.find()
+        //     .populate('firstname', 'lastname')
+        //     .populate('specialty', 'name');
         // console.log('Current doctors in database:', JSON.stringify(doctors, null, 2));
 
     } catch (error) {

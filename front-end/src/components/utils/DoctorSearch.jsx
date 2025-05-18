@@ -1,6 +1,6 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { 
     HeartIcon,
     BriefcaseIcon,
@@ -9,20 +9,7 @@ import {
     DocumentTextIcon,
     MagnifyingGlassIcon 
 } from '@heroicons/react/24/outline';
-
-const specialtyOptions = [
-    "Neurology",
-    "Oncology",
-    "Otorhinolaryngology",
-    "Ophthalmology",
-    "Cardiovascular",
-    "Pulmonology",
-    "Renal Medicine",
-    "Gastroenterology",
-    "Urology",
-    "Dermatology",
-    "Gynaecology",
-];
+import axios from 'axios';
 
 const occupationOptions = [
     "Doctor",
@@ -56,12 +43,45 @@ const Degree = [
     "Specialist Level 2 Doctor",
 ];
 
-const DoctorSearch = () => {
+const DoctorSearch = ({ onSearch }) => {
     const [selectedSpecialty, setSelectedSpecialty] = useState("Specialty");
     const [selectedOccupation, setSelectedOccupation] = useState("Occupation");
     const [selectedTitle, setSelectedTitle] = useState("Title");
     const [selectedLanguage, setSelectedLanguage] = useState("Language");
     const [selectedDegree, setSelectedDegree] = useState("Degree");
+    const [specialtyOptions, setSpecialtyOptions] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchSpecialties = async () => {
+            try {
+                const response = await axios.get('http://localhost:3001/api/specialties');
+                const specialties = response.data.map(specialty => specialty.name);
+                setSpecialtyOptions(specialties);
+                setLoading(false);
+            } catch (error) {
+                console.error('Error fetching specialties:', error);
+                setLoading(false);
+            }
+        };
+
+        fetchSpecialties();
+    }, []);
+
+    const handleSearch = () => {
+        const searchParams = {
+            specialty: selectedSpecialty !== "Specialty" ? selectedSpecialty : null,
+            occupation: selectedOccupation !== "Occupation" ? selectedOccupation : null,
+            title: selectedTitle !== "Title" ? selectedTitle : null,
+            language: selectedLanguage !== "Language" ? selectedLanguage : null,
+            degree: selectedDegree !== "Degree" ? selectedDegree : null,
+        };
+        
+        console.table("search params = ", searchParams)
+        onSearch(searchParams).then(result => {
+            console.log("handle search result = " + result)
+        });
+    };
 
     const dropdownConfig = [
         { 
@@ -69,7 +89,8 @@ const DoctorSearch = () => {
             value: selectedSpecialty, 
             setValue: setSelectedSpecialty, 
             options: specialtyOptions,
-            placeholder: "Specialty"
+            placeholder: "Specialty",
+            loading: loading
         },
         { 
             icon: BriefcaseIcon, 
@@ -118,7 +139,7 @@ const DoctorSearch = () => {
                                 <div className="flex items-center gap-3">
                                     <config.icon className="h-5 w-5 text-gray-400 group-hover:text-bimec-green transition-colors" />
                                     <span className={`text-sm ${config.value === config.placeholder ? 'text-gray-400' : 'text-bimec-black font-medium'}`}>
-                                        {config.value}
+                                        {config.loading ? 'Loading...' : config.value}
                                     </span>
                                 </div>
                                 <ChevronDownIcon className="h-4 w-4 text-gray-400 group-hover:text-bimec-green transition-colors" />
@@ -126,21 +147,25 @@ const DoctorSearch = () => {
                         </MenuButton>
                         <MenuItems className="absolute z-20 mt-2 w-full origin-top rounded-xl bg-white shadow-lg border border-gray-100 focus:outline-none overflow-hidden">
                             <div className="max-h-60 overflow-auto">
-                                {config.options.map((option) => (
-                                    <MenuItem key={option}>
-                                        {({ active }) => (
-                                            <button
-                                                onClick={() => config.setValue(option)}
-                                                className={`${
-                                                    active ? 'bg-bimec-light-green' : ''
-                                                } w-full px-4 py-3 text-left text-sm transition-colors duration-150 ease-in-out
-                                                ${config.value === option ? 'text-bimec-heavy-green font-medium bg-bimec-light-green' : 'text-gray-700'}`}
-                                            >
-                                                {option}
-                                            </button>
-                                        )}
-                                    </MenuItem>
-                                ))}
+                                {config.loading ? (
+                                    <div className="px-4 py-3 text-sm text-gray-500">Loading options...</div>
+                                ) : (
+                                    config.options.map((option) => (
+                                        <MenuItem key={option}>
+                                            {({ active }) => (
+                                                <button
+                                                    onClick={() => config.setValue(option)}
+                                                    className={`${
+                                                        active ? 'bg-bimec-light-green' : ''
+                                                    } w-full px-4 py-3 text-left text-sm transition-colors duration-150 ease-in-out
+                                                    ${config.value === option ? 'text-bimec-heavy-green font-medium bg-bimec-light-green' : 'text-gray-700'}`}
+                                                >
+                                                    {option}
+                                                </button>
+                                            )}
+                                        </MenuItem>
+                                    ))
+                                )}
                             </div>
                         </MenuItems>
                     </Menu>
@@ -149,7 +174,10 @@ const DoctorSearch = () => {
 
             {/* Search Button */}
             <div className="flex justify-center mt-8">
-                <button className="flex items-center gap-2 bg-bimec-green hover:bg-bimec-heavy-green text-white px-8 py-3 rounded-xl font-medium transition-all duration-200 ease-in-out shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+                <button 
+                    onClick={handleSearch}
+                    className="flex items-center gap-2 bg-bimec-green hover:bg-bimec-heavy-green text-white px-8 py-3 rounded-xl font-medium transition-all duration-200 ease-in-out shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+                >
                     <MagnifyingGlassIcon className="h-5 w-5" />
                     Search Professionals
                 </button>

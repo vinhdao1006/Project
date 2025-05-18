@@ -155,7 +155,7 @@ const DoctorsSlider = () => {
         {/* View All Link */}
         <div className="text-center mt-12">
           <a 
-            href="/doctors" 
+            href="/default/doctors" 
             className="inline-flex items-center text-sm font-medium text-bimec-green hover:text-bimec-heavy-green transition-colors duration-200"
           >
             View All Doctors
