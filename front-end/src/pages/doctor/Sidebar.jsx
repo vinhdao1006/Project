@@ -9,7 +9,14 @@ function Sidebar() {
   
   const navItems = [
     { path: "/doctor/appointments", label: "Appointments", icon: ClipboardList },
-    { path: "/doctor/patients", label: "Patients", icon: Users },
+    { 
+      path: "/doctor/patients", 
+      label: "Patients", 
+      icon: Users,
+      // Add a matcher function to check if the current path includes or starts with this path
+      // or is the specific patient-detail path
+      isActive: (path) => path.startsWith("/doctor/patients") || path.startsWith("/doctor/patient-detail")
+    },
     { path: "/doctor/schedule", label: "Schedule", icon: Calendar },
   ];
 
@@ -62,13 +69,17 @@ function Sidebar() {
       <nav className="flex flex-col mt-6 space-y-1 px-3 flex-grow">
         {navItems.map((item, index) => {
           const Icon = item.icon;
-          const isActive = location.pathname === item.path;
+          
+          // Check if this item should be considered active
+          const isActive = item.isActive 
+            ? item.isActive(location.pathname)
+            : location.pathname === item.path;
           
           return (
             <NavLink
               key={item.path}
               to={item.path}
-              className={({ isActive }) => `
+              className={`
                 flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300
                 ${isActive 
                   ? "bg-bimec-light-green text-bimec-green shadow-sm" 
