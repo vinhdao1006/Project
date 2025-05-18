@@ -15,7 +15,7 @@ const SignUp = () => {
         phone: '',
         password: '',
         confirmPassword: '',
-        role: 'Patient'
+        role: 'Patients'
     });
     const [error, setError] = useState(null);
     const [fieldErrors, setFieldErrors] = useState({});

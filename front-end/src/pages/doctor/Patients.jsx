@@ -2,102 +2,124 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
+import { 
+  UserIcon, 
+  CalendarDaysIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon
+} from '@heroicons/react/24/outline';
 
+// Updated patient data with new columns
 const patientsData = [
   {
-    admitted: "27 Dec, 2024",
     patient: "Dianne Russell",
-    room: "BC5001",
-    concern: "Upper Abdomen General",
-    status: { label: "Report Pending", color: "#3B8A9E" },
+    dateOfBirth: "15 Apr, 1985",
+    gender: "Female",
+    lastVisit: "27 Dec, 2024",
+    avatar: "DR"
   },
   {
-    admitted: "03 Feb, 2023",
     patient: "Bessie Cooper",
-    room: "DMK502",
-    concern: "Gynecologic Disorders",
-    status: { label: "Life Support", color: "#8B1E2F" },
+    dateOfBirth: "03 Jun, 1992",
+    gender: "Female",
+    lastVisit: "03 Feb, 2023",
+    avatar: "BC"
   },
   {
-    admitted: "02 Mar, 2023",
     patient: "Marvin McKinney",
-    room: "DMK502",
-    concern: "Brain, Spinal Cord, and Nerve Disorders",
-    status: { label: "ICU", color: "#6B21A8" },
-    highlight: true,
+    dateOfBirth: "12 Nov, 1978",
+    gender: "Male",
+    lastVisit: "02 Mar, 2023",
+    avatar: "MM"
   },
   {
-    admitted: "02 Mar, 2023",
     patient: "Esther Howard",
-    room: "DMK502",
-    concern: "Digestive Disorders",
-    status: { label: "Discharged", color: "#6FCF97" },
+    dateOfBirth: "22 Sep, 1990",
+    gender: "Female",
+    lastVisit: "02 Mar, 2023",
+    avatar: "EH"
   },
   {
-    admitted: "02 Mar, 2023",
     patient: "Marvin McKinney",
-    room: "BC1022",
-    concern: "Upper Abdomen General –",
-    status: { label: "Report Pending", color: "#2F5597" },
+    dateOfBirth: "12 Nov, 1978",
+    gender: "Male",
+    lastVisit: "15 Jan, 2023",
+    avatar: "MM"
   },
   {
-    admitted: "02 Mar, 2023",
     patient: "Annette Black",
-    room: "BC1022",
-    concern: "Digestive Disorders",
-    status: { label: "Report Pending", color: "#2F5597" },
-    rowBg: "white",
+    dateOfBirth: "19 Jul, 1995",
+    gender: "Female",
+    lastVisit: "02 Mar, 2023",
+    avatar: "AB"
   },
   {
-    admitted: "02 Mar, 2023",
     patient: "Cameron Williamson",
-    room: "BC1022",
-    concern: "Liver and Gallbladder Disorders",
-    status: { label: "Report Pending", color: "#2F5597" },
+    dateOfBirth: "05 May, 1988",
+    gender: "Male",
+    lastVisit: "14 Feb, 2023",
+    avatar: "CW"
   },
   {
-    admitted: "02 Mar, 2023",
     patient: "Guy Hawkins",
-    room: "BC1022",
-    concern: "Medical Care During Pregnancy",
-    status: { label: "Life Support", color: "#8B1E2F" },
+    dateOfBirth: "23 Dec, 1983",
+    gender: "Male",
+    lastVisit: "02 Mar, 2023",
+    avatar: "GH"
   },
 ];
 
+// Gender badge component
+function GenderBadge({ gender }) {
+  const styles = {
+    Male: "bg-blue-50 text-blue-700",
+    Female: "bg-pink-50 text-pink-700",
+    Other: "bg-purple-50 text-purple-700"
+  };
+  
+  return (
+    <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${styles[gender] || styles.Other}`}>
+      {gender}
+    </span>
+  );
+}
+
 function PatientsTable({ paginatedPatients, onPatientClick }) {
   return (
-    <div className="border border-gray-200 rounded-lg overflow-hidden max-w-full">
+    <div className="border border-gray-200 rounded-xl overflow-hidden max-w-full">
       <table className="w-full text-left text-sm text-gray-600">
-        <thead className="bg-[#F9FAFB] text-xs text-gray-400 font-semibold">
+        <thead className="bg-gray-50 text-xs text-gray-500 font-semibold uppercase">
           <tr>
-            <th className="py-3 px-6 uppercase font-semibold">Admitted</th>
-            <th className="py-3 px-6 uppercase font-semibold">Patient</th>
-            <th className="py-3 px-6 uppercase font-semibold">Room</th>
-            <th className="py-3 px-6 uppercase font-semibold">Concern</th>
-            <th className="py-3 px-6 uppercase font-semibold">Status</th>
+            <th className="py-4 px-6">Patient</th>
+            <th className="py-4 px-6">Date of Birth</th>
+            <th className="py-4 px-6">Gender</th>
+            <th className="py-4 px-6">Last Visit</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="divide-y divide-gray-100">
           {paginatedPatients.map((patient, index) => (
             <tr
               key={index}
-              className="hover:bg-[#E6F6FF] cursor-pointer"
+              className="hover:bg-bimec-light-green/20 cursor-pointer transition-colors duration-150"
               onClick={() => onPatientClick(patient)}
             >
-              <td className="py-4 px-6">{patient.admitted}</td>
-              <td className="py-4 px-6">{patient.patient}</td>
-              <td className="py-4 px-6">{patient.room}</td>
-              <td className="py-4 px-6">{patient.concern}</td>
-              <td
-                className="py-4 px-6 flex items-center gap-2"
-                style={{ color: patient.status.color }}
-              >
-                <span
-                  aria-hidden="true"
-                  className="w-3 h-3 rounded-full inline-block"
-                  style={{ backgroundColor: patient.status.color }}
-                ></span>
-                {patient.status.label}
+              <td className="py-4 px-6">
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-full bg-gradient-to-br from-bimec-green to-bimec-heavy-green flex items-center justify-center text-white text-xs font-medium">
+                    {patient.avatar}
+                  </div>
+                  <span className="font-medium text-gray-900">{patient.patient}</span>
+                </div>
+              </td>
+              <td className="py-4 px-6 text-gray-500">{patient.dateOfBirth}</td>
+              <td className="py-4 px-6">
+                <GenderBadge gender={patient.gender} />
+              </td>
+              <td className="py-4 px-6">
+                <div className="flex items-center gap-2 text-gray-500">
+                  <CalendarDaysIcon className="w-4 h-4 text-bimec-green" />
+                  {patient.lastVisit}
+                </div>
               </td>
             </tr>
           ))}
@@ -120,11 +142,49 @@ function Patients() {
   );
 
   const handlePageChange = (page) => {
-    setCurrentPage(page);
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+    }
   };
 
   const handlePatientClick = (patient) => {
     navigate("/doctor/patient-detail", { state: { patient } });
+  };
+
+  // Generate page numbers to display
+  const getPageNumbers = () => {
+    const pages = [];
+    const maxPagesToShow = 5;
+    
+    if (totalPages <= maxPagesToShow) {
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      if (currentPage <= 3) {
+        for (let i = 1; i <= 4; i++) {
+          pages.push(i);
+        }
+        pages.push('...');
+        pages.push(totalPages);
+      } else if (currentPage >= totalPages - 2) {
+        pages.push(1);
+        pages.push('...');
+        for (let i = totalPages - 3; i <= totalPages; i++) {
+          pages.push(i);
+        }
+      } else {
+        pages.push(1);
+        pages.push('...');
+        for (let i = currentPage - 1; i <= currentPage + 1; i++) {
+          pages.push(i);
+        }
+        pages.push('...');
+        pages.push(totalPages);
+      }
+    }
+    
+    return pages;
   };
 
   return (
@@ -132,29 +192,49 @@ function Patients() {
       <Sidebar />
       <main className="flex-1 flex flex-col">
         <Header />
-        <section className="bg-[#F9FAFB] flex-1 p-7 overflow-auto">
-          <div className="max-w-full bg-white rounded-xl p-6 space-y-6 shadow-sm">
+        <section className="bg-gray-50 flex-1 p-7 overflow-auto">
+          <div className="max-w-full bg-white rounded-xl p-6 shadow-sm">
+            {/* Table */}
             <PatientsTable
               paginatedPatients={paginatedPatients}
               onPatientClick={handlePatientClick}
             />
-            <div className="flex justify-between items-center text-sm text-gray-600">
+            
+            {/* Pagination */}
+            <div className="flex justify-between items-center text-sm text-gray-600 mt-6">
               <button
-                className="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100"
+                className="p-2 rounded-lg transition-colors"
                 onClick={() => handlePageChange(currentPage - 1)}
                 disabled={currentPage === 1}
               >
-                Previous
+                <ChevronLeftIcon className={`w-5 h-5 ${currentPage === 1 ? 'text-gray-300' : 'text-gray-600 hover:text-bimec-green'}`} />
               </button>
-              <span>
-                Page {currentPage} of {totalPages}
-              </span>
+              
+              <div className="flex items-center gap-1">
+                {getPageNumbers().map((page, index) => (
+                  <button
+                    key={index}
+                    onClick={() => typeof page === 'number' && handlePageChange(page)}
+                    disabled={page === '...'}
+                    className={`px-3 py-1 rounded-lg text-sm font-medium transition-colors ${
+                      page === currentPage
+                        ? 'bg-bimec-green text-white'
+                        : page === '...'
+                        ? 'text-gray-400 cursor-default'
+                        : 'text-gray-600 hover:bg-gray-100'
+                    }`}
+                  >
+                    {page}
+                  </button>
+                ))}
+              </div>
+              
               <button
-                className="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100"
+                className="p-2 rounded-lg transition-colors"
                 onClick={() => handlePageChange(currentPage + 1)}
                 disabled={currentPage === totalPages}
               >
-                Next
+                <ChevronRightIcon className={`w-5 h-5 ${currentPage === totalPages ? 'text-gray-300' : 'text-gray-600 hover:text-bimec-green'}`} />
               </button>
             </div>
           </div>

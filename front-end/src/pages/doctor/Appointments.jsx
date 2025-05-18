@@ -7,98 +7,102 @@ import {
   UserIcon, 
   HomeModernIcon, 
   ExclamationCircleIcon,
+  CheckCircleIcon,
+  XCircleIcon,
+  ClockIcon,
   ChevronLeftIcon,
   ChevronRightIcon
 } from '@heroicons/react/24/outline';
 
+// Updated patient data with new status types
 const patientsData = [
   {
     admitted: "27 Dec, 2024",
     patient: "Dianne Russell",
     room: "BC5001",
     concern: "Upper Abdomen General",
-    status: { label: "Report Pending", type: "pending" },
+    status: { label: "Pending", type: "pending" },
   },
   {
     admitted: "03 Feb, 2023",
     patient: "Bessie Cooper",
     room: "DMK502",
     concern: "Gynecologic Disorders",
-    status: { label: "Life Support", type: "critical" },
+    status: { label: "Canceled", type: "canceled" },
   },
   {
     admitted: "02 Mar, 2023",
     patient: "Marvin McKinney",
     room: "DMK502",
     concern: "Brain, Spinal Cord, and Nerve Disorders",
-    status: { label: "ICU", type: "urgent" },
+    status: { label: "Checked", type: "checked" },
   },
   {
     admitted: "02 Mar, 2023",
     patient: "Esther Howard",
     room: "DMK502",
     concern: "Digestive Disorders",
-    status: { label: "Discharged", type: "discharged" },
+    status: { label: "Checked", type: "checked" },
   },
   {
     admitted: "02 Mar, 2023",
     patient: "Marvin McKinney",
     room: "BC1022",
     concern: "Upper Abdomen General",
-    status: { label: "Report Pending", type: "pending" },
+    status: { label: "Pending", type: "pending" },
   },
   {
     admitted: "02 Mar, 2023",
     patient: "Annette Black",
     room: "BC1022",
     concern: "Digestive Disorders",
-    status: { label: "Report Pending", type: "pending" },
+    status: { label: "Pending", type: "pending" },
   },
   {
     admitted: "02 Mar, 2023",
     patient: "Cameron Williamson",
     room: "BC1022",
     concern: "Liver and Gallbladder Disorders",
-    status: { label: "Report Pending", type: "pending" },
+    status: { label: "Canceled", type: "canceled" },
   },
   {
     admitted: "02 Mar, 2023",
     patient: "Guy Hawkins",
     room: "BC1022",
     concern: "Medical Care During Pregnancy",
-    status: { label: "Life Support", type: "critical" },
+    status: { label: "Checked", type: "checked" },
   },
 ];
 
+// Updated status styles with only the three required statuses
 const statusStyles = {
   pending: {
-    bg: "bg-blue-50",
-    text: "text-blue-700",
-    dot: "bg-blue-500"
+    bg: "bg-yellow-50",
+    text: "text-yellow-700",
+    dot: "bg-yellow-500",
+    icon: ClockIcon
   },
-  critical: {
+  canceled: {
     bg: "bg-red-50",
     text: "text-red-700",
-    dot: "bg-red-500"
+    dot: "bg-red-500",
+    icon: XCircleIcon
   },
-  urgent: {
-    bg: "bg-purple-50",
-    text: "text-purple-700",
-    dot: "bg-purple-500"
-  },
-  discharged: {
+  checked: {
     bg: "bg-green-50",
     text: "text-green-700",
-    dot: "bg-green-500"
+    dot: "bg-green-500",
+    icon: CheckCircleIcon
   }
 };
 
 function StatusBadge({ status }) {
   const style = statusStyles[status.type] || statusStyles.pending;
+  const Icon = style.icon;
   
   return (
     <span className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium ${style.bg} ${style.text}`}>
-      <span className={`w-2 h-2 rounded-full ${style.dot}`}></span>
+      <Icon className="w-4 h-4" />
       {status.label}
     </span>
   );
@@ -236,6 +240,11 @@ function DoctorAppoinments() {
     return pages;
   };
 
+  // Count by status type for dashboard stats
+  const pendingCount = patientsData.filter(p => p.status.type === 'pending').length;
+  const canceledCount = patientsData.filter(p => p.status.type === 'canceled').length;
+  const checkedCount = patientsData.filter(p => p.status.type === 'checked').length;
+
   return (
     <div className="flex flex-1 min-h-screen bg-gray-50">
       <Sidebar />
@@ -259,13 +268,23 @@ function DoctorAppoinments() {
             <div className="bg-white rounded-xl p-6 shadow-sm">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-600">Critical</p>
-                  <p className="text-2xl font-bold text-red-600 mt-1">
-                    {patientsData.filter(p => p.status.type === 'critical').length}
-                  </p>
+                  <p className="text-sm font-medium text-gray-600">Pending</p>
+                  <p className="text-2xl font-bold text-yellow-600 mt-1">{pendingCount}</p>
+                </div>
+                <div className="w-12 h-12 bg-yellow-50 rounded-lg flex items-center justify-center">
+                  <ClockIcon className="w-6 h-6 text-yellow-600" />
+                </div>
+              </div>
+            </div>
+            
+            <div className="bg-white rounded-xl p-6 shadow-sm">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-gray-600">Canceled</p>
+                  <p className="text-2xl font-bold text-red-600 mt-1">{canceledCount}</p>
                 </div>
                 <div className="w-12 h-12 bg-red-50 rounded-lg flex items-center justify-center">
-                  <ExclamationCircleIcon className="w-6 h-6 text-red-600" />
+                  <XCircleIcon className="w-6 h-6 text-red-600" />
                 </div>
               </div>
             </div>
@@ -273,27 +292,11 @@ function DoctorAppoinments() {
             <div className="bg-white rounded-xl p-6 shadow-sm">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-600">ICU</p>
-                  <p className="text-2xl font-bold text-purple-600 mt-1">
-                    {patientsData.filter(p => p.status.type === 'urgent').length}
-                  </p>
-                </div>
-                <div className="w-12 h-12 bg-purple-50 rounded-lg flex items-center justify-center">
-                  <HomeModernIcon className="w-6 h-6 text-purple-600" />
-                </div>
-              </div>
-            </div>
-            
-            <div className="bg-white rounded-xl p-6 shadow-sm">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600">Discharged</p>
-                  <p className="text-2xl font-bold text-green-600 mt-1">
-                    {patientsData.filter(p => p.status.type === 'discharged').length}
-                  </p>
+                  <p className="text-sm font-medium text-gray-600">Checked</p>
+                  <p className="text-2xl font-bold text-green-600 mt-1">{checkedCount}</p>
                 </div>
                 <div className="w-12 h-12 bg-green-50 rounded-lg flex items-center justify-center">
-                  <CalendarDaysIcon className="w-6 h-6 text-green-600" />
+                  <CheckCircleIcon className="w-6 h-6 text-green-600" />
                 </div>
               </div>
             </div>
@@ -301,11 +304,6 @@ function DoctorAppoinments() {
 
           {/* Table Section */}
           <div className="bg-white rounded-xl shadow-sm">
-            <div className="p-6 border-b border-gray-100">
-              <h2 className="text-lg font-semibold text-gray-900">Patient Appointments</h2>
-              <p className="text-sm text-gray-600 mt-1">Manage and view all patient appointments</p>
-            </div>
-            
             <PatientsTable
               paginatedPatients={paginatedPatients}
               onPatientClick={handlePatientClick}
