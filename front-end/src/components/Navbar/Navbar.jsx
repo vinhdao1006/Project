@@ -31,6 +31,11 @@ const Navbar = () => {
   const [searchFocused, setSearchFocused] = useState(false);
   const dropdownRef = useRef(null);
 
+  // Scroll to top when location changes
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
   useEffect(() => {
     const checkAuth = async () => {
       try {
@@ -68,6 +73,13 @@ const Navbar = () => {
     navigate('/default/home');
   };
 
+  // Custom link handler to ensure page scrolls to top
+  const handleNavClick = (path) => {
+    navigate(path);
+    window.scrollTo(0, 0);
+    setIsMenuOpen(false);
+  };
+
   const isActive = (path) => location.pathname === path;
 
   const navLinks = [
@@ -92,22 +104,22 @@ const Navbar = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             {/* Logo with Animation */}
-            <Link 
-              to="/default/home" 
+            <button 
+              onClick={() => handleNavClick('/default/home')}
               className="group flex items-center space-x-2 transform transition-all duration-300 hover:scale-105"
             >
               <div className="w-10 h-10 bg-gradient-to-br from-bimec-green to-bimec-heavy-green rounded-lg flex items-center justify-center shadow-md group-hover:shadow-lg transition-shadow duration-300">
                 <span className="text-white font-bold text-lg">B</span>
               </div>
               <span className="text-2xl font-bold text-bimec-heavy-green">BIMEC</span>
-            </Link>
+            </button>
 
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center space-x-1">
               {navLinks.map((link, index) => (
-                <Link
+                <button
                   key={link.path}
-                  to={link.path}
+                  onClick={() => handleNavClick(link.path)}
                   className={`group relative px-4 py-2 text-sm font-medium transition-all duration-300 rounded-lg
                     ${isActive(link.path) 
                       ? 'text-bimec-green' 
@@ -125,7 +137,7 @@ const Navbar = () => {
                       ? 'bg-bimec-light-green scale-100 opacity-100'
                       : 'bg-gray-100 scale-95 opacity-0 group-hover:scale-100 group-hover:opacity-100'
                   }`} />
-                </Link>
+                </button>
               ))}
             </nav>
 
@@ -177,28 +189,28 @@ const Navbar = () => {
                       </div>
                       <Menu.Item>
                         {({ active }) => (
-                          <Link
-                            to="/profile"
-                            className={`flex items-center space-x-3 px-4 py-3 text-sm transition-colors duration-200 ${
+                          <button
+                            onClick={() => handleNavClick('/profile')}
+                            className={`flex items-center space-x-3 px-4 py-3 text-sm transition-colors duration-200 w-full text-left ${
                               active ? 'bg-bimec-light-green text-bimec-heavy-green' : 'text-gray-700'
                             }`}
                           >
                             <UserIcon className="w-5 h-5" />
                             <span>Profile</span>
-                          </Link>
+                          </button>
                         )}
                       </Menu.Item>
                       <Menu.Item>
                         {({ active }) => (
-                          <Link
-                            to="/settings"
-                            className={`flex items-center space-x-3 px-4 py-3 text-sm transition-colors duration-200 ${
+                          <button
+                            onClick={() => handleNavClick('/settings')}
+                            className={`flex items-center space-x-3 px-4 py-3 text-sm transition-colors duration-200 w-full text-left ${
                               active ? 'bg-bimec-light-green text-bimec-heavy-green' : 'text-gray-700'
                             }`}
                           >
                             <Cog6ToothIcon className="w-5 h-5" />
                             <span>Settings</span>
-                          </Link>
+                          </button>
                         )}
                       </Menu.Item>
                       <div className="border-t border-gray-100">
@@ -206,7 +218,7 @@ const Navbar = () => {
                           {({ active }) => (
                             <button
                               onClick={handleLogout}
-                              className={`flex items-center space-x-3 w-full px-4 py-3 text-sm transition-colors duration-200 ${
+                              className={`flex items-center space-x-3 w-full px-4 py-3 text-sm transition-colors duration-200 text-left ${
                                 active ? 'bg-red-50 text-red-600' : 'text-gray-700'
                               }`}
                             >
@@ -221,18 +233,18 @@ const Navbar = () => {
                 </Menu>
               ) : (
                 <div className="flex items-center space-x-3">
-                  <Link
-                    to="/login"
+                  <button
+                    onClick={() => handleNavClick('/login')}
                     className="text-sm font-medium text-gray-700 hover:text-bimec-heavy-green transition-colors duration-200"
                   >
                     Login
-                  </Link>
-                  <Link
-                    to="/register"
+                  </button>
+                  <button
+                    onClick={() => handleNavClick('/register')}
                     className="text-sm font-medium text-white bg-gradient-to-r from-bimec-green to-bimec-heavy-green px-5 py-2.5 rounded-full hover:shadow-lg transform hover:scale-105 transition-all duration-300"
                   >
                     Sign Up
-                  </Link>
+                  </button>
                 </div>
               )}
             </div>
@@ -277,20 +289,19 @@ const Navbar = () => {
 
               <nav className="flex flex-col">
                 {navLinks.map((link, index) => (
-                  <Link
+                  <button
                     key={link.path}
-                    to={link.path}
-                    className={`flex items-center space-x-3 px-4 py-3 text-sm font-medium transition-all duration-200
+                    onClick={() => handleNavClick(link.path)}
+                    className={`flex items-center space-x-3 px-4 py-3 text-sm font-medium transition-all duration-200 text-left w-full
                       ${isActive(link.path) 
                         ? 'text-bimec-green bg-bimec-light-green border-l-4 border-bimec-green' 
                         : 'text-gray-700 hover:bg-gray-50'
                       }`}
-                    onClick={() => setIsMenuOpen(false)}
                     style={{ animationDelay: `${index * 50}ms` }}
                   >
                     <link.icon className="w-5 h-5" />
                     <span>{link.label}</span>
-                  </Link>
+                  </button>
                 ))}
                 
                 {/* Mobile Auth Section */}
@@ -308,28 +319,23 @@ const Navbar = () => {
                           </div>
                         </div>
                       </div>
-                      <Link
-                        to="/profile"
-                        className="flex items-center space-x-3 px-4 py-3 text-sm text-gray-700 hover:bg-gray-50"
-                        onClick={() => setIsMenuOpen(false)}
+                      <button
+                        onClick={() => handleNavClick('/profile')}
+                        className="flex items-center space-x-3 px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 w-full text-left"
                       >
                         <UserIcon className="w-5 h-5" />
                         <span>Profile</span>
-                      </Link>
-                      <Link
-                        to="/settings"
-                        className="flex items-center space-x-3 px-4 py-3 text-sm text-gray-700 hover:bg-gray-50"
-                        onClick={() => setIsMenuOpen(false)}
+                      </button>
+                      <button
+                        onClick={() => handleNavClick('/settings')}
+                        className="flex items-center space-x-3 px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 w-full text-left"
                       >
                         <Cog6ToothIcon className="w-5 h-5" />
                         <span>Settings</span>
-                      </Link>
+                      </button>
                       <button
-                        onClick={() => {
-                          handleLogout();
-                          setIsMenuOpen(false);
-                        }}
-                        className="flex items-center space-x-3 w-full px-4 py-3 text-sm text-red-600 hover:bg-red-50"
+                        onClick={handleLogout}
+                        className="flex items-center space-x-3 w-full px-4 py-3 text-sm text-red-600 hover:bg-red-50 text-left"
                       >
                         <ArrowRightOnRectangleIcon className="w-5 h-5" />
                         <span>Logout</span>
@@ -337,20 +343,18 @@ const Navbar = () => {
                     </>
                   ) : (
                     <div className="px-4 space-y-3">
-                      <Link
-                        to="/login"
+                      <button
+                        onClick={() => handleNavClick('/login')}
                         className="block w-full text-center px-4 py-2 text-sm text-gray-700 border border-gray-300 rounded-full hover:bg-gray-50"
-                        onClick={() => setIsMenuOpen(false)}
                       >
                         Login
-                      </Link>
-                      <Link
-                        to="/register"
+                      </button>
+                      <button
+                        onClick={() => handleNavClick('/register')}
                         className="block w-full text-center px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-bimec-green to-bimec-heavy-green rounded-full"
-                        onClick={() => setIsMenuOpen(false)}
                       >
                         Sign Up
-                      </Link>
+                      </button>
                     </div>
                   )}
                 </div>
