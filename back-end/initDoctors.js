@@ -3,11 +3,6 @@ const UserModel = require('./models/user');
 const DoctorModel = require('./models/doctor');
 const SpecialtyModel = require('./models/specialty');
 
-// Connect to MongoDB
-// mongoose.connect("mongodb+srv://vinhdao1006:VinhDao1006@cluster0.yfwoj.mongodb.net/user")
-//     .then(() => console.log('Connected to MongoDB'))
-//     .catch(err => console.error('MongoDB connection error:', err));
-
 const testDoctors = [
     {
       "firstname": "John",
@@ -16,7 +11,7 @@ const testDoctors = [
       "phone": "0800111222",
       "password": "password123",
       "role": "Doctor",
-      "specialty": "Internal Medicine",
+      "specialty": "Neurology",
       "consultationFee": 180,
       "experience": "14 years",
       "languages": ["English"],
@@ -37,7 +32,7 @@ const testDoctors = [
       "specialty": "Pediatrics",
       "consultationFee": 190,
       "experience": "11 years",
-      "languages": ["English", "Spanish"],
+      "languages": ["English", "Vietnamese"],
       "title": "Dr.",
       "degree": "MD",
       "availability": [
@@ -91,7 +86,7 @@ const testDoctors = [
       "specialty": "Endocrinology",
       "consultationFee": 210,
       "experience": "12 years",
-      "languages": ["English", "German"],
+      "languages": ["English", "Vietnamese"],
       "title": "Dr.",
       "degree": "MD",
       "availability": [
@@ -106,10 +101,10 @@ const testDoctors = [
       "phone": "0800666777",
       "password": "password123",
       "role": "Doctor",
-      "specialty": "Obstetrics and Gynecology",
+      "specialty": "Cardiology",
       "consultationFee": 195,
       "experience": "10 years",
-      "languages": ["English", "French"],
+      "languages": ["English", "Vietnamese"],
       "title": "Dr.",
       "degree": "MD",
       "availability": [
@@ -163,7 +158,7 @@ const testDoctors = [
       "specialty": "Otorhinolaryngology (ENT)",
       "consultationFee": 200,
       "experience": "13 years",
-      "languages": ["English", "Spanish"],
+      "languages": ["English", "Vietnamese"],
       "title": "Dr.",
       "degree": "MD",
       "availability": [
@@ -196,7 +191,7 @@ const testDoctors = [
       "phone": "0800222444",
       "password": "password123",
       "role": "Doctor",
-      "specialty": "Internal Medicine",
+      "specialty": "Neurology",
       "consultationFee": 185,
       "experience": "9 years",
       "languages": ["English"],
@@ -217,7 +212,7 @@ const testDoctors = [
       "specialty": "Pediatrics",
       "consultationFee": 175,
       "experience": "7 years",
-      "languages": ["English", "Italian"],
+      "languages": ["English", "Vietnamese"],
       "title": "Dr.",
       "degree": "MD",
       "availability": [
@@ -271,7 +266,7 @@ const testDoctors = [
       "specialty": "Psychiatry",
       "consultationFee": 230,
       "experience": "16 years",
-      "languages": ["English", "French"],
+      "languages": ["English", "Vietnamese"],
       "title": "Dr.",
       "degree": "MD",
       "availability": [
@@ -290,7 +285,7 @@ async function initializeDoctors() {
         //     await UserModel.findByIdAndDelete(doctor.userId);
         // }
         await DoctorModel.deleteMany({});
-        console.log('Cleared existing doctors');
+        // console.log('Cleared existing doctors');
 
         // Create doctors
         for (const doctorData of testDoctors) {
@@ -329,7 +324,7 @@ async function initializeDoctors() {
                 availability: doctorData.availability
             });
             await doctor.save();
-            console.log(`Created doctor profile for Dr. ${doctorData.firstname} ${doctorData.lastname}`);
+            // console.log(`Created doctor profile for Dr. ${doctorData.firstname} ${doctorData.lastname}`);
         }
 
         // Verify the insertion
