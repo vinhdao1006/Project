@@ -284,7 +284,7 @@ const ContactSection = () => {
             <Footer />
 
             {/* Floating Button Group */}
-            <FloatButtonGroup />
+            {/* <FloatButtonGroup /> */}
 
             {/* Custom Animation Styles */}
             <style jsx>{`

@@ -132,7 +132,7 @@ const Appointments = () => {
         <div className="mt-16 mx-auto w-full">
           <Footer />
         </div>
-        <FloatButtonGroup />
+        {/* <FloatButtonGroup /> */}
       </div>
     </div>
   );

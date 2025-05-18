@@ -301,7 +301,7 @@ const NewsPage = () => {
       <Footer />
 
       {/* Floating Button Group */}
-      <FloatButtonGroup />
+      {/* <FloatButtonGroup /> */}
     </div>
   );
 };

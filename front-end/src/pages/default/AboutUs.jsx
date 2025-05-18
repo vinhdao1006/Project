@@ -207,7 +207,7 @@ const AboutUs = () => {
       <Footer />
 
       {/* Floating Button Group */}
-      <FloatButtonGroup />
+      {/* <FloatButtonGroup /> */}
     </div>
   );
 };
