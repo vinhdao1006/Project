@@ -68,3 +68,7 @@
     @apply bg-background text-foreground;
   }
 }
+
+body {
+  font-family: "Open Sans", sans-serif; /* Open sans font */
+}
