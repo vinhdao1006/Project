@@ -74,11 +74,55 @@ app.get('/api/doctors', async (req, res) => {
         res.status(500).json({ error: error.message})
     }
 })
+
+// Search doctors with multiple filters
+app.get('/api/doctors/search', async (req, res) => {
+    try {
+        console.log("api search doctors")
+        const { specialty, occupation, title, language, degree } = req.query;
+        
+        // Build the query object based on provided filters
+        const query = {};
+        
+        if (specialty) {
+            query.specialty = specialty;
+        }
+        if (occupation) {
+            query.role = occupation;
+        }
+        
+        if (title) {
+            query.title = title;
+        }
+        
+        if (language) {
+            query.languages = { $in: [language] };
+        }
+        
+        if (degree) {
+            query.degree = degree;
+        }
+        
+        console.log('Search query:', query); // For debugging
+        
+        const doctors = await DoctorModel.find(query)
+            .populate('firstname lastname')
+            .populate('specialty', 'name');
+            
+        console.log('Found doctors:', doctors.length); // For debugging
+        res.json(doctors);
+    } catch (error) {
+        console.error('Search error:', error); // For debugging
+        res.status(500).json({ error: error.message });
+    }
+});
+
 // Get doctors by specialty
 app.get('/api/doctors/:specialty', async (req, res) => {
     try {
         //use this code to print list of specialties when trying to debug  
         const a = await SpecialtyModel.find()
+        console.log("api doctors specialy: ")
         for (var i = 0; i < a.length; ++i)
             console.log(a[i])
 
@@ -149,3 +193,4 @@ app.get('/api/patient-appointments/:patientId', async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
+
