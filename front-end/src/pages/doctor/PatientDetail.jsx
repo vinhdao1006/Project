@@ -460,7 +460,7 @@ function PatientDetail() {
 
   if (!patient) {
     return (
-      <div className="flex min-h-screen max-w-[1440px] mx-auto">
+      <div className="flex min-h-screen max-w-screen mx-auto">
         <Sidebar />
         <main className="flex-1 flex flex-col bg-white">
           <Header />
@@ -483,11 +483,11 @@ function PatientDetail() {
   }
 
   return (
-    <div className="flex min-h-screen max-w-[1440px] mx-auto">
+    <div className="flex min-h-screen max-w-screen mx-auto">
       <Sidebar />
       <main className="flex-1 flex flex-col bg-white">
         <Header />
-        <section className="bg-gray-50 flex-1 overflow-auto p-6">
+        <section className="bg-gray-50 flex-1 overflow-auto p-4">
           <button onClick={() => window.history.back()} className="mb-4 text-sm font-medium text-gray-600 hover:text-bimec-green flex items-center gap-1"> 
             <ArrowLeftIcon className="h-4 w-4" />
             Back to Patients
