@@ -490,7 +490,7 @@ function PatientDetail() {
         <section className="bg-gray-50 flex-1 overflow-auto p-4">
           <button onClick={() => window.history.back()} className="mb-4 text-sm font-medium text-gray-600 hover:text-bimec-green flex items-center gap-1"> 
             <ArrowLeftIcon className="h-4 w-4" />
-            Back to Patients
+            Back
           </button>
           
           <PatientInfo patient={patient} />
