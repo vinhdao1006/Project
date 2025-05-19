@@ -11,7 +11,8 @@ import {
   XCircleIcon,
   ClockIcon,
   ChevronLeftIcon,
-  ChevronRightIcon
+  ChevronRightIcon,
+  MagnifyingGlassIcon
 } from '@heroicons/react/24/outline';
 
 // Updated patient data with new status types
@@ -110,35 +111,35 @@ function StatusBadge({ status }) {
 
 function PatientsTable({ paginatedPatients, onPatientClick }) {
   return (
-    <div className="bg-white rounded-xl shadow-sm overflow-hidden">
-      <table className="w-full">
-        <thead>
-          <tr className="bg-gray-50 border-b border-gray-100">
-            <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+    <div className="border border-gray-200 rounded-xl overflow-hidden max-w-full">
+      <table className="w-full text-left text-sm text-gray-600">
+        <thead className="bg-gray-50 text-xs text-gray-500 font-semibold uppercase">
+          <tr>
+            <th className="px-6 py-4">
               <div className="flex items-center gap-2">
                 <CalendarDaysIcon className="w-4 h-4" />
                 Admitted
               </div>
             </th>
-            <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+            <th className="px-6 py-4">
               <div className="flex items-center gap-2">
                 <UserIcon className="w-4 h-4" />
                 Patient
               </div>
             </th>
-            <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+            <th className="px-6 py-4">
               <div className="flex items-center gap-2">
                 <HomeModernIcon className="w-4 h-4" />
                 Room
               </div>
             </th>
-            <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+            <th className="px-6 py-4">
               <div className="flex items-center gap-2">
                 <ExclamationCircleIcon className="w-4 h-4" />
                 Concern
               </div>
             </th>
-            <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+            <th className="px-6 py-4">
               Status
             </th>
           </tr>
@@ -147,28 +148,28 @@ function PatientsTable({ paginatedPatients, onPatientClick }) {
           {paginatedPatients.map((patient, index) => (
             <tr
               key={index}
-              className="hover:bg-bimec-light-green/30 cursor-pointer transition-colors duration-150"
+              className="hover:bg-bimec-light-green/20 cursor-pointer transition-colors duration-150"
               onClick={() => onPatientClick(patient)}
             >
-              <td className="px-6 py-4 text-sm text-gray-900">
+              <td className="px-6 py-4 text-gray-600">
                 {patient.admitted}
               </td>
               <td className="px-6 py-4">
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-bimec-green to-bimec-heavy-green flex items-center justify-center text-white text-xs font-medium">
+                  <div className="w-9 h-9 rounded-full bg-gradient-to-br from-bimec-green to-bimec-heavy-green flex items-center justify-center text-white text-xs font-medium">
                     {patient.patient.split(' ').map(n => n[0]).join('')}
                   </div>
-                  <span className="text-sm font-medium text-gray-900">
+                  <span className="font-medium text-gray-900">
                     {patient.patient}
                   </span>
                 </div>
               </td>
-              <td className="px-6 py-4 text-sm text-gray-600">
+              <td className="px-6 py-4 text-gray-600">
                 <span className="inline-flex items-center px-2.5 py-1 rounded-md bg-gray-100 text-gray-700 text-xs font-medium">
                   {patient.room}
                 </span>
               </td>
-              <td className="px-6 py-4 text-sm text-gray-600 max-w-xs truncate">
+              <td className="px-6 py-4 text-gray-600 max-w-xs truncate">
                 {patient.concern}
               </td>
               <td className="px-6 py-4">
@@ -184,12 +185,31 @@ function PatientsTable({ paginatedPatients, onPatientClick }) {
 
 function DoctorAppoinments() {
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filterStatus, setFilterStatus] = useState("all");
   const itemsPerPage = 5;
   const navigate = useNavigate();
 
-  const totalPages = Math.ceil(patientsData.length / itemsPerPage);
+  // Count by status type for filter counts
+  const pendingCount = patientsData.filter(p => p.status.type === "pending").length;
+  const canceledCount = patientsData.filter(p => p.status.type === "canceled").length;
+  const checkedCount = patientsData.filter(p => p.status.type === "checked").length;
+
+  // Filter appointments based on status and search term
+  const filteredPatients = patientsData
+    .filter(patient => 
+      filterStatus === "all" ? true : patient.status.type === filterStatus
+    )
+    .filter(patient => 
+      patient.patient.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      patient.concern.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      patient.room.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+  // Calculate pagination
+  const totalPages = Math.ceil(filteredPatients.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const paginatedPatients = patientsData.slice(
+  const paginatedPatients = filteredPatients.slice(
     startIndex,
     startIndex + itemsPerPage
   );
@@ -202,6 +222,16 @@ function DoctorAppoinments() {
 
   const handlePatientClick = (patient) => {
     navigate("/doctor/patient-detail", { state: { patient } });
+  };
+
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+    setCurrentPage(1); // Reset to first page on new search
+  };
+
+  const handleFilterChange = (status) => {
+    setFilterStatus(status);
+    setCurrentPage(1); // Reset to first page on filter change
   };
 
   // Generate page numbers to display
@@ -240,95 +270,103 @@ function DoctorAppoinments() {
     return pages;
   };
 
-  // Count by status type for dashboard stats
-  const pendingCount = patientsData.filter(p => p.status.type === 'pending').length;
-  const canceledCount = patientsData.filter(p => p.status.type === 'canceled').length;
-  const checkedCount = patientsData.filter(p => p.status.type === 'checked').length;
-
   return (
-    <div className="flex flex-1 min-h-screen bg-gray-50">
+    <div className="flex flex-1 min-h-screen">
       <Sidebar />
       <main className="flex-1 flex flex-col">
         <Header />
-        <section className="flex-1 p-6 lg:p-8">
-          {/* Stats Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-            <div className="bg-white rounded-xl p-6 shadow-sm">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600">Total Patients</p>
-                  <p className="text-2xl font-bold text-gray-900 mt-1">{patientsData.length}</p>
-                </div>
-                <div className="w-12 h-12 bg-bimec-light-green rounded-lg flex items-center justify-center">
-                  <UserIcon className="w-6 h-6 text-bimec-green" />
-                </div>
-              </div>
+        <section className="bg-gray-50 flex-1 p-7 overflow-auto">
+          {/* Search and Filters Section */}
+          <div className="flex flex-wrap justify-between items-center mb-6">
+            {/* Search Field */}
+            <div className="relative w-full md:w-80">
+              <input
+                type="text"
+                placeholder="Search appointments..."
+                value={searchTerm}
+                onChange={handleSearch}
+                className="w-full h-11 pl-11 pr-4 rounded-xl bg-white border border-gray-200 text-sm text-gray-700 placeholder-gray-400 
+                       transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-bimec-green/20 focus:border-bimec-green"
+              />
+              <MagnifyingGlassIcon className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
             </div>
-            
-            <div className="bg-white rounded-xl p-6 shadow-sm">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600">Pending</p>
-                  <p className="text-2xl font-bold text-yellow-600 mt-1">{pendingCount}</p>
-                </div>
-                <div className="w-12 h-12 bg-yellow-50 rounded-lg flex items-center justify-center">
-                  <ClockIcon className="w-6 h-6 text-yellow-600" />
-                </div>
-              </div>
-            </div>
-            
-            <div className="bg-white rounded-xl p-6 shadow-sm">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600">Canceled</p>
-                  <p className="text-2xl font-bold text-red-600 mt-1">{canceledCount}</p>
-                </div>
-                <div className="w-12 h-12 bg-red-50 rounded-lg flex items-center justify-center">
-                  <XCircleIcon className="w-6 h-6 text-red-600" />
-                </div>
-              </div>
-            </div>
-            
-            <div className="bg-white rounded-xl p-6 shadow-sm">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600">Checked</p>
-                  <p className="text-2xl font-bold text-green-600 mt-1">{checkedCount}</p>
-                </div>
-                <div className="w-12 h-12 bg-green-50 rounded-lg flex items-center justify-center">
-                  <CheckCircleIcon className="w-6 h-6 text-green-600" />
-                </div>
-              </div>
+
+            {/* Filters */}
+            <div className="flex flex-wrap gap-3 mt-4 md:mt-0">
+              <button
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 
+                ${filterStatus === "all" ? "bg-gray-900 text-white" : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-50"}`}
+                onClick={() => handleFilterChange("all")}
+              >
+                All
+              </button>
+
+              <button
+                className={`flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 
+                ${filterStatus === "pending" ? "bg-yellow-50 text-yellow-700 border border-yellow-300" : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-50"}`}
+                onClick={() => handleFilterChange("pending")}
+              >
+                <div className="w-2 h-2 rounded-full bg-yellow-500 mr-1.5"></div>
+                Pending ({pendingCount})
+              </button>
+
+              <button
+                className={`flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 
+                ${filterStatus === "canceled" ? "bg-red-50 text-red-700 border border-red-300" : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-50"}`}
+                onClick={() => handleFilterChange("canceled")}
+              >
+                <div className="w-2 h-2 rounded-full bg-red-500 mr-1.5"></div>
+                Canceled ({canceledCount})
+              </button>
+
+              <button
+                className={`flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 
+                ${filterStatus === "checked" ? "bg-green-50 text-green-700 border border-green-300" : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-50"}`}
+                onClick={() => handleFilterChange("checked")}
+              >
+                <div className="w-2 h-2 rounded-full bg-green-500 mr-1.5"></div>
+                Checked ({checkedCount})
+              </button>
             </div>
           </div>
 
-          {/* Table Section */}
-          <div className="bg-white rounded-xl shadow-sm">
+          {/* Table Section with white background */}
+          <div className="max-w-full bg-white rounded-xl p-6 shadow-sm">
+            {/* Table */}
             <PatientsTable
               paginatedPatients={paginatedPatients}
               onPatientClick={handlePatientClick}
             />
             
+            {/* Empty state if no results */}
+            {paginatedPatients.length === 0 && (
+              <div className="text-center py-12">
+                <p className="text-gray-500">
+                  No appointments found matching your filters.
+                </p>
+              </div>
+            )}
+            
             {/* Pagination */}
-            <div className="px-6 py-4 flex items-center justify-between border-t border-gray-100">
-              <p className="text-sm text-gray-600">
-                Showing {startIndex + 1} to {Math.min(startIndex + itemsPerPage, patientsData.length)} of {patientsData.length} results
-              </p>
-              
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={() => handlePageChange(currentPage - 1)}
-                  disabled={currentPage === 1}
-                  className={`p-2 rounded-lg transition-colors ${
-                    currentPage === 1 
-                      ? 'text-gray-400 cursor-not-allowed' 
-                      : 'text-gray-600 hover:bg-gray-100'
-                  }`}
-                >
-                  <ChevronLeftIcon className="w-5 h-5" />
-                </button>
+            {filteredPatients.length > 0 && (
+              <div className="flex justify-between items-center text-sm text-gray-600 mt-6">
+                <p className="text-sm text-gray-600">
+                  Showing {startIndex + 1} to {Math.min(startIndex + itemsPerPage, filteredPatients.length)} of {filteredPatients.length} results
+                </p>
                 
                 <div className="flex items-center gap-1">
+                  <button
+                    onClick={() => handlePageChange(currentPage - 1)}
+                    disabled={currentPage === 1}
+                    className={`p-2 rounded-lg transition-colors ${
+                      currentPage === 1 
+                        ? 'text-gray-300 cursor-not-allowed' 
+                        : 'text-gray-600 hover:text-bimec-green'
+                    }`}
+                  >
+                    <ChevronLeftIcon className="w-5 h-5" />
+                  </button>
+                  
                   {getPageNumbers().map((page, index) => (
                     <button
                       key={index}
@@ -345,21 +383,21 @@ function DoctorAppoinments() {
                       {page}
                     </button>
                   ))}
+                  
+                  <button
+                    onClick={() => handlePageChange(currentPage + 1)}
+                    disabled={currentPage === totalPages || totalPages === 0}
+                    className={`p-2 rounded-lg transition-colors ${
+                      currentPage === totalPages || totalPages === 0
+                        ? 'text-gray-300 cursor-not-allowed' 
+                        : 'text-gray-600 hover:text-bimec-green'
+                    }`}
+                  >
+                    <ChevronRightIcon className="w-5 h-5" />
+                  </button>
                 </div>
-                
-                <button
-                  onClick={() => handlePageChange(currentPage + 1)}
-                  disabled={currentPage === totalPages}
-                  className={`p-2 rounded-lg transition-colors ${
-                    currentPage === totalPages 
-                      ? 'text-gray-400 cursor-not-allowed' 
-                      : 'text-gray-600 hover:bg-gray-100'
-                  }`}
-                >
-                  <ChevronRightIcon className="w-5 h-5" />
-                </button>
               </div>
-            </div>
+            )}
           </div>
         </section>
       </main>
