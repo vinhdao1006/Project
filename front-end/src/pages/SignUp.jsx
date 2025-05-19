@@ -484,9 +484,11 @@ const SignUp = () => {
                 )}
 
                 {/* Submit Button with animation*/}
-                <div 
+                <div
                   className={`transform transition-all duration-700 delay-[900ms] ${
-                    isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
+                    isVisible
+                      ? "translate-y-0 opacity-100"
+                      : "translate-y-10 opacity-0"
                   }`}
                 >
                   <button
@@ -536,7 +538,9 @@ const SignUp = () => {
                 {/* Google Button*/}
                 <div
                   className={`transform transition-all duration-700 delay-[1200ms] ${
-                    isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
+                    isVisible
+                      ? "translate-y-0 opacity-100"
+                      : "translate-y-10 opacity-0"
                   }`}
                 >
                   <button

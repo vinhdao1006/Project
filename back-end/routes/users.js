@@ -110,7 +110,7 @@ router.post('/login', (req, res) => {
                 bcrypt.compare(password, user.password, (err, response) => {
                     if (response) {
                         const token = jwt.sign(
-                            { email: user.email, role: user.role }, 
+                            { email: user.email, role: user.role, userId: user.userId }, 
                             "jwt-secret-key", { expiresIn: "1d" }
                         );
                         res.cookie("token", token);
@@ -147,7 +147,7 @@ router.post('/google-login', async (req, res) => {
 
         if(user)
         {
-            const jwtToken = jwt.sign({ email: user.email, role: user.role }, "jwt-secret-key", { expiresIn: "1d" });
+            const jwtToken = jwt.sign({ email: user.email, role: user.role, userId: user.userId }, "jwt-secret-key", { expiresIn: "1d" });
             res.cookie("token", jwtToken);
             res.json({jwtToken, message: "Success"});
         }

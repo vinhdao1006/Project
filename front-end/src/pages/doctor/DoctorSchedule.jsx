@@ -1,12 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react';
-import Sidebar from './Sidebar';
-import Header from './Header';
-import FullCalendar from '@fullcalendar/react';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import timeGridPlugin from '@fullcalendar/timegrid';
-import interactionPlugin from '@fullcalendar/interaction';
+import React, { useState, useEffect, useRef } from "react";
+import Sidebar from "./Sidebar";
+import Header from "./Header";
+import FullCalendar from "@fullcalendar/react";
+import dayGridPlugin from "@fullcalendar/daygrid";
+import timeGridPlugin from "@fullcalendar/timegrid";
+import interactionPlugin from "@fullcalendar/interaction";
 import { Button } from "@/components/ui/button";
-import { Plus, RefreshCw, X } from 'lucide-react';
+import { Plus, RefreshCw, X } from "lucide-react";
 import tippy from "tippy.js";
 import "tippy.js/dist/tippy.css";
 import "tippy.js/animations/shift-away.css";
@@ -16,48 +16,48 @@ import Draggable from "react-draggable";
 // Dữ liệu ( thay bằng API sau)
 const staticEvents = [
   {
-    id: '1',
-    title: 'Dr. John Smith',
-    start: '2025-05-13T07:00:00',
-    end: '2025-05-13T07:10:00',
+    id: "1",
+    title: "Dr. John Smith",
+    start: "2025-05-13T07:00:00",
+    end: "2025-05-13T07:10:00",
     extendedProps: {
-      doctorId: '1',
-      department: 'Cardiology',
-      room: 'C4-501',
-    }
+      doctorId: "1",
+      department: "Cardiology",
+      room: "C4-501",
+    },
   },
   {
-    id: '2',
-    title: 'Dr. John Smith',
-    start: '2025-05-13T08:00:00',
-    end: '2025-05-13T09:30:00',
+    id: "2",
+    title: "Dr. John Smith",
+    start: "2025-05-13T08:00:00",
+    end: "2025-05-13T09:30:00",
     extendedProps: {
-      doctorId: '1',
-      department: 'Cardiology',
-      room: 'A5-502',
-    }
+      doctorId: "1",
+      department: "Cardiology",
+      room: "A5-502",
+    },
   },
   {
-    id: '3',
-    title: 'Dr. John Smith',
-    start: '2025-05-13T10:00:00',
-    end: '2025-05-13T11:30:00',
+    id: "3",
+    title: "Dr. John Smith",
+    start: "2025-05-13T10:00:00",
+    end: "2025-05-13T11:30:00",
     extendedProps: {
-      doctorId: '1',
-      department: 'Cardiology',
-      room: 'B1-203',
-    }
+      doctorId: "1",
+      department: "Cardiology",
+      room: "B1-203",
+    },
   },
   {
-    id: '4',
-    title: 'Dr. John Smith',
-    start: '2025-05-14T07:00:00',
-    end: '2025-05-14T10:00:00',
+    id: "4",
+    title: "Dr. John Smith",
+    start: "2025-05-14T07:00:00",
+    end: "2025-05-14T10:00:00",
     extendedProps: {
-      doctorId: '1',
-      department: 'Cardiology',
-      room: 'B4-503',
-    }
+      doctorId: "1",
+      department: "Cardiology",
+      room: "B4-503",
+    },
   },
 ];
 
@@ -184,22 +184,22 @@ function DoctorSchedule() {
       const apiData = staticEvents; // Dùng dữ liệu tĩnh để kiểm tra
 
       // Format events for the calendar
-      const formattedEvents = apiData.map(event => ({
+      const formattedEvents = apiData.map((event) => ({
         ...event,
-        backgroundColor: '#5f8d4d',
-        borderColor: '#5f8d4d',
-        textColor: 'white'
+        backgroundColor: "#5f8d4d",
+        borderColor: "#5f8d4d",
+        textColor: "white",
       }));
 
       setCalendarEvents(formattedEvents);
     } catch (error) {
-      console.error('Error fetching events:', error);
+      console.error("Error fetching events:", error);
       // Fallback to static data in case of error
-      const formattedEvents = staticEvents.map(event => ({
+      const formattedEvents = staticEvents.map((event) => ({
         ...event,
-        backgroundColor: '#5f8d4d',
-        borderColor: '#5f8d4d',
-        textColor: 'white'
+        backgroundColor: "#5f8d4d",
+        borderColor: "#5f8d4d",
+        textColor: "white",
       }));
       setCalendarEvents(formattedEvents);
     } finally {
@@ -209,12 +209,12 @@ function DoctorSchedule() {
 
   useEffect(() => {
     fetchEvents();
-    
+
     // Refresh data every 30 seconds
     const interval = setInterval(() => {
       fetchEvents();
     }, 30000);
-    
+
     return () => clearInterval(interval);
   }, []);
 
@@ -222,14 +222,12 @@ function DoctorSchedule() {
   const handleCloseForm = () => setShowForm(false);
 
   return (
-    <div className="grid grid-cols-12 min-h-screen bg-gray-50">
-      <div className="col-span-2">
-        <Sidebar />
-      </div>
+    <div className="flex flex-1 min-h-screen bg-gray-50">
+      <Sidebar />
 
-      <main className="col-span-10 flex flex-col">
+      <main className="flex-1 flex flex-col">
         <Header />
-        
+
         <div className="p-5 flex-1 overflow-auto">
           {/* Control Bar */}
           <div className="flex items-center justify-end mb-4">
@@ -242,15 +240,19 @@ function DoctorSchedule() {
                 <Plus className="w-3.5 h-3.5" />
                 Add Schedule
               </Button>
-              
-              <Button 
-                variant="outline" 
+
+              <Button
+                variant="outline"
                 onClick={fetchEvents}
                 disabled={isRefreshing}
                 size="sm"
                 className="flex items-center gap-1.5 rounded-lg border-gray-200 text-gray-700 hover:bg-gray-50 h-9 px-3"
               >
-                <RefreshCw className={`w-3.5 h-3.5 ${isRefreshing ? 'animate-spin' : ''}`} />
+                <RefreshCw
+                  className={`w-3.5 h-3.5 ${
+                    isRefreshing ? "animate-spin" : ""
+                  }`}
+                />
                 <span className="sr-only md:not-sr-only">Refresh</span>
               </Button>
             </div>
@@ -270,8 +272,13 @@ function DoctorSchedule() {
               }}
               views={{
                 timeGrid: {
-                  dayHeaderFormat: { weekday: 'short', month: 'numeric', day: 'numeric', omitCommas: true }
-                }
+                  dayHeaderFormat: {
+                    weekday: "short",
+                    month: "numeric",
+                    day: "numeric",
+                    omitCommas: true,
+                  },
+                },
               }}
               events={calendarEvents}
               slotMinTime="07:00:00"
@@ -282,14 +289,16 @@ function DoctorSchedule() {
               height={720}
               businessHours={{
                 daysOfWeek: [1, 2, 3, 4, 5, 6], // Monday - Saturday
-                startTime: '7:00',
-                endTime: '16:00',
+                startTime: "7:00",
+                endTime: "16:00",
               }}
               eventDidMount={(info) => {
                 tippy(info.el, {
                   content: `
                     <div class="p-3">
-                      <div class="font-semibold text-gray-900 mb-2">${info.event.title}</div>
+                      <div class="font-semibold text-gray-900 mb-2">${
+                        info.event.title
+                      }</div>
                       <div class="text-sm text-gray-600 mb-1">
                         Room: ${info.event.extendedProps.room}
                       </div>
@@ -297,19 +306,25 @@ function DoctorSchedule() {
                         Department: ${info.event.extendedProps.department}
                       </div>
                       <div class="flex items-center text-xs text-gray-500">
-                        ${new Date(info.event.start).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})} - 
-                        ${new Date(info.event.end).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+                        ${new Date(info.event.start).toLocaleTimeString([], {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })} - 
+                        ${new Date(info.event.end).toLocaleTimeString([], {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
                       </div>
                     </div>
                   `,
                   allowHTML: true,
                   animation: "shift-away",
-                  theme: 'calendar',
+                  theme: "calendar",
                   interactive: true,
                   delay: [100, 0],
                   placement: "top",
                   appendTo: document.body,
-                  maxWidth: 300
+                  maxWidth: 300,
                 });
               }}
             />
@@ -324,7 +339,9 @@ function DoctorSchedule() {
             <div className="bg-white rounded-xl shadow-2xl max-w-xl w-full relative transform transition-all duration-300 animate-in fade-in zoom-in-95 border border-gray-200">
               <div className="handle p-5 border-b border-gray-100 flex justify-between items-center cursor-move bg-gradient-to-r from-white to-gray-50">
                 <div className="flex items-center gap-2">
-                  <h3 className="font-semibold text-gray-900 ml-2">Add New Schedule</h3>
+                  <h3 className="font-semibold text-gray-900 ml-2">
+                    Add New Schedule
+                  </h3>
                 </div>
                 <button
                   onClick={handleCloseForm}
@@ -337,7 +354,9 @@ function DoctorSchedule() {
                 {/* Form placeholder - would be replaced with actual form component */}
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Doctor</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Doctor
+                    </label>
                     <select className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-bimec-green focus:border-bimec-green">
                       <option value="">Select Doctor</option>
                       <option value="1">Dr. John Smith</option>
@@ -345,25 +364,31 @@ function DoctorSchedule() {
                     </select>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Room</label>
-                    <input 
-                      type="text" 
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Room
+                    </label>
+                    <input
+                      type="text"
                       placeholder="e.g. C4-501"
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-bimec-green focus:border-bimec-green"
                     />
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Start Date & Time</label>
-                      <input 
-                        type="datetime-local" 
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Start Date & Time
+                      </label>
+                      <input
+                        type="datetime-local"
                         className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-bimec-green focus:border-bimec-green"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">End Date & Time</label>
-                      <input 
-                        type="datetime-local" 
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        End Date & Time
+                      </label>
+                      <input
+                        type="datetime-local"
                         className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-bimec-green focus:border-bimec-green"
                       />
                     </div>
@@ -377,9 +402,7 @@ function DoctorSchedule() {
                 >
                   Cancel
                 </button>
-                <button
-                  className="px-4 py-2 bg-bimec-green hover:bg-bimec-heavy-green text-white text-sm font-medium rounded-lg transition-colors"
-                >
+                <button className="px-4 py-2 bg-bimec-green hover:bg-bimec-heavy-green text-white text-sm font-medium rounded-lg transition-colors">
                   Save Schedule
                 </button>
               </div>
