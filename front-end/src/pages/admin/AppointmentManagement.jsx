@@ -3,7 +3,6 @@ import {
   Search,
   ChevronLeft,
   ChevronRight,
-  Calendar,
   Clock,
   User,
   Stethoscope,
@@ -230,12 +229,6 @@ const AppointmentsManagement = () => {
                     <tr>
                       <th className="px-6 py-4">
                         <div className="flex items-center gap-2">
-                          <Calendar className="w-4 h-4" />
-                          Admitted
-                        </div>
-                      </th>
-                      <th className="px-6 py-4">
-                        <div className="flex items-center gap-2">
                           <User className="w-4 h-4" />
                           Patient
                         </div>
@@ -279,9 +272,6 @@ const AppointmentsManagement = () => {
                         key={idx}
                         className="hover:bg-bimec-light-green/20 transition-colors duration-150"
                       >
-                        <td className="px-6 py-4 text-gray-600">
-                          {appointment.date}
-                        </td>
                         <td className="px-6 py-4">
                           <div className="flex items-center gap-3">
                             <div className="w-9 h-9 rounded-full bg-gradient-to-br from-bimec-green to-bimec-heavy-green flex items-center justify-center text-white text-xs font-medium">
@@ -296,7 +286,12 @@ const AppointmentsManagement = () => {
                           </div>
                         </td>
                         <td className="px-6 py-4 text-gray-600">
-                          {appointment.time}
+                          <div className="flex items-center gap-2">
+                            <span>{appointment.date}</span>
+                            <span className="px-2.5 py-1 rounded-md bg-gray-100 text-gray-700 text-xs font-medium">
+                              {appointment.time}
+                            </span>
+                          </div>
                         </td>
                         <td className="px-6 py-4 text-gray-600">
                           <span className="inline-flex items-center px-2.5 py-1 rounded-md bg-gray-100 text-gray-700 text-xs font-medium">
