@@ -5,6 +5,7 @@ const app = express();
 const path = require("path");
 const initDoctors = require("./initDoctors")
 const initSpecialties = require("./initSpecialties")
+const OpenAI = require('openai');
 
 // Initialize database and data
 async function initializeApp() {
@@ -195,6 +196,49 @@ app.get('/api/patient-appointments/:patientId', async (req, res) => {
         res.json(appointments);
     } catch (error) {
         res.status(500).json({ error: error.message });
+    }
+});
+
+// OpenAI configuration
+const openai = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
+});
+
+// AI Assistant chat endpoint
+app.post('/api/ai-assistant/chat', async (req, res) => {
+    try {
+        const { message } = req.body;
+
+        // System message to set context
+        const systemMessage = {
+            role: "system",
+            content: `You are a helpful medical assistant for Bimec Hospital. 
+            You can help with:
+            - General hospital information
+            - Appointment scheduling
+            - Department locations
+            - Insurance and billing questions
+            - Basic medical advice
+            - Doctor availability
+            Please be professional, empathetic, and concise in your responses.
+            If a question is beyond your scope, suggest contacting the hospital directly.`
+        };
+
+        const completion = await openai.chat.completions.create({
+            model: "gpt-3.5-turbo",
+            messages: [
+                systemMessage,
+                { role: "user", content: message }
+            ],
+            temperature: 0.7,
+            max_tokens: 150
+        });
+
+        const response = completion.choices[0].message.content;
+        res.json({ response });
+    } catch (error) {
+        console.error('AI Assistant error:', error);
+        res.status(500).json({ error: 'Failed to process your request. Please try again.' });
     }
 });
 

@@ -29,6 +29,8 @@ import PatientDetail from "./pages/doctor/PatientDetail";
 import DoctorAppointment from "./pages/doctor/Appointments";
 import DoctorSchedule from "./pages/doctor/DoctorSchedule";
 
+import AIAssistant from './components/utils/AIAssistant'
+
 function App() {
   return (
     <Router>
@@ -86,6 +88,7 @@ function App() {
         ></Route>
         <Route path="/doctor/schedule" element={<DoctorSchedule />}></Route>
       </Routes>
+      <AIAssistant />
     </Router>
   );
 }

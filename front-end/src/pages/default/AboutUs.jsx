@@ -31,14 +31,14 @@ const AboutUs = () => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             const index = entry.target.dataset.valueIndex;
-            setVisibleValues(prev => new Set(prev).add(index));
+            setVisibleValues((prev) => new Set(prev).add(index));
           }
         });
       },
       { threshold: 0.1 }
     );
 
-    const valueElements = document.querySelectorAll('.value-item');
+    const valueElements = document.querySelectorAll(".value-item");
     valueElements.forEach((el) => observer.observe(el));
 
     return () => {
@@ -81,16 +81,18 @@ const AboutUs = () => {
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             {/* Left Side: Image with Reveal Animation */}
-            <div 
+            <div
               className={`order-2 md:order-1 transform transition-all duration-1000 delay-500 ${
-                isVisible ? 'translate-x-0 opacity-100' : '-translate-x-20 opacity-0'
+                isVisible
+                  ? "translate-x-0 opacity-100"
+                  : "-translate-x-20 opacity-0"
               }`}
             >
               <div className="relative overflow-hidden rounded-lg group">
                 <img
                   src={img_blackGirls_aboutus}
                   className={`w-full h-auto transform transition-all duration-700 group-hover:scale-110 ${
-                    imageLoaded ? 'opacity-100' : 'opacity-0'
+                    imageLoaded ? "opacity-100" : "opacity-0"
                   }`}
                   alt="About Us"
                   onLoad={() => setImageLoaded(true)}
@@ -101,21 +103,27 @@ const AboutUs = () => {
             </div>
 
             {/* Right Side: Text Content with Stagger Animation */}
-            <div 
+            <div
               className={`order-1 md:order-2 transform transition-all duration-1000 delay-700 ${
-                isVisible ? 'translate-x-0 opacity-100' : 'translate-x-20 opacity-0'
+                isVisible
+                  ? "translate-x-0 opacity-100"
+                  : "translate-x-20 opacity-0"
               }`}
             >
-              <p 
+              <p
                 className={`text-sm uppercase tracking-wider text-bimec-green font-medium mb-4 transform transition-all duration-1000 delay-900 ${
-                  isVisible ? 'translate-y-0 opacity-100' : 'translate-y-5 opacity-0'
+                  isVisible
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-5 opacity-0"
                 }`}
               >
                 Welcome to BIMEC
               </p>
-              <h2 
+              <h2
                 className={`text-3xl md:text-4xl font-light text-bimec-heavy-green mb-8 leading-tight transform transition-all duration-1000 delay-1000 ${
-                  isVisible ? 'translate-y-0 opacity-100' : 'translate-y-5 opacity-0'
+                  isVisible
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-5 opacity-0"
                 }`}
               >
                 Best Care for Your <br />
@@ -125,40 +133,48 @@ const AboutUs = () => {
               {/* Values Grid with Stagger Animation */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
                 {values.map((value, index) => (
-                  <div 
+                  <div
                     key={index}
                     data-value-index={index}
                     className={`value-item flex items-center space-x-3 transform transition-all duration-500 ${
-                      visibleValues.has(index.toString()) 
-                        ? 'translate-x-0 opacity-100' 
-                        : '-translate-x-10 opacity-0'
+                      visibleValues.has(index.toString())
+                        ? "translate-x-0 opacity-100"
+                        : "-translate-x-10 opacity-0"
                     }`}
                     style={{ transitionDelay: `${1100 + index * 100}ms` }}
                   >
-                    <div 
+                    <div
                       className={`w-1.5 h-1.5 bg-bimec-green rounded-full flex-shrink-0 transform transition-all duration-500 ${
-                        visibleValues.has(index.toString()) ? 'scale-100' : 'scale-0'
+                        visibleValues.has(index.toString())
+                          ? "scale-100"
+                          : "scale-0"
                       }`}
                       style={{ transitionDelay: `${1200 + index * 100}ms` }}
                     ></div>
-                    <span className="text-gray-700 hover:text-bimec-green transition-colors duration-300">{value}</span>
+                    <span className="text-gray-700 hover:text-bimec-green transition-colors duration-300">
+                      {value}
+                    </span>
                   </div>
                 ))}
               </div>
 
               <div className="space-y-4 text-gray-600 leading-relaxed">
-                <p 
+                <p
                   className={`transform transition-all duration-1000 delay-[1600ms] ${
-                    isVisible ? 'translate-y-0 opacity-100' : 'translate-y-5 opacity-0'
+                    isVisible
+                      ? "translate-y-0 opacity-100"
+                      : "translate-y-5 opacity-0"
                   }`}
                 >
                   Bimec is a modern online appointment booking system, enabling
                   patients to easily schedule visits at outpatient departments
                   of reputable hospitals and clinics.
                 </p>
-                <p 
+                <p
                   className={`transform transition-all duration-1000 delay-[1700ms] ${
-                    isVisible ? 'translate-y-0 opacity-100' : 'translate-y-5 opacity-0'
+                    isVisible
+                      ? "translate-y-0 opacity-100"
+                      : "translate-y-5 opacity-0"
                   }`}
                 >
                   With a user-friendly interface, Bimec saves time, reduces
@@ -171,9 +187,11 @@ const AboutUs = () => {
               <a
                 href="/default/contact"
                 className={`inline-flex items-center mt-8 text-bimec-green font-medium hover:text-bimec-heavy-green transition-all duration-300 group transform ${
-                  isVisible ? 'translate-y-0 opacity-100' : 'translate-y-5 opacity-0'
+                  isVisible
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-5 opacity-0"
                 }`}
-                style={{ transitionDelay: '1800ms' }}
+                style={{ transitionDelay: "1800ms" }}
               >
                 Get in Touch
                 <svg
@@ -194,7 +212,6 @@ const AboutUs = () => {
           </div>
         </div>
       </section>
-
 
       {/* Contact Section */}
       <section className="py-16 px-4">
