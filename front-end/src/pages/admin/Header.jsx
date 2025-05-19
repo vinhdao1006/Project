@@ -128,7 +128,7 @@ function Header() {
   };
 
   return (
-    <header className="fixed top-0 right-0 z-10 flex items-center justify-between h-16 px-6 py-5 bg-white border-b border-gray-100 ml-50 w-[calc(100%-12.5rem)]">
+    <header className="fixed top-0 right-0 z-10 flex items-center justify-between h-16 px-6 py-5 bg-white border-b border-gray-100 ml-50 w-[calc(100%-16rem)]">
       <div className="flex items-center gap-6">
         <h1 className="text-2xl font-bold text-gray-900">{activeRouteName}</h1>
       </div>
