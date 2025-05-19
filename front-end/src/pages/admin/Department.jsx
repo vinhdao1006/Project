@@ -72,7 +72,7 @@ const DepartmentsPage = () => {
         
         {/* Content Container - Thêm pt-16 để tạo khoảng cách cho header */}
         <main className="pt-16 flex flex-col">
-          <div className="p-8 flex-1">
+          <div className="p-10 flex-1">
             {/* Header Section */}
             <div className="flex justify-between items-center mb-6">
               <div>
