@@ -36,7 +36,7 @@ function Header() {
     "/admin/doctors": "Doctors",
   };
 
-  const activeRouteName = routeNames[location.pathname] || "Dashboard";
+  const activeRouteName = routeNames[location.pathname];
 
   // get user info
   useEffect(() => {
@@ -50,6 +50,9 @@ function Header() {
           }
         );
         setUser(response.data);
+        if (response.data.role !== "Admin") {
+          handleLogout();
+        }
         setIsLoggedIn(true);
       } catch (error) {
         console.error("Error fetching user info:", error);
@@ -90,6 +93,7 @@ function Header() {
   }, [unreadCount]);
 
   const handleLogout = () => {
+    // localStorage.removeItem("token");
     navigate("/login");
   };
 
