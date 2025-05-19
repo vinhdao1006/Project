@@ -29,10 +29,8 @@ const AdminDashboard = () => {
       {/* Main Content */}
       <div className="col-span-10">
         <Header />
-
-        {/* Dashboard Content - Thêm pt-16 để tạo khoảng cách cho header */}
-        <main className="pt-16 flex flex-col">
-          <div className="p-8 flex-1">
+        <main className="pt-16 flex flex-col mt-7">
+          <div className="p-8 flex-1 m-auto">
             {/* Metrics */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
               {/* Patients Card */}

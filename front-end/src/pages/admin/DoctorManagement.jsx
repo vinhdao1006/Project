@@ -162,8 +162,8 @@ const DoctorsManagement = () => {
         <Header />
 
         {/* Content Container */}
-        <main className="pt-16 flex flex-col">
-          <div className="p-8 flex-1 bg-gray-50">
+        <main className="pt-16 flex flex-col mt-2">
+          <div className="p-8 flex-1 bg-gray-50 m-1">
             {/* Top Row with Search and Add Button */}
             <div className="flex flex-wrap justify-between items-center mb-6">
               <div className="flex flex-wrap gap-4 items-center">

@@ -227,8 +227,8 @@ const PatientsManagement = () => {
         <Header />
 
         {/* Content Container */}
-        <main className="pt-16 flex flex-col">
-          <div className="p-8 flex-1 bg-gray-50">
+        <main className="pt-16 flex flex-col mt-2">
+          <div className="p-8 flex-1 bg-gray-50 m-1">
             {/* Search and Filters Section */}
             <div className="flex flex-wrap justify-between items-center mb-6">
               {/* Search Field */}

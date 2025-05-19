@@ -128,23 +128,10 @@ function Header() {
   };
 
   return (
-    <header className="fixed top-0 right-0 z-10 flex items-center justify-between h-16 px-6 py-5 bg-white border-b border-gray-100 ml-50 w-[calc(100%-16rem)]">
+    <header className="fixed top-0 right-0 z-10 flex items-center justify-between px-8 py-5 bg-white border-b border-gray-100 ml-50 w-[calc(100%-16rem)]">
       <div className="flex items-center gap-6">
         <h1 className="text-2xl font-bold text-gray-900">{activeRouteName}</h1>
       </div>
-
-      {/* <div className="flex items-center gap-5"> */}
-      {/* Search Bar */}
-      {/* <div className="relative">
-          <input
-            type="search"
-            placeholder="Search..."
-            className="w-64 h-11 pl-11 pr-4 rounded-full bg-gray-50 border-2 border-gray-200 text-sm text-gray-700 placeholder-gray-400 
-                     transition-all duration-200 
-                     focus:outline-none focus:border-bimec-green focus:bg-white"
-          />
-          <MagnifyingGlassIcon className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-        </div> */}
 
       <div className="flex items-center gap-4">
         {/* Notifications */}
@@ -254,15 +241,6 @@ function Header() {
                   </div>
                 )}
               </div>
-
-              {/* <div className="p-3 border-t border-gray-100 bg-gray-50 text-center">
-                <button
-                  onClick={() => navigate("/admin/notifications")}
-                  className="text-xs font-medium text-bimec-green hover:text-bimec-heavy-green transition-colors"
-                >
-                  View all notifications
-                </button>
-              </div> */}
             </Menu.Items>
           </Transition>
         </Menu>
