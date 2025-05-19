@@ -26,7 +26,7 @@ function Header() {
     "/doctor/schedule": "Schedule",
   };
 
-  const activeRouteName = routeNames[location.pathname] || "Dashboard";
+  const activeRouteName = routeNames[location.pathname] || "Patient Record";
 
   useEffect(() => {
     const checkAuth = async () => {
