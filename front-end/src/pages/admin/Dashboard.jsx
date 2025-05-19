@@ -29,7 +29,7 @@ const AdminDashboard = () => {
       {/* Main Content */}
       <div className="col-span-10">
         <Header />
-        
+
         {/* Dashboard Content - Thêm pt-16 để tạo khoảng cách cho header */}
         <main className="pt-16 flex flex-col">
           <div className="p-8 flex-1">
@@ -169,7 +169,11 @@ const AdminDashboard = () => {
                       <h3 className="font-semibold text-gray-800">
                         Revenue Analytics
                       </h3>
-                      <Button variant="outline" size="sm" className="text-xs h-8">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="text-xs h-8"
+                      >
                         View Report
                       </Button>
                     </div>
@@ -306,7 +310,9 @@ const AdminDashboard = () => {
                           <span className="text-xs font-medium bg-bimec-light-green text-bimec-green px-2 py-0.5 rounded">
                             {item === 1 ? "Today" : "Tomorrow"}
                           </span>
-                          <span className="text-xs text-gray-500">10:30 AM</span>
+                          <span className="text-xs text-gray-500">
+                            10:30 AM
+                          </span>
                         </div>
                         <h4 className="text-sm font-medium">James Wilson</h4>
                         <div className="flex items-center text-xs text-gray-500 mt-1">

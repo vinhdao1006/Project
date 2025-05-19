@@ -102,7 +102,7 @@ const AppointmentsManagement = () => {
       {/* Main Content */}
       <div className="col-span-10">
         <Header />
-        
+
         {/* Content Container - Thêm pt-16 để tạo khoảng cách cho header */}
         <main className="pt-16 flex flex-col">
           <div className="p-8 flex-1">
@@ -258,7 +258,10 @@ const AppointmentsManagement = () => {
             <div className="flex flex-wrap justify-between items-center mt-6">
               <p className="text-sm text-gray-600">
                 Showing {startIndex + 1} to{" "}
-                {Math.min(startIndex + itemsPerPage, filteredAppointments.length)}{" "}
+                {Math.min(
+                  startIndex + itemsPerPage,
+                  filteredAppointments.length
+                )}{" "}
                 of {filteredAppointments.length} results
               </p>
 

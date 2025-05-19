@@ -69,7 +69,7 @@ const DepartmentsPage = () => {
       {/* Main Content */}
       <div className="col-span-10">
         <Header />
-        
+
         {/* Content Container - Thêm pt-16 để tạo khoảng cách cho header */}
         <main className="pt-16 flex flex-col">
           <div className="p-10 flex-1">
@@ -88,13 +88,14 @@ const DepartmentsPage = () => {
                 Add Department
               </Button>
             </div>
-
             {/* Departments Grid */}
             {loading ? (
               <div className="flex items-center justify-center h-64">
                 <div className="flex flex-col items-center gap-2">
                   <Loader2 className="w-8 h-8 text-bimec-green animate-spin" />
-                  <p className="text-sm text-gray-500">Loading departments...</p>
+                  <p className="text-sm text-gray-500">
+                    Loading departments...
+                  </p>
                 </div>
               </div>
             ) : departments.length === 0 ? (

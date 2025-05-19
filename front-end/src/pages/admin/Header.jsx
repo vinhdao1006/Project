@@ -109,21 +109,21 @@ function Header() {
   };
 
   const formatTimeAgo = (timestamp) => {
-    if (!timestamp) return '';
+    if (!timestamp) return "";
     const now = new Date();
     const notifDate = new Date(timestamp);
     const diffMs = now - notifDate;
-    
+
     const diffMins = Math.floor(diffMs / (1000 * 60));
     const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
     const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-    
+
     if (diffMins < 60) {
-      return `${diffMins} ${diffMins === 1 ? 'minute' : 'minutes'} ago`;
+      return `${diffMins} ${diffMins === 1 ? "minute" : "minutes"} ago`;
     } else if (diffHours < 24) {
-      return `${diffHours} ${diffHours === 1 ? 'hour' : 'hours'} ago`;
+      return `${diffHours} ${diffHours === 1 ? "hour" : "hours"} ago`;
     } else {
-      return `${diffDays} ${diffDays === 1 ? 'day' : 'days'} ago`;
+      return `${diffDays} ${diffDays === 1 ? "day" : "days"} ago`;
     }
   };
 
@@ -132,6 +132,19 @@ function Header() {
       <div className="flex items-center gap-6">
         <h1 className="text-2xl font-bold text-gray-900">{activeRouteName}</h1>
       </div>
+
+      {/* <div className="flex items-center gap-5"> */}
+      {/* Search Bar */}
+      {/* <div className="relative">
+          <input
+            type="search"
+            placeholder="Search..."
+            className="w-64 h-11 pl-11 pr-4 rounded-full bg-gray-50 border-2 border-gray-200 text-sm text-gray-700 placeholder-gray-400 
+                     transition-all duration-200 
+                     focus:outline-none focus:border-bimec-green focus:bg-white"
+          />
+          <MagnifyingGlassIcon className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+        </div> */}
 
       <div className="flex items-center gap-4">
         {/* Notifications */}
@@ -168,7 +181,7 @@ function Header() {
                     </span>
                   )}
                 </h3>
-                <button 
+                <button
                   onClick={markAllAsRead}
                   className="text-xs font-medium text-bimec-green hover:text-bimec-heavy-green transition-colors flex items-center"
                 >
@@ -176,15 +189,19 @@ function Header() {
                   Mark all as read
                 </button>
               </div>
-              
+
               <div className="max-h-96 overflow-y-auto">
                 {notifications.length === 0 ? (
                   <div className="p-8 text-center">
                     <div className="mx-auto w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mb-3">
                       <BellIcon className="w-6 h-6 text-gray-400" />
                     </div>
-                    <p className="text-sm text-gray-500">No notifications yet</p>
-                    <p className="text-xs text-gray-400 mt-1">We'll notify you when something arrives</p>
+                    <p className="text-sm text-gray-500">
+                      No notifications yet
+                    </p>
+                    <p className="text-xs text-gray-400 mt-1">
+                      We'll notify you when something arrives
+                    </p>
                   </div>
                 ) : (
                   <div>
@@ -211,9 +228,19 @@ function Header() {
                         }}
                       >
                         <div className="flex items-start">
-                          <div className={`flex-shrink-0 w-2 h-2 mt-2 rounded-full ${n.read ? 'bg-gray-200' : 'bg-bimec-green'} mr-3`}></div>
+                          <div
+                            className={`flex-shrink-0 w-2 h-2 mt-2 rounded-full ${
+                              n.read ? "bg-gray-200" : "bg-bimec-green"
+                            } mr-3`}
+                          ></div>
                           <div className="flex-1">
-                            <p className={`text-sm ${n.read ? 'text-gray-600' : 'text-gray-900 font-medium'}`}>
+                            <p
+                              className={`text-sm ${
+                                n.read
+                                  ? "text-gray-600"
+                                  : "text-gray-900 font-medium"
+                              }`}
+                            >
                               {n.message}
                             </p>
                             <div className="flex items-center mt-1 text-xs text-gray-400">
@@ -227,10 +254,10 @@ function Header() {
                   </div>
                 )}
               </div>
-              
+
               <div className="p-3 border-t border-gray-100 bg-gray-50 text-center">
-                <button 
-                  onClick={() => navigate('/admin/notifications')}
+                <button
+                  onClick={() => navigate("/admin/notifications")}
                   className="text-xs font-medium text-bimec-green hover:text-bimec-heavy-green transition-colors"
                 >
                   View all notifications

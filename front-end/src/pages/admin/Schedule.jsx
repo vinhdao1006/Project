@@ -207,7 +207,6 @@ const DoctorSchedulePage = () => {
 
       <div className="col-span-10">
         <Header />
-
         {/* Thêm pt-16 để tạo khoảng cách cho header */}
         <main className="pt-16 flex flex-col">
           <div className="p-5 flex-1 overflow-auto">
