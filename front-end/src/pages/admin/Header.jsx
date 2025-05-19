@@ -62,7 +62,7 @@ function Header() {
       
       <div className="flex items-center gap-5">
         {/* Search Bar */}
-        <div className="relative">
+        {/* <div className="relative">
           <input
             type="search"
             placeholder="Search..."
@@ -71,7 +71,7 @@ function Header() {
                      focus:outline-none focus:border-bimec-green focus:bg-white"
           />
           <MagnifyingGlassIcon className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-        </div>
+        </div> */}
 
         {/* Notifications */}
         <button
