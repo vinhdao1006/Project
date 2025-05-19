@@ -67,68 +67,68 @@ const DepartmentsPage = () => {
       </div>
 
       {/* Main Content */}
-      <main className="col-span-10 flex flex-col">
-        <div className="mb-20">
-          <Header />
-        </div>
-
-        {/* Content Container */}
-        <div className="p-8 pt-6 flex-1">
-          {/* Header Section */}
-          <div className="flex justify-between items-center mb-6">
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
-                <Building2 className="w-6 h-6 text-bimec-green" />
-                Departments
-              </h1>
-              <p className="text-sm text-gray-500 mt-1">
-                Browse and manage hospital departments
-              </p>
-            </div>
-            <Button className="bg-bimec-green hover:bg-bimec-heavy-green rounded-lg">
-              Add Department
-            </Button>
-          </div>
-
-          {/* Departments Grid */}
-          {loading ? (
-            <div className="flex items-center justify-center h-64">
-              <div className="flex flex-col items-center gap-2">
-                <Loader2 className="w-8 h-8 text-bimec-green animate-spin" />
-                <p className="text-sm text-gray-500">Loading departments...</p>
+      <div className="col-span-10">
+        <Header />
+        
+        {/* Content Container - Thêm pt-16 để tạo khoảng cách cho header */}
+        <main className="pt-16 flex flex-col">
+          <div className="p-8 flex-1">
+            {/* Header Section */}
+            <div className="flex justify-between items-center mb-6">
+              <div>
+                <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
+                  <Building2 className="w-6 h-6 text-bimec-green" />
+                  Departments
+                </h1>
+                <p className="text-sm text-gray-500 mt-1">
+                  Browse and manage hospital departments
+                </p>
               </div>
-            </div>
-          ) : departments.length === 0 ? (
-            <div className="flex flex-col items-center justify-center h-64 bg-white rounded-xl p-8 border border-gray-100">
-              <Building2 className="w-16 h-16 text-gray-200 mb-4" />
-              <h3 className="text-lg font-medium text-gray-700">
-                No departments found
-              </h3>
-              <p className="text-sm text-gray-500 mb-6 text-center max-w-md">
-                There are no departments available at the moment. Try adding a
-                new department to get started.
-              </p>
               <Button className="bg-bimec-green hover:bg-bimec-heavy-green rounded-lg">
-                Add First Department
+                Add Department
               </Button>
             </div>
-          ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {departments.map((dept, index) => (
-                <DepartmentCard
-                  key={index}
-                  title={dept.name}
-                  description={dept.description}
-                  image={
-                    dept.image ||
-                    "https://placehold.co/600x400/e6e7ee/818283?text=Department+Image"
-                  }
-                />
-              ))}
-            </div>
-          )}
-        </div>
-      </main>
+
+            {/* Departments Grid */}
+            {loading ? (
+              <div className="flex items-center justify-center h-64">
+                <div className="flex flex-col items-center gap-2">
+                  <Loader2 className="w-8 h-8 text-bimec-green animate-spin" />
+                  <p className="text-sm text-gray-500">Loading departments...</p>
+                </div>
+              </div>
+            ) : departments.length === 0 ? (
+              <div className="flex flex-col items-center justify-center h-64 bg-white rounded-xl p-8 border border-gray-100">
+                <Building2 className="w-16 h-16 text-gray-200 mb-4" />
+                <h3 className="text-lg font-medium text-gray-700">
+                  No departments found
+                </h3>
+                <p className="text-sm text-gray-500 mb-6 text-center max-w-md">
+                  There are no departments available at the moment. Try adding a
+                  new department to get started.
+                </p>
+                <Button className="bg-bimec-green hover:bg-bimec-heavy-green rounded-lg">
+                  Add First Department
+                </Button>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {departments.map((dept, index) => (
+                  <DepartmentCard
+                    key={index}
+                    title={dept.name}
+                    description={dept.description}
+                    image={
+                      dept.image ||
+                      "https://placehold.co/600x400/e6e7ee/818283?text=Department+Image"
+                    }
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+        </main>
+      </div>
     </div>
   );
 };

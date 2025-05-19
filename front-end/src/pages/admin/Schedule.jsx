@@ -205,114 +205,115 @@ const DoctorSchedulePage = () => {
         <SideBar />
       </div>
 
-      <main className="col-span-10 flex flex-col">
-        <div className="mb-20">
-          <Header />
-        </div>
+      <div className="col-span-10">
+        <Header />
+        
+        {/* Thêm pt-16 để tạo khoảng cách cho header */}
+        <main className="pt-16 flex flex-col">
+          <div className="p-5 flex-1 overflow-auto">
+            {/* Simple Control Bar */}
+            <div className="flex items-center justify-end mb-4">
+              <div className="flex items-center gap-2">
+                <Button
+                  onClick={handleAddClick}
+                  className="bg-bimec-green hover:bg-bimec-heavy-green text-white flex items-center gap-1.5 rounded-lg h-9 px-3"
+                  size="sm"
+                >
+                  <Plus className="w-3.5 h-3.5" />
+                  Add Schedule
+                </Button>
+                
+                <Button 
+                  variant="outline" 
+                  onClick={fetchEvents}
+                  disabled={isRefreshing}
+                  size="sm"
+                  className="flex items-center gap-1.5 rounded-lg border-gray-200 text-gray-700 hover:bg-gray-50 h-9 px-3"
+                >
+                  <RefreshCw
+                    className={`w-3.5 h-3.5 ${
+                      isRefreshing ? "animate-spin" : ""
+                    }`}
+                  />
+                  <span className="sr-only md:not-sr-only">Refresh</span>
+                </Button>
+              </div>
+            </div>
 
-        <div className="p-5 flex-1 overflow-auto">
-          {/* Simple Control Bar */}
-          <div className="flex items-center justify-end mb-4">
-            <div className="flex items-center gap-2">
-              <Button
-                onClick={handleAddClick}
-                className="bg-bimec-green hover:bg-bimec-heavy-green text-white flex items-center gap-1.5 rounded-lg h-9 px-3"
-                size="sm"
-              >
-                <Plus className="w-3.5 h-3.5" />
-                Add Schedule
-              </Button>
-
-              <Button
-                variant="outline"
-                onClick={fetchEvents}
-                disabled={isRefreshing}
-                size="sm"
-                className="flex items-center gap-1.5 rounded-lg border-gray-200 text-gray-700 hover:bg-gray-50 h-9 px-3"
-              >
-                <RefreshCw
-                  className={`w-3.5 h-3.5 ${
-                    isRefreshing ? "animate-spin" : ""
-                  }`}
-                />
-                <span className="sr-only md:not-sr-only">Refresh</span>
-              </Button>
+            {/* Calendar */}
+            <div className="bg-white rounded-xl shadow-sm px-4 pt-4 pb-2 border border-gray-100">
+              <style>{calendarStyles}</style>
+              <FullCalendar
+                ref={calendarRef}
+                plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+                initialView="timeGridWeek"
+                headerToolbar={{
+                  left: "prev,next today",
+                  center: "title",
+                  right: "dayGridMonth,timeGridWeek,timeGridDay",
+                }}
+                views={{
+                  timeGrid: {
+                    dayHeaderFormat: {
+                      weekday: "short",
+                      month: "numeric",
+                      day: "numeric",
+                      omitCommas: true,
+                    },
+                  },
+                }}
+                events={events}
+                slotMinTime="07:00:00"
+                slotMaxTime="16:00:00"
+                allDaySlot={false}
+                slotDuration="01:00:00"
+                snapDuration="00:15:00"
+                height={720}
+                businessHours={{
+                  daysOfWeek: [1, 2, 3, 4, 5, 6], // Monday - Saturday
+                  startTime: "7:00",
+                  endTime: "16:00",
+                }}
+                eventDidMount={(info) => {
+                  tippy(info.el, {
+                    content: `
+                      <div class="p-3">
+                        <div class="font-semibold text-gray-900 mb-2">${
+                          info.event.title
+                        }</div>
+                        <div class="text-sm text-gray-600 mb-2">
+                          ${
+                            info.event.extendedProps.description ||
+                            "No description provided"
+                          }
+                        </div>
+                        <div class="flex items-center text-xs text-gray-500">
+                          ${new Date(info.event.start).toLocaleTimeString([], {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          })} - 
+                          ${new Date(info.event.end).toLocaleTimeString([], {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          })}
+                        </div>
+                      </div>
+                    `,
+                    allowHTML: true,
+                    animation: "shift-away",
+                    theme: "calendar",
+                    interactive: true,
+                    delay: [100, 0],
+                    placement: "top",
+                    appendTo: document.body,
+                    maxWidth: 300,
+                  });
+                }}
+              />
             </div>
           </div>
-
-          {/* Calendar */}
-          <div className="bg-white rounded-xl shadow-sm px-4 pt-4 pb-2 border border-gray-100">
-            <style>{calendarStyles}</style>
-            <FullCalendar
-              ref={calendarRef}
-              plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-              initialView="timeGridWeek"
-              headerToolbar={{
-                left: "prev,next today",
-                center: "title",
-                right: "dayGridMonth,timeGridWeek,timeGridDay",
-              }}
-              views={{
-                timeGrid: {
-                  dayHeaderFormat: {
-                    weekday: "short",
-                    month: "numeric",
-                    day: "numeric",
-                    omitCommas: true,
-                  },
-                },
-              }}
-              events={events}
-              slotMinTime="07:00:00"
-              slotMaxTime="16:00:00"
-              allDaySlot={false}
-              slotDuration="01:00:00"
-              snapDuration="00:15:00"
-              height={720}
-              businessHours={{
-                daysOfWeek: [1, 2, 3, 4, 5, 6], // Monday - Saturday
-                startTime: "7:00",
-                endTime: "16:00",
-              }}
-              eventDidMount={(info) => {
-                tippy(info.el, {
-                  content: `
-                    <div class="p-3">
-                      <div class="font-semibold text-gray-900 mb-2">${
-                        info.event.title
-                      }</div>
-                      <div class="text-sm text-gray-600 mb-2">
-                        ${
-                          info.event.extendedProps.description ||
-                          "No description provided"
-                        }
-                      </div>
-                      <div class="flex items-center text-xs text-gray-500">
-                        ${new Date(info.event.start).toLocaleTimeString([], {
-                          hour: "2-digit",
-                          minute: "2-digit",
-                        })} - 
-                        ${new Date(info.event.end).toLocaleTimeString([], {
-                          hour: "2-digit",
-                          minute: "2-digit",
-                        })}
-                      </div>
-                    </div>
-                  `,
-                  allowHTML: true,
-                  animation: "shift-away",
-                  theme: "calendar",
-                  interactive: true,
-                  delay: [100, 0],
-                  placement: "top",
-                  appendTo: document.body,
-                  maxWidth: 300,
-                });
-              }}
-            />
-          </div>
-        </div>
-      </main>
+        </main>
+      </div>
 
       {/*Add Schedule Form */}
       {showForm && (
