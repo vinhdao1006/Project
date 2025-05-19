@@ -28,7 +28,7 @@ function Header() {
 
   // Map routes to their corresponding names
   const routeNames = {
-    "/admin/appointments": "Appointments",
+    "/admin/appointments": "Today Appointments",
     "/admin/patients": "Patients",
     "/admin/doctor-schedule": "Schedule",
     "/admin/dashboard": "Dashboard",
@@ -128,7 +128,7 @@ function Header() {
   };
 
   return (
-    <header className="fixed top-0 right-0 z-10 flex items-center justify-between px-8 py-5 bg-white border-b border-gray-100 ml-50 w-[calc(100%-16rem)]">
+    <header className="fixed top-0 right-0 z-50 flex items-center justify-between px-8 py-5 bg-white border-b border-gray-100 ml-50 w-[calc(100%-16rem)] shadow-sm">
       <div className="flex items-center gap-6">
         <h1 className="text-2xl font-bold text-gray-900">{activeRouteName}</h1>
       </div>
@@ -279,7 +279,7 @@ function Header() {
               leaveFrom="transform opacity-100 scale-100"
               leaveTo="transform opacity-0 scale-95"
             >
-              <Menu.Items className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none overflow-hidden z-30">
+              <Menu.Items className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none overflow-hidden z-50">
                 <div className="px-4 py-3 border-b border-gray-100">
                   <p className="text-sm font-medium text-gray-900">
                     {user.firstname + " " + user.lastname}
