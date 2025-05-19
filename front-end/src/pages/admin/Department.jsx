@@ -16,7 +16,7 @@ const DepartmentCard = ({ title, description, image }) => (
         alt={title}
         className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-105"
       />
-      <div className="absolute bottom-0 left-0 right-0 p-4 z-20">
+      <div className="absolute bottom-0 left-0 right-0 p-4 z-10">
         <h3 className="text-white font-semibold text-lg">{title}</h3>
       </div>
     </div>
@@ -70,8 +70,8 @@ const DepartmentsPage = () => {
       <div className="col-span-10">
         <Header />
 
-        {/* Content Container - Thêm pt-16 để tạo khoảng cách cho header */}
-        <main className="pt-16 flex flex-col">
+        {/* Content Container with adjusted padding to avoid header overlap */}
+        <main className="pt-24 flex flex-col relative z-0">
           <div className="p-10 flex-1">
             {/* Header Section */}
             <div className="flex justify-between items-center mb-6">

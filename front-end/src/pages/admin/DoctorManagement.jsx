@@ -57,6 +57,7 @@ const doctors = [
 const DoctorsManagement = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [filterStatus, setFilterStatus] = useState("All"); // State to manage the selected filter
+  const [searchTerm, setSearchTerm] = useState(""); // State for search term
   const [currentPage, setCurrentPage] = useState(1); // State to manage the current page
   const itemsPerPage = 5; // Number of items per page
 
@@ -68,11 +69,20 @@ const DoctorsManagement = () => {
     setIsModalOpen(false);
   };
 
-  // Filter doctors based on the selected status
-  const filteredDoctors =
-    filterStatus === "All"
-      ? doctors
-      : doctors.filter((doctor) => doctor.status === filterStatus);
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+    setCurrentPage(1); // Reset to first page on new search
+  };
+
+  // Filter doctors based on the selected status and search term
+  const filteredDoctors = doctors
+    .filter(doctor => 
+      filterStatus === "All" ? true : doctor.status === filterStatus
+    )
+    .filter(doctor =>
+      doctor.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      doctor.department.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
   // Calculate pagination
   const totalPages = Math.ceil(filteredDoctors.length / itemsPerPage);
@@ -82,29 +92,61 @@ const DoctorsManagement = () => {
     startIndex + itemsPerPage
   );
 
-  const handlePreviousPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
+  const handlePageChange = (page) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
     }
   };
 
-  const handleNextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
+  // Generate page numbers to display
+  const getPageNumbers = () => {
+    const pages = [];
+    const maxPagesToShow = 5;
+    
+    if (totalPages <= maxPagesToShow) {
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      if (currentPage <= 3) {
+        for (let i = 1; i <= 4; i++) {
+          pages.push(i);
+        }
+        pages.push('...');
+        pages.push(totalPages);
+      } else if (currentPage >= totalPages - 2) {
+        pages.push(1);
+        pages.push('...');
+        for (let i = totalPages - 3; i <= totalPages; i++) {
+          pages.push(i);
+        }
+      } else {
+        pages.push(1);
+        pages.push('...');
+        for (let i = currentPage - 1; i <= currentPage + 1; i++) {
+          pages.push(i);
+        }
+        pages.push('...');
+        pages.push(totalPages);
+      }
     }
+    
+    return pages;
   };
 
   // Status style mapping
   const statusStyles = {
     Available: {
-      bg: "bg-bimec-light-green",
-      text: "text-bimec-green",
-      icon: <Check className="w-3 h-3 mr-1.5" />,
+      bg: "bg-green-50",
+      text: "text-green-700",
+      dot: "bg-green-500",
+      icon: <Check className="w-4 h-4" />
     },
     Unavailable: {
       bg: "bg-red-50",
-      text: "text-red-600",
-      icon: <X className="w-3 h-3 mr-1.5" />,
+      text: "text-red-700",
+      dot: "bg-red-500",
+      icon: <X className="w-4 h-4" />
     },
   };
 
@@ -119,9 +161,9 @@ const DoctorsManagement = () => {
       <div className="col-span-10">
         <Header />
 
-        {/* Content Container - Thêm pt-16 để tạo khoảng cách cho header */}
-        <main className="pt-16 flex flex-col">
-          <div className="p-8 flex-1">
+        {/* Content Container */}
+        <main className="pt-16 flex flex-col mt-2">
+          <div className="p-8 flex-1 bg-gray-50 m-1">
             {/* Top Row with Search and Add Button */}
             <div className="flex flex-wrap justify-between items-center mb-6">
               <div className="flex flex-wrap gap-4 items-center">
@@ -130,6 +172,8 @@ const DoctorsManagement = () => {
                   <input
                     type="text"
                     placeholder="Search doctors..."
+                    value={searchTerm}
+                    onChange={handleSearch}
                     className="w-full h-11 pl-11 pr-4 rounded-xl bg-white border border-gray-200 text-sm text-gray-700 placeholder-gray-400 
                           transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-bimec-green/20 focus:border-bimec-green"
                   />
@@ -140,41 +184,29 @@ const DoctorsManagement = () => {
                 <div className="flex gap-3">
                   <button
                     className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 
-                    ${
-                      filterStatus === "All"
-                        ? "bg-gray-900 text-white"
-                        : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-50"
-                    }`}
+                    ${filterStatus === "All" ? "bg-gray-900 text-white" : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-50"}`}
                     onClick={() => setFilterStatus("All")}
                   >
                     All
                   </button>
 
-                  {Object.keys(statusStyles).map((status) => (
-                    <button
-                      key={status}
-                      className={`flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 
-                      ${
-                        filterStatus === status
-                          ? `${statusStyles[status].bg} ${
-                              statusStyles[status].text
-                            } border border-${
-                              status === "Available"
-                                ? "bimec-green/30"
-                                : "red-300/30"
-                            }`
-                          : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-50"
-                      }`}
-                      onClick={() => setFilterStatus(status)}
-                    >
-                      {status === "Available" ? (
-                        <div className="w-2 h-2 rounded-full bg-bimec-green mr-1.5"></div>
-                      ) : (
-                        <div className="w-2 h-2 rounded-full bg-red-500 mr-1.5"></div>
-                      )}
-                      {status}
-                    </button>
-                  ))}
+                  <button
+                    className={`flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 
+                    ${filterStatus === "Available" ? "bg-green-50 text-green-700 border border-green-300" : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-50"}`}
+                    onClick={() => setFilterStatus("Available")}
+                  >
+                    <div className="w-2 h-2 rounded-full bg-green-500 mr-1.5"></div>
+                    Available ({doctors.filter(d => d.status === "Available").length})
+                  </button>
+
+                  <button
+                    className={`flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 
+                    ${filterStatus === "Unavailable" ? "bg-red-50 text-red-700 border border-red-300" : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-50"}`}
+                    onClick={() => setFilterStatus("Unavailable")}
+                  >
+                    <div className="w-2 h-2 rounded-full bg-red-500 mr-1.5"></div>
+                    Unavailable ({doctors.filter(d => d.status === "Unavailable").length})
+                  </button>
                 </div>
               </div>
               {/* Add Doctor Button */}
@@ -187,31 +219,32 @@ const DoctorsManagement = () => {
               </button>
             </div>
 
-            {/* Table Card */}
-            <div className="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100">
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead>
-                    <tr className="border-b border-gray-100">
-                      <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+            {/* Table Section with white background */}
+            <div className="max-w-full bg-white rounded-xl p-6 shadow-sm">
+              {/* Table */}
+              <div className="border border-gray-200 rounded-xl overflow-hidden max-w-full">
+                <table className="w-full text-left text-sm text-gray-600">
+                  <thead className="bg-gray-50 text-xs text-gray-500 font-semibold uppercase">
+                    <tr>
+                      <th className="px-6 py-4">
                         <div className="flex items-center gap-2">
                           <UserRound className="w-4 h-4" />
                           Name
                         </div>
                       </th>
-                      <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                      <th className="px-6 py-4">
                         <div className="flex items-center gap-2">
                           <Building2 className="w-4 h-4" />
                           Department
                         </div>
                       </th>
-                      <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                      <th className="px-6 py-4">
                         <div className="flex items-center gap-2">
                           <Calendar className="w-4 h-4" />
                           Today's Appointments
                         </div>
                       </th>
-                      <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                      <th className="px-6 py-4">
                         Status
                       </th>
                     </tr>
@@ -220,46 +253,34 @@ const DoctorsManagement = () => {
                     {paginatedDoctors.map((doctor, idx) => (
                       <tr
                         key={idx}
-                        className="hover:bg-gray-50 transition-colors duration-150"
+                        className="hover:bg-bimec-light-green/20 transition-colors duration-150"
                       >
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="flex items-center">
-                            <div className="w-9 h-9 rounded-full bg-gradient-to-br from-bimec-green to-bimec-heavy-green flex items-center justify-center text-white text-xs font-medium mr-3">
+                        <td className="px-6 py-4">
+                          <div className="flex items-center gap-3">
+                            <div className="w-9 h-9 rounded-full bg-gradient-to-br from-bimec-green to-bimec-heavy-green flex items-center justify-center text-white text-xs font-medium">
                               {doctor.name.split(" ")[1][0]}
                               {doctor.name.split(" ")[2]
                                 ? doctor.name.split(" ")[2][0]
                                 : ""}
                             </div>
-                            <div className="text-sm font-medium text-gray-900">
+                            <span className="font-medium text-gray-900">
                               {doctor.name}
-                            </div>
-                          </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <span className="inline-flex items-center px-2.5 py-1 rounded-md bg-gray-100 text-gray-700 text-xs">
-                            {doctor.department}
-                          </span>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="flex items-center">
-                            <span
-                              className={`text-sm ${
-                                doctor.todayAppointments > 0
-                                  ? "text-gray-900 font-medium"
-                                  : "text-gray-500"
-                              }`}
-                            >
-                              {doctor.todayAppointments} appointment
-                              {doctor.todayAppointments !== 1 ? "s" : ""}
                             </span>
                           </div>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <span
-                            className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${
-                              statusStyles[doctor.status].bg
-                            } ${statusStyles[doctor.status].text}`}
-                          >
+                        <td className="px-6 py-4 text-gray-600">
+                          <span className="inline-flex items-center px-2.5 py-1 rounded-md bg-gray-100 text-gray-700 text-xs font-medium">
+                            {doctor.department}
+                          </span>
+                        </td>
+                        <td className="px-6 py-4 text-gray-600">
+                          <span className={doctor.todayAppointments > 0 ? "font-medium text-gray-900" : ""}>
+                            {doctor.todayAppointments} appointment
+                            {doctor.todayAppointments !== 1 ? "s" : ""}
+                          </span>
+                        </td>
+                        <td className="px-6 py-4">
+                          <span className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium ${statusStyles[doctor.status].bg} ${statusStyles[doctor.status].text}`}>
                             {statusStyles[doctor.status].icon}
                             {doctor.status}
                           </span>
@@ -278,59 +299,50 @@ const DoctorsManagement = () => {
                   </p>
                 </div>
               )}
-            </div>
-
-            {/* Pagination */}
-            <div className="flex flex-wrap justify-between items-center mt-6">
-              <p className="text-sm text-gray-600">
-                Showing {startIndex + 1} to{" "}
-                {Math.min(startIndex + itemsPerPage, filteredDoctors.length)} of{" "}
-                {filteredDoctors.length} results
-              </p>
-
-              <div className="flex items-center space-x-2 mt-4 sm:mt-0">
-                <button
-                  onClick={handlePreviousPage}
-                  disabled={currentPage === 1}
-                  className={`p-2 rounded-lg transition-colors ${
-                    currentPage === 1
-                      ? "text-gray-400 cursor-not-allowed"
-                      : "text-gray-600 hover:bg-gray-100"
-                  }`}
-                >
-                  <ChevronLeft className="w-5 h-5" />
-                </button>
-
-                <div className="flex items-center gap-1">
-                  {Array.from({ length: totalPages }, (_, i) => i + 1).map(
-                    (page) => (
+              
+              {/* Pagination */}
+              {filteredDoctors.length > 0 && (
+                <div className="flex justify-between items-center text-sm text-gray-600 mt-6">
+                  <p className="text-sm text-gray-600">
+                    Showing {startIndex + 1} to {Math.min(startIndex + itemsPerPage, filteredDoctors.length)} of {filteredDoctors.length} results
+                  </p>
+                  
+                  <div className="flex items-center gap-1">
+                    <button
+                      className="p-2 rounded-lg transition-colors"
+                      onClick={() => handlePageChange(currentPage - 1)}
+                      disabled={currentPage === 1}
+                    >
+                      <ChevronLeft className={`w-5 h-5 ${currentPage === 1 ? 'text-gray-300' : 'text-gray-600 hover:text-bimec-green'}`} />
+                    </button>
+                    
+                    {getPageNumbers().map((page, index) => (
                       <button
-                        key={page}
-                        onClick={() => setCurrentPage(page)}
-                        className={`w-8 h-8 flex items-center justify-center rounded-lg text-sm font-medium transition-colors ${
+                        key={index}
+                        onClick={() => typeof page === 'number' && handlePageChange(page)}
+                        disabled={page === '...'}
+                        className={`px-3 py-1 rounded-lg text-sm font-medium transition-colors ${
                           page === currentPage
-                            ? "bg-bimec-green text-white"
-                            : "text-gray-700 hover:bg-gray-100"
+                            ? 'bg-bimec-green text-white'
+                            : page === '...'
+                            ? 'text-gray-400 cursor-default'
+                            : 'text-gray-600 hover:bg-gray-100'
                         }`}
                       >
                         {page}
                       </button>
-                    )
-                  )}
+                    ))}
+                    
+                    <button
+                      className="p-2 rounded-lg transition-colors"
+                      onClick={() => handlePageChange(currentPage + 1)}
+                      disabled={currentPage === totalPages || totalPages === 0}
+                    >
+                      <ChevronRight className={`w-5 h-5 ${currentPage === totalPages || totalPages === 0 ? 'text-gray-300' : 'text-gray-600 hover:text-bimec-green'}`} />
+                    </button>
+                  </div>
                 </div>
-
-                <button
-                  onClick={handleNextPage}
-                  disabled={currentPage === totalPages}
-                  className={`p-2 rounded-lg transition-colors ${
-                    currentPage === totalPages
-                      ? "text-gray-400 cursor-not-allowed"
-                      : "text-gray-600 hover:bg-gray-100"
-                  }`}
-                >
-                  <ChevronRight className="w-5 h-5" />
-                </button>
-              </div>
+              )}
             </div>
           </div>
         </main>

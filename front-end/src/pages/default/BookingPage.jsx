@@ -149,7 +149,7 @@ function DateOfBirthPicker({ selectedDate, onChange, dateError }) {
   const handleSelectDay = (day) => {
     // Format date as YYYY-MM-DD for input value
     const date = day.date;
-    const dateString = date.toISOString().split("T")[0];
+  const dateString = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
 
     onChange(dateString);
     setCalendarOpen(false);
@@ -470,7 +470,7 @@ function Calendar({ selectedDate, onChange, dateError }) {
 
     // Format date as YYYY-MM-DD for input value
     const date = day.date;
-    const dateString = date.toISOString().split("T")[0];
+    const dateString = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
 
     onChange(dateString);
     setCalendarOpen(false);

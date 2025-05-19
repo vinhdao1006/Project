@@ -21,12 +21,12 @@ function Header() {
 
   // Map routes to their corresponding names
   const routeNames = {
-    "/doctor/appointments": "Appointments",
+    "/doctor/appointments": "Today Appointments",
     "/doctor/patients": "Patients",
     "/doctor/schedule": "Schedule",
   };
 
-  const activeRouteName = routeNames[location.pathname];
+  const activeRouteName = routeNames[location.pathname] || "Patient Record";
 
   useEffect(() => {
     const checkAuth = async () => {
