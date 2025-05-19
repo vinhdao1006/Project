@@ -14,11 +14,21 @@ const auth = new google.auth.JWT(
 const calendar = google.calendar({ version: "v3", auth });
 
 async function createEvent({ summary, description, start, end }) {
+  // Convert to RFC3339 with timezone if needed
+  function toRFC3339(dateStr) {
+    // If already has timezone, return as is
+    if (dateStr.endsWith("Z") || dateStr.match(/[+-]\d{2}:\d{2}$/)) return dateStr;
+    // Assume Asia/Ho_Chi_Minh (UTC+7)
+    return dateStr.length === 16
+      ? `${dateStr}:00+07:00` // "YYYY-MM-DDTHH:mm" -> "YYYY-MM-DDTHH:mm:00+07:00"
+      : `${dateStr}+07:00`;
+  }
+
   const event = {
     summary,
     description,
-    start: { dateTime: start, timeZone: "Asia/Ho_Chi_Minh" },
-    end: { dateTime: end, timeZone: "Asia/Ho_Chi_Minh" },
+    start: { dateTime: toRFC3339(start), timeZone: "Asia/Ho_Chi_Minh" },
+    end: { dateTime: toRFC3339(end), timeZone: "Asia/Ho_Chi_Minh" },
   };
 
   return await calendar.events.insert({

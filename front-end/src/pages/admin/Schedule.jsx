@@ -127,10 +127,12 @@ const DoctorSchedulePage = () => {
   const [events, setEvents] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const [viewMode, setViewMode] = useState('timeGridWeek');
-  
+  const [viewMode, setViewMode] = useState("timeGridWeek");
+
   // Define a reference to the calendar
   const calendarRef = useRef(null);
+  const draggableRef = useRef(null);
+  const submitRef = useRef(null);
 
   const fetchEvents = async () => {
     setIsRefreshing(true);
@@ -175,7 +177,7 @@ const DoctorSchedulePage = () => {
 
   const handleAddClick = () => setShowForm(true);
   const handleCloseForm = () => setShowForm(false);
-  
+
   const handlePrev = () => {
     if (calendarRef.current) {
       const calendarApi = calendarRef.current.getApi();
@@ -205,7 +207,7 @@ const DoctorSchedulePage = () => {
 
       <main className="col-span-10 flex flex-col">
         <Header />
-        
+
         <div className="p-5 flex-1 overflow-auto">
           {/* Simple Control Bar */}
           <div className="flex items-center justify-end mb-4">
@@ -218,15 +220,19 @@ const DoctorSchedulePage = () => {
                 <Plus className="w-3.5 h-3.5" />
                 Add Schedule
               </Button>
-              
-              <Button 
-                variant="outline" 
+
+              <Button
+                variant="outline"
                 onClick={fetchEvents}
                 disabled={isRefreshing}
                 size="sm"
                 className="flex items-center gap-1.5 rounded-lg border-gray-200 text-gray-700 hover:bg-gray-50 h-9 px-3"
               >
-                <RefreshCw className={`w-3.5 h-3.5 ${isRefreshing ? 'animate-spin' : ''}`} />
+                <RefreshCw
+                  className={`w-3.5 h-3.5 ${
+                    isRefreshing ? "animate-spin" : ""
+                  }`}
+                />
                 <span className="sr-only md:not-sr-only">Refresh</span>
               </Button>
             </div>
@@ -246,8 +252,13 @@ const DoctorSchedulePage = () => {
               }}
               views={{
                 timeGrid: {
-                  dayHeaderFormat: { weekday: 'short', month: 'numeric', day: 'numeric', omitCommas: true }
-                }
+                  dayHeaderFormat: {
+                    weekday: "short",
+                    month: "numeric",
+                    day: "numeric",
+                    omitCommas: true,
+                  },
+                },
               }}
               events={events}
               slotMinTime="07:00:00"
@@ -258,31 +269,42 @@ const DoctorSchedulePage = () => {
               height={720}
               businessHours={{
                 daysOfWeek: [1, 2, 3, 4, 5, 6], // Monday - Saturday
-                startTime: '7:00',
-                endTime: '16:00',
+                startTime: "7:00",
+                endTime: "16:00",
               }}
               eventDidMount={(info) => {
                 tippy(info.el, {
                   content: `
                     <div class="p-3">
-                      <div class="font-semibold text-gray-900 mb-2">${info.event.title}</div>
+                      <div class="font-semibold text-gray-900 mb-2">${
+                        info.event.title
+                      }</div>
                       <div class="text-sm text-gray-600 mb-2">
-                        ${info.event.extendedProps.description || "No description provided"}
+                        ${
+                          info.event.extendedProps.description ||
+                          "No description provided"
+                        }
                       </div>
                       <div class="flex items-center text-xs text-gray-500">
-                        ${new Date(info.event.start).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})} - 
-                        ${new Date(info.event.end).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+                        ${new Date(info.event.start).toLocaleTimeString([], {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })} - 
+                        ${new Date(info.event.end).toLocaleTimeString([], {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
                       </div>
                     </div>
                   `,
                   allowHTML: true,
                   animation: "shift-away",
-                  theme: 'calendar',
+                  theme: "calendar",
                   interactive: true,
                   delay: [100, 0],
                   placement: "top",
                   appendTo: document.body,
-                  maxWidth: 300
+                  maxWidth: 300,
                 });
               }}
             />
@@ -293,11 +315,16 @@ const DoctorSchedulePage = () => {
       {/*Add Schedule Form */}
       {showForm && (
         <div className="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50 transition-all duration-300 backdrop-blur-sm">
-          <Draggable handle=".handle">
-            <div className="bg-white rounded-xl shadow-2xl max-w-xl w-full relative transform transition-all duration-300 animate-in fade-in zoom-in-95 border border-gray-200">
+          <Draggable handle=".handle" nodeRef={draggableRef}>
+            <div
+              ref={draggableRef}
+              className="bg-white rounded-xl shadow-2xl max-w-xl w-full relative transform transition-all duration-300 animate-in fade-in zoom-in-95 border border-gray-200"
+            >
               <div className="handle p-5 border-b border-gray-100 flex justify-between items-center cursor-move bg-gradient-to-r from-white to-gray-50">
                 <div className="flex items-center gap-2">
-                  <h3 className="font-semibold text-gray-900 ml-2">Add New Schedule</h3>
+                  <h3 className="font-semibold text-gray-900 ml-2">
+                    Add New Schedule
+                  </h3>
                 </div>
                 <button
                   onClick={handleCloseForm}
@@ -312,6 +339,7 @@ const DoctorSchedulePage = () => {
                     fetchEvents();
                     setShowForm(false);
                   }}
+                  submitRef={submitRef}
                 />
               </div>
               <div className="p-4 border-t border-gray-100 bg-gray-50 rounded-b-xl flex justify-end">
@@ -324,9 +352,7 @@ const DoctorSchedulePage = () => {
                 <button
                   className="px-4 py-2 bg-bimec-green hover:bg-bimec-heavy-green text-white text-sm font-medium rounded-lg transition-colors"
                   onClick={() => {
-                    // This is just for the styling - the actual submit functionality is handled in the AddScheduleForm component
-                    const submitButton = document.querySelector('form button[type="submit"]');
-                    if (submitButton) submitButton.click();
+                    if (submitRef.current) submitRef.current.click();
                   }}
                 >
                   Save Schedule

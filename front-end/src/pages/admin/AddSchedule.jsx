@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { CalendarDays, Clock, User, FileText } from "lucide-react";
 
-const AddScheduleForm = ({ onEventCreated }) => {
+const AddScheduleForm = ({ onEventCreated, submitRef }) => {
   const [summary, setSummary] = useState("");
   const [description, setDescription] = useState("");
   const [start, setStart] = useState("");
@@ -17,7 +17,10 @@ const AddScheduleForm = ({ onEventCreated }) => {
 
     try {
       const eventData = { summary, description, start, end };
-      const response = await axios.post("http://localhost:3001/api/calendar/events", eventData);
+      const response = await axios.post(
+        "http://localhost:3001/api/calendar/events",
+        eventData
+      );
 
       if (onEventCreated) onEventCreated(response.data);
 
@@ -39,8 +42,17 @@ const AddScheduleForm = ({ onEventCreated }) => {
       {error && (
         <div className="text-red-600 text-sm bg-red-50 p-3 rounded-lg border border-red-200 flex items-start">
           <span className="bg-red-100 p-1 rounded-full mr-2">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-red-600" viewBox="0 0 20 20" fill="currentColor">
-              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-4 w-4 text-red-600"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fillRule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                clipRule="evenodd"
+              />
             </svg>
           </span>
           {error}
@@ -50,7 +62,7 @@ const AddScheduleForm = ({ onEventCreated }) => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         <div className="coolinput">
           <label className="text" htmlFor="summary">
-            <User size={14} className="mr-1 inline-block" /> 
+            <User size={14} className="mr-1 inline-block" />
             Doctor's Name
           </label>
           <input
@@ -66,7 +78,7 @@ const AddScheduleForm = ({ onEventCreated }) => {
 
         <div className="coolinput">
           <label className="text" htmlFor="description">
-            <FileText size={14} className="mr-1 inline-block" /> 
+            <FileText size={14} className="mr-1 inline-block" />
             Description
           </label>
           <input
@@ -81,7 +93,7 @@ const AddScheduleForm = ({ onEventCreated }) => {
 
         <div className="coolinput">
           <label className="text" htmlFor="start">
-            <CalendarDays size={14} className="mr-1 inline-block" /> 
+            <CalendarDays size={14} className="mr-1 inline-block" />
             Start Time
           </label>
           <input
@@ -96,7 +108,7 @@ const AddScheduleForm = ({ onEventCreated }) => {
 
         <div className="coolinput">
           <label className="text" htmlFor="end">
-            <Clock size={14} className="mr-1 inline-block" /> 
+            <Clock size={14} className="mr-1 inline-block" />
             End Time
           </label>
           <input
@@ -108,6 +120,7 @@ const AddScheduleForm = ({ onEventCreated }) => {
             className="input bg-white"
           />
         </div>
+        <button type="submit" className="hidden" ref={submitRef} />
       </div>
 
       <style jsx>{`
