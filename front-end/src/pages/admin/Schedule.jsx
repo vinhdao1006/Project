@@ -206,7 +206,9 @@ const DoctorSchedulePage = () => {
       </div>
 
       <main className="col-span-10 flex flex-col">
-        <Header />
+        <div className="mb-20">
+          <Header />
+        </div>
 
         <div className="p-5 flex-1 overflow-auto">
           {/* Simple Control Bar */}
