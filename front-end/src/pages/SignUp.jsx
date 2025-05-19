@@ -483,22 +483,23 @@ const SignUp = () => {
                   </div>
                 )}
 
-                {/* Submit Button with animation */}
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className={`w-full bg-bimec-heavy-green text-white py-2.5 rounded-lg font-medium 
-                                             hover:bg-bimec-green focus:outline-none focus:ring-4 focus:ring-green-300 
-                                             transition-all duration-200 transform hover:scale-[1.02] hover:shadow-lg 
-                                             disabled:bg-gray-400 disabled:hover:scale-100 ${
-                                               isVisible
-                                                 ? "translate-y-0 opacity-100"
-                                                 : "translate-y-10 opacity-0"
-                                             }`}
-                  style={{ transitionDelay: "900ms" }}
+                {/* Submit Button with animation*/}
+                <div 
+                  className={`transform transition-all duration-700 delay-[900ms] ${
+                    isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
+                  }`}
                 >
-                  {loading ? "Creating Account..." : "Create Account"}
-                </button>
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="w-full bg-bimec-heavy-green text-white py-2.5 rounded-lg font-medium 
+                               hover:bg-bimec-green focus:outline-none focus:ring-4 focus:ring-green-300 
+                               transition-all duration-150 transform hover:scale-[1.02] hover:shadow-lg 
+                               disabled:bg-gray-400 disabled:hover:scale-100"
+                  >
+                    {loading ? "Creating Account..." : "Create Account"}
+                  </button>
+                </div>
 
                 {/* Login Link with animation */}
                 <p
@@ -532,21 +533,22 @@ const SignUp = () => {
                   <hr className="flex-grow border-gray-300" />
                 </div>
 
-                {/* Google Button with animation */}
-                <button
-                  type="button"
-                  className={`w-full bg-white border border-gray-300 text-gray-700 py-2.5 px-4 rounded-lg font-medium 
-                                             hover:bg-gray-50 flex items-center justify-center gap-2 
-                                             transition-all duration-200 transform hover:scale-[1.02] hover:shadow-md ${
-                                               isVisible
-                                                 ? "translate-y-0 opacity-100"
-                                                 : "translate-y-10 opacity-0"
-                                             }`}
-                  style={{ transitionDelay: "1200ms" }}
+                {/* Google Button*/}
+                <div
+                  className={`transform transition-all duration-700 delay-[1200ms] ${
+                    isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
+                  }`}
                 >
-                  <img src={Google_icon} alt="Google" className="w-5 h-5" />
-                  {/* Sign up with Google */}
-                </button>
+                  <button
+                    type="button"
+                    className="w-full bg-white border border-gray-300 text-gray-700 py-2.5 px-4 rounded-lg font-medium 
+                               hover:bg-gray-50 flex items-center justify-center gap-2 
+                               transition-all duration-150 transform hover:scale-[1.02] hover:shadow-md"
+                  >
+                    <img src={Google_icon} alt="Google" className="w-5 h-5" />
+                    {/* Sign up with Google */}
+                  </button>
+                </div>
               </form>
             </div>
           </div>

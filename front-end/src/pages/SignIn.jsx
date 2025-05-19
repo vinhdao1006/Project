@@ -226,19 +226,20 @@ function SignIn() {
                                 )}
 
                                 {/* Submit Button with animation */}
-                                <button
-                                    type="submit"
-                                    className={`w-full bg-bimec-heavy-green text-white py-2.5 rounded-sm font-medium 
-                                             hover:bg-bimec-green focus:outline-none focus:ring-4 focus:ring-green-300 
-                                             transition-all duration-200 transform hover:scale-[1.02] hover:shadow-lg ${
-                                        isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
-                                    }`}
-                                    style={{ transitionDelay: '700ms' }}
-                                >
-                                    Login
-                                </button>
+                                <div className={`transform transition-all duration-700 delay-[700ms] ${
+                                    isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+                                }`}>
+                                    <button
+                                        type="submit"
+                                        className="w-full bg-bimec-heavy-green text-white py-2.5 rounded-sm font-medium 
+                                                hover:bg-bimec-green focus:outline-none focus:ring-4 focus:ring-green-300 
+                                                transition-all duration-150 hover:scale-[1.02] hover:shadow-lg"
+                                    >
+                                        Login
+                                    </button>
+                                </div>
 
-                                {/* Sign up Link with animation */}
+                                {/* Sign up Link */}
                                 <p className={`text-center text-sm transform transition-all duration-700 delay-[800ms] ${
                                     isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
                                 }`}>
@@ -257,7 +258,7 @@ function SignIn() {
                                     <hr className="flex-grow border-gray-300" />
                                 </div>
 
-                                {/* Google Button with animation */}
+                                {/* Google Button*/}
                                 <div className={`w-full flex items-center justify-center transform transition-all duration-700 delay-[1000ms] ${
                                     isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
                                 }`}>

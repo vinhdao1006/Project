@@ -288,7 +288,7 @@ function DoctorPage() {
             <BimecFooter />
 
             {/* Floating Button Group */}
-            <FloatButtonGroup />
+            {/* <FloatButtonGroup /> */}
 
             {/* Custom Styles for Animations */}
             <style jsx>{`

@@ -244,32 +244,34 @@ const ContactSection = () => {
                             </form>
                         </div>
 
-                        {/* Info Section */}
+                        {/* Info Section - Modified Animation Timing */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                             {contactInfo.map((info, index) => (
                                 <div
                                     key={info.id}
                                     data-card-id={info.id}
-                                    className={`info-card ${info.bgColor} p-8 rounded-2xl shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl ${info.hoverColor} cursor-pointer ${
+                                    className={`info-card ${info.bgColor} p-8 rounded-2xl shadow-lg ${
                                         visibleCards.has(info.id.toString()) 
-                                            ? 'translate-y-0 opacity-100' 
-                                            : 'translate-y-20 opacity-0'
-                                    }`}
+                                            ? 'opacity-100 translate-y-0' 
+                                            : 'opacity-0 translate-y-20'
+                                    } info-card-entrance`}
                                     style={{ transitionDelay: `${1000 + index * 100}ms` }}
                                 >
-                                    <div className="bg-white/20 backdrop-blur-sm rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6 transform transition-all duration-300 hover:scale-110 hover:rotate-12">
-                                        <info.icon className="text-white h-8 w-8" />
-                                    </div>
-                                    <h4 className="font-semibold text-xl text-white text-center mb-4">
-                                        {info.title}
-                                    </h4>
-                                    <div className="space-y-3">
-                                        {info.details.map((detail, idx) => (
-                                            <p key={idx} className="text-white/90 flex items-center justify-center text-sm">
-                                                <detail.icon className="h-4 w-4 mr-2" />
-                                                {detail.text}
-                                            </p>
-                                        ))}
+                                    <div className="info-card-content">
+                                        <div className="bg-white/20 backdrop-blur-sm rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6 info-card-icon">
+                                            <info.icon className="text-white h-8 w-8" />
+                                        </div>
+                                        <h4 className="font-semibold text-xl text-white text-center mb-4">
+                                            {info.title}
+                                        </h4>
+                                        <div className="space-y-3">
+                                            {info.details.map((detail, idx) => (
+                                                <p key={idx} className="text-white/90 flex items-center justify-center text-sm">
+                                                    <detail.icon className="h-4 w-4 mr-2" />
+                                                    {detail.text}
+                                                </p>
+                                            ))}
+                                        </div>
                                     </div>
                                 </div>
                             ))}
@@ -282,7 +284,7 @@ const ContactSection = () => {
             <Footer />
 
             {/* Floating Button Group */}
-            <FloatButtonGroup />
+            {/* <FloatButtonGroup /> */}
 
             {/* Custom Animation Styles */}
             <style jsx>{`
@@ -297,6 +299,28 @@ const ContactSection = () => {
 
                 .animate-expand {
                     animation: expand 0.8s ease-out forwards;
+                }
+
+                /* Separate entrance animation from hover effects */
+                .info-card-entrance {
+                    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+                }
+
+                .info-card {
+                    transition: transform 0.15s ease-out, box-shadow 0.15s ease-out;
+                }
+
+                .info-card:hover {
+                    transform: scale(1.05);
+                    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+                }
+
+                .info-card-icon {
+                    transition: transform 0.15s ease-out;
+                }
+
+                .info-card:hover .info-card-icon {
+                    transform: scale(1.1) rotate(12deg);
                 }
             `}</style>
         </div>

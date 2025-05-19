@@ -18,7 +18,7 @@ import "tippy.js/themes/light.css";
 // Custom css for FullCalendar
 const calendarStyles = `
   .fc {
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: "Open Sans", sans-serif;
     --fc-border-color: #E5E7EB;
     --fc-today-bg-color: rgba(244, 255, 243, 0.5);
   }
