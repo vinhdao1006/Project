@@ -207,7 +207,7 @@ const DoctorSchedulePage = () => {
 
       <div className="col-span-10">
         <Header />
-        
+
         {/* Thêm pt-16 để tạo khoảng cách cho header */}
         <main className="pt-16 flex flex-col">
           <div className="p-5 flex-1 overflow-auto">
@@ -222,9 +222,9 @@ const DoctorSchedulePage = () => {
                   <Plus className="w-3.5 h-3.5" />
                   Add Schedule
                 </Button>
-                
-                <Button 
-                  variant="outline" 
+
+                <Button
+                  variant="outline"
                   onClick={fetchEvents}
                   disabled={isRefreshing}
                   size="sm"
