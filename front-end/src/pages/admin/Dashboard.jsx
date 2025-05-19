@@ -32,7 +32,7 @@ const AdminDashboard = () => {
         
         {/* Dashboard Content - Thêm pt-16 để tạo khoảng cách cho header */}
         <main className="pt-16 flex flex-col">
-          <div className="p-6 flex-1">
+          <div className="p-8 flex-1">
             {/* Metrics */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
               {/* Patients Card */}
