@@ -15,61 +15,61 @@ import {
   MagnifyingGlassIcon
 } from '@heroicons/react/24/outline';
 
-// Updated patient data with new status types
+// Updated patient data with new status types and time field
 const patientsData = [
   {
     admitted: "27 Dec, 2024",
     patient: "Dianne Russell",
-    room: "BC5001",
+    time: "09:30 AM",
     concern: "Upper Abdomen General",
     status: { label: "Pending", type: "pending" },
   },
   {
     admitted: "03 Feb, 2023",
     patient: "Bessie Cooper",
-    room: "DMK502",
+    time: "11:00 AM",
     concern: "Gynecologic Disorders",
     status: { label: "Canceled", type: "canceled" },
   },
   {
     admitted: "02 Mar, 2023",
     patient: "Marvin McKinney",
-    room: "DMK502",
+    time: "02:15 PM",
     concern: "Brain, Spinal Cord, and Nerve Disorders",
     status: { label: "Checked", type: "checked" },
   },
   {
     admitted: "02 Mar, 2023",
     patient: "Esther Howard",
-    room: "DMK502",
+    time: "10:45 AM",
     concern: "Digestive Disorders",
     status: { label: "Checked", type: "checked" },
   },
   {
     admitted: "02 Mar, 2023",
     patient: "Marvin McKinney",
-    room: "BC1022",
+    time: "03:30 PM",
     concern: "Upper Abdomen General",
     status: { label: "Pending", type: "pending" },
   },
   {
     admitted: "02 Mar, 2023",
     patient: "Annette Black",
-    room: "BC1022",
+    time: "01:00 PM",
     concern: "Digestive Disorders",
     status: { label: "Pending", type: "pending" },
   },
   {
     admitted: "02 Mar, 2023",
     patient: "Cameron Williamson",
-    room: "BC1022",
+    time: "08:15 AM",
     concern: "Liver and Gallbladder Disorders",
     status: { label: "Canceled", type: "canceled" },
   },
   {
     admitted: "02 Mar, 2023",
     patient: "Guy Hawkins",
-    room: "BC1022",
+    time: "04:45 PM",
     concern: "Medical Care During Pregnancy",
     status: { label: "Checked", type: "checked" },
   },
@@ -129,8 +129,8 @@ function PatientsTable({ paginatedPatients, onPatientClick }) {
             </th>
             <th className="px-6 py-4">
               <div className="flex items-center gap-2">
-                <HomeModernIcon className="w-4 h-4" />
-                Room
+                <ClockIcon className="w-4 h-4" />
+                Time
               </div>
             </th>
             <th className="px-6 py-4">
@@ -166,7 +166,7 @@ function PatientsTable({ paginatedPatients, onPatientClick }) {
               </td>
               <td className="px-6 py-4 text-gray-600">
                 <span className="inline-flex items-center px-2.5 py-1 rounded-md bg-gray-100 text-gray-700 text-xs font-medium">
-                  {patient.room}
+                  {patient.time}
                 </span>
               </td>
               <td className="px-6 py-4 text-gray-600 max-w-xs truncate">
@@ -203,7 +203,7 @@ function DoctorAppoinments() {
     .filter(patient => 
       patient.patient.toLowerCase().includes(searchTerm.toLowerCase()) ||
       patient.concern.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      patient.room.toLowerCase().includes(searchTerm.toLowerCase())
+      patient.time.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
   // Calculate pagination
@@ -364,7 +364,7 @@ function DoctorAppoinments() {
                         : 'text-gray-600 hover:text-bimec-green'
                     }`}
                   >
-                    <ChevronLeftIcon className="w-5 h-5" />
+                    <ChevronRightIcon className="w-5 h-5" />
                   </button>
                   
                   {getPageNumbers().map((page, index) => (
@@ -393,7 +393,7 @@ function DoctorAppoinments() {
                         : 'text-gray-600 hover:text-bimec-green'
                     }`}
                   >
-                    <ChevronRightIcon className="w-5 h-5" />
+                    <ChevronLeftIcon className="w-5 h-5" />
                   </button>
                 </div>
               </div>
