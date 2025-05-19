@@ -255,14 +255,14 @@ function Header() {
                 )}
               </div>
 
-              <div className="p-3 border-t border-gray-100 bg-gray-50 text-center">
+              {/* <div className="p-3 border-t border-gray-100 bg-gray-50 text-center">
                 <button
                   onClick={() => navigate("/admin/notifications")}
                   className="text-xs font-medium text-bimec-green hover:text-bimec-heavy-green transition-colors"
                 >
                   View all notifications
                 </button>
-              </div>
+              </div> */}
             </Menu.Items>
           </Transition>
         </Menu>
