@@ -4,8 +4,6 @@ import Google_icon from "../assets/icon/icon_google.png";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import BimecHeader from "../components/Header/BimecHeader";
-import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/react";
-import { ChevronDownIcon } from "@heroicons/react/20/solid";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -484,9 +482,11 @@ const SignUp = () => {
                 )}
 
                 {/* Submit Button with animation*/}
-                <div 
+                <div
                   className={`transform transition-all duration-700 delay-[900ms] ${
-                    isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
+                    isVisible
+                      ? "translate-y-0 opacity-100"
+                      : "translate-y-10 opacity-0"
                   }`}
                 >
                   <button
@@ -536,7 +536,9 @@ const SignUp = () => {
                 {/* Google Button*/}
                 <div
                   className={`transform transition-all duration-700 delay-[1200ms] ${
-                    isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
+                    isVisible
+                      ? "translate-y-0 opacity-100"
+                      : "translate-y-10 opacity-0"
                   }`}
                 >
                   <button

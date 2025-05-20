@@ -31,7 +31,7 @@ const Appointments = () => {
             },
           }
         );
-
+        console.log("Appointments data:", response.data);
         setAppointments(response.data);
         setLoading(false);
       } catch (err) {
@@ -95,12 +95,12 @@ const Appointments = () => {
                 You have not booked any appointments. Book your first
                 appointment now!
               </p>
-              <a
-                href="/booking"
+              <button
+                onClick={() => navigate("/default/booking")}
                 className="inline-block bg-bimec-green text-white px-6 py-2 rounded hover:bg-bimec-heavy-green font-semibold transition"
               >
                 Book Appointment
-              </a>
+              </button>
             </div>
           ) : (
             <>
@@ -132,11 +132,11 @@ const Appointments = () => {
                     {appointments.map((appt) => (
                       <tr key={appt._id}>
                         <td className="px-6 py-4 whitespace-nowrap font-semibold text-bimec-heavy-green">
-                          Dr. {appt.doctorId?.userId?.firstname}{" "}
-                          {appt.doctorId?.userId?.lastname}
+                          Dr. {appt.doctorId?.firstname}{" "}
+                          {appt.doctorId?.lastname}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          {appt.specialtyId?.name}
+                          {appt.specialtyId}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           {new Date(appt.appointmentDate).toLocaleDateString()}
@@ -161,12 +161,12 @@ const Appointments = () => {
                 </table>
               </div>
               <div className="mt-8 text-center">
-                <a
-                  href="/booking"
+                <button
+                  onClick={() => navigate("/default/booking")}
                   className="inline-block bg-bimec-green text-white px-6 py-2 rounded hover:bg-bimec-heavy-green font-semibold transition"
                 >
                   Book Another Appointment
-                </a>
+                </button>
               </div>
             </>
           )}

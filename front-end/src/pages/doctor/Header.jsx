@@ -1,16 +1,16 @@
 import React, { useEffect, useState, Fragment } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { Menu, Transition } from '@headlessui/react';
-import { jwtDecode } from 'jwt-decode';
-import { 
-  MagnifyingGlassIcon, 
-  BellIcon, 
-  ChevronDownIcon, 
-  UserIcon, 
-  Cog6ToothIcon, 
-  ArrowRightOnRectangleIcon 
-} from '@heroicons/react/24/outline';
+import { Menu, Transition } from "@headlessui/react";
+import { jwtDecode } from "jwt-decode";
+import {
+  MagnifyingGlassIcon,
+  BellIcon,
+  ChevronDownIcon,
+  UserIcon,
+  Cog6ToothIcon,
+  ArrowRightOnRectangleIcon,
+} from "@heroicons/react/24/outline";
 
 function Header() {
   const [userName, setUserName] = useState("");
@@ -21,27 +21,30 @@ function Header() {
 
   // Map routes to their corresponding names
   const routeNames = {
-    "/doctor/appointments": "Appointments",
+    "/doctor/appointments": "Today Appointments",
     "/doctor/patients": "Patients",
     "/doctor/schedule": "Schedule",
   };
 
-  const activeRouteName = routeNames[location.pathname] || "Dashboard";
+  const activeRouteName = routeNames[location.pathname] || "Patient Record";
 
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem("token");
         if (token) {
           const decodedToken = jwtDecode(token);
-          const response = await axios.get(`http://localhost:3001/api/users/${decodedToken.email}`);
+          const response = await axios.get(
+            `http://localhost:3001/api/users/${decodedToken.email}`
+          );
           setIsLoggedIn(true);
           setUserName(`${response.data.firstname} ${response.data.lastname}`);
-          setUserRole(response.data.role);
+        } else {
+          handleLogout();
         }
       } catch (error) {
-        console.error('Error checking auth status:', error);
-        localStorage.removeItem('token');
+        console.error("Error checking auth status:", error);
+        localStorage.removeItem("token");
       }
     };
 
@@ -49,11 +52,11 @@ function Header() {
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem("token");
     setIsLoggedIn(false);
     setUserName("");
     setUserRole("");
-    navigate('/login');
+    navigate("/login");
   };
 
   return (
@@ -61,7 +64,7 @@ function Header() {
       <div className="flex items-center gap-6">
         <h1 className="text-2xl font-bold text-gray-900">{activeRouteName}</h1>
       </div>
-      
+
       <div className="flex items-center gap-5">
         {/* Search Bar */}
         <div className="relative">
@@ -92,10 +95,12 @@ function Header() {
               <div className="w-8 h-8 rounded-full bg-gradient-to-br from-bimec-green to-bimec-heavy-green flex items-center justify-center text-white font-medium shadow-sm group-hover:shadow-md transition-shadow duration-300">
                 {userName.charAt(0).toUpperCase()}
               </div>
-              <span className="text-sm font-medium text-gray-700">{userName}</span>
+              <span className="text-sm font-medium text-gray-700">
+                {userName}
+              </span>
               <ChevronDownIcon className="w-4 h-4 text-gray-500 group-hover:rotate-180 transition-transform duration-300" />
             </Menu.Button>
-            
+
             <Transition
               as={Fragment}
               enter="transition ease-out duration-200"
@@ -107,16 +112,20 @@ function Header() {
             >
               <Menu.Items className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none overflow-hidden z-[100]">
                 <div className="px-4 py-3 border-b border-gray-100">
-                  <p className="text-sm font-medium text-gray-900">{userName}</p>
+                  <p className="text-sm font-medium text-gray-900">
+                    {userName}
+                  </p>
                   <p className="text-xs text-gray-500">{userRole}</p>
                 </div>
-                
+
                 <Menu.Item>
                   {({ active }) => (
                     <button
-                      onClick={() => navigate('/profile')}
+                      onClick={() => navigate("/profile")}
                       className={`flex items-center space-x-3 w-full px-4 py-3 text-sm transition-colors duration-200 ${
-                        active ? 'bg-bimec-light-green text-bimec-heavy-green' : 'text-gray-700'
+                        active
+                          ? "bg-bimec-light-green text-bimec-heavy-green"
+                          : "text-gray-700"
                       }`}
                     >
                       <UserIcon className="w-5 h-5" />
@@ -124,13 +133,15 @@ function Header() {
                     </button>
                   )}
                 </Menu.Item>
-                
+
                 <Menu.Item>
                   {({ active }) => (
                     <button
-                      onClick={() => navigate('/settings')}
+                      onClick={() => navigate("/settings")}
                       className={`flex items-center space-x-3 w-full px-4 py-3 text-sm transition-colors duration-200 ${
-                        active ? 'bg-bimec-light-green text-bimec-heavy-green' : 'text-gray-700'
+                        active
+                          ? "bg-bimec-light-green text-bimec-heavy-green"
+                          : "text-gray-700"
                       }`}
                     >
                       <Cog6ToothIcon className="w-5 h-5" />
@@ -138,14 +149,14 @@ function Header() {
                     </button>
                   )}
                 </Menu.Item>
-                
+
                 <div className="border-t border-gray-100">
                   <Menu.Item>
                     {({ active }) => (
                       <button
                         onClick={handleLogout}
                         className={`flex items-center space-x-3 w-full px-4 py-3 text-sm transition-colors duration-200 ${
-                          active ? 'bg-red-50 text-red-600' : 'text-gray-700'
+                          active ? "bg-red-50 text-red-600" : "text-gray-700"
                         }`}
                       >
                         <ArrowRightOnRectangleIcon className="w-5 h-5" />

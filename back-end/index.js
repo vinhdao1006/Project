@@ -123,9 +123,9 @@ app.get('/api/doctors/:specialty', async (req, res) => {
     try {
         //use this code to print list of specialties when trying to debug  
         const a = await SpecialtyModel.find()
-        console.log("api doctors specialy: ")
-        for (var i = 0; i < a.length; ++i)
-            console.log(a[i])
+        // console.log("api doctors specialy: ")
+        // for (var i = 0; i < a.length; ++i)
+        //     console.log(a[i])
 
         const doctors = await DoctorModel.find({ specialty: req.params.specialty })
             .populate('firstname lastname')
@@ -185,9 +185,10 @@ app.post('/api/appointments', async (req, res) => {
 // Get patient's appointments
 app.get('/api/patient-appointments/:patientId', async (req, res) => {
     try {
+        // console.log("patientId: ", req.params.patientId);
         const appointments = await AppointmentModel.find({ patientId: req.params.patientId })
             .populate('doctorId')
-            .populate('specialtyId', 'name')
+            // .populate('specialtyId', 'name')
             .sort({ appointmentDate: 1 });
         res.json(appointments);
     } catch (error) {

@@ -28,7 +28,7 @@ function Header() {
 
   // Map routes to their corresponding names
   const routeNames = {
-    "/admin/appointments": "Appointments",
+    "/admin/appointments": "Today Appointments",
     "/admin/patients": "Patients",
     "/admin/doctor-schedule": "Schedule",
     "/admin/dashboard": "Dashboard",
@@ -36,7 +36,7 @@ function Header() {
     "/admin/doctors": "Doctors",
   };
 
-  const activeRouteName = routeNames[location.pathname] || "Dashboard";
+  const activeRouteName = routeNames[location.pathname];
 
   // get user info
   useEffect(() => {
@@ -50,6 +50,9 @@ function Header() {
           }
         );
         setUser(response.data);
+        if (response.data.role !== "Admin") {
+          handleLogout();
+        }
         setIsLoggedIn(true);
       } catch (error) {
         console.error("Error fetching user info:", error);
@@ -90,6 +93,7 @@ function Header() {
   }, [unreadCount]);
 
   const handleLogout = () => {
+    // localStorage.removeItem("token");
     navigate("/login");
   };
 
@@ -128,23 +132,10 @@ function Header() {
   };
 
   return (
-    <header className="fixed top-0 right-0 z-10 flex items-center justify-between h-16 px-6 py-5 bg-white border-b border-gray-100 ml-50 w-[calc(100%-16rem)]">
+    <header className="fixed top-0 right-0 z-50 flex items-center justify-between px-8 py-5 bg-white border-b border-gray-100 ml-50 w-[calc(100%-16rem)] shadow-sm">
       <div className="flex items-center gap-6">
         <h1 className="text-2xl font-bold text-gray-900">{activeRouteName}</h1>
       </div>
-
-      {/* <div className="flex items-center gap-5"> */}
-      {/* Search Bar */}
-      {/* <div className="relative">
-          <input
-            type="search"
-            placeholder="Search..."
-            className="w-64 h-11 pl-11 pr-4 rounded-full bg-gray-50 border-2 border-gray-200 text-sm text-gray-700 placeholder-gray-400 
-                     transition-all duration-200 
-                     focus:outline-none focus:border-bimec-green focus:bg-white"
-          />
-          <MagnifyingGlassIcon className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-        </div> */}
 
       <div className="flex items-center gap-4">
         {/* Notifications */}
@@ -155,7 +146,7 @@ function Header() {
           >
             <BellIcon className="w-5 h-5" />
             {unreadCount > 0 && (
-              <span className="absolute top-2 right-2 flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-red-500 rounded-full shadow-lg animate-pulse">
+              <span className="absolute -top-1 -right-1 flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-red-500 rounded-full shadow-lg animate-pulse">
                 {unreadCount}
               </span>
             )}
@@ -254,15 +245,6 @@ function Header() {
                   </div>
                 )}
               </div>
-
-              {/* <div className="p-3 border-t border-gray-100 bg-gray-50 text-center">
-                <button
-                  onClick={() => navigate("/admin/notifications")}
-                  className="text-xs font-medium text-bimec-green hover:text-bimec-heavy-green transition-colors"
-                >
-                  View all notifications
-                </button>
-              </div> */}
             </Menu.Items>
           </Transition>
         </Menu>
@@ -301,7 +283,7 @@ function Header() {
               leaveFrom="transform opacity-100 scale-100"
               leaveTo="transform opacity-0 scale-95"
             >
-              <Menu.Items className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none overflow-hidden z-30">
+              <Menu.Items className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none overflow-hidden z-50">
                 <div className="px-4 py-3 border-b border-gray-100">
                   <p className="text-sm font-medium text-gray-900">
                     {user.firstname + " " + user.lastname}
