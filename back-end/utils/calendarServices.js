@@ -1,9 +1,14 @@
+require("dotenv").config();
 const { google } = require("googleapis");
-const key = require("../credentials/google-service-account.json");
 
 const SCOPES = ["https://www.googleapis.com/auth/calendar"];
-const calendarId = "610f89de9c7dec26bf6c9d9b2f0a1b2261fab4d695d3fc39616cfe7756498315@group.calendar.google.com"; 
+const calendarId = "610f89de9c7dec26bf6c9d9b2f0a1b2261fab4d695d3fc39616cfe7756498315@group.calendar.google.com";
 
+// Decode the base64 environment variable
+const keyJson = Buffer.from(process.env.GOOGLE_SERVICE_KEY_BASE64, "base64").toString("utf-8");
+const key = JSON.parse(keyJson);
+
+// Authorize with JWT
 const auth = new google.auth.JWT(
   key.client_email,
   null,
