@@ -20,16 +20,24 @@ const UserSchema = new mongoose.Schema({
 })
 
 // Pre-save hook to generate userId based on role
-UserSchema.pre("save", function(next) {
+UserSchema.pre("save", async function(next) {
     if (!this.userId) {
         let prefix = "P";
         if (this.role === "Doctor") prefix = "D";
         if (this.role === "Admin") prefix = "A";
-        const randomNum = Math.floor(Math.random() * 10000) + 1;
-        this.userId = `${prefix}${randomNum}`;
+
+        try {
+            const count = await mongoose.model("Users").countDocuments({ role: this.role });
+            this.userId = `${prefix}${count + 1}`;
+            next();
+        } catch (err) {
+            next(err);
+        }
+    } else {
+        next();
     }
-    next();
 });
+
 
 const UserModel = mongoose.model("Users", UserSchema)
 module.exports = UserModel
