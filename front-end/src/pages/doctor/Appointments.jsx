@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
-import { 
-  UserIcon, 
+import {
+  UserIcon,
   ClockIcon,
   ExclamationCircleIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
-  MagnifyingGlassIcon
-} from '@heroicons/react/24/outline';
+  MagnifyingGlassIcon,
+} from "@heroicons/react/24/outline";
 
 // Updated patient data without status information
 const patientsData = [
@@ -91,7 +91,10 @@ function PatientsTable({ paginatedPatients, onPatientClick }) {
               <td className="px-6 py-4">
                 <div className="flex items-center gap-3">
                   <div className="w-9 h-9 rounded-full bg-gradient-to-br from-bimec-green to-bimec-heavy-green flex items-center justify-center text-white text-xs font-medium">
-                    {patient.patient.split(' ').map(n => n[0]).join('')}
+                    {patient.patient
+                      .split(" ")
+                      .map((n) => n[0])
+                      .join("")}
                   </div>
                   <span className="font-medium text-gray-900">
                     {patient.patient}
@@ -121,12 +124,12 @@ function DoctorAppoinments() {
   const navigate = useNavigate();
 
   // Filter appointments based on search term only
-  const filteredPatients = patientsData
-    .filter(patient => 
+  const filteredPatients = patientsData.filter(
+    (patient) =>
       patient.patient.toLowerCase().includes(searchTerm.toLowerCase()) ||
       patient.concern.toLowerCase().includes(searchTerm.toLowerCase()) ||
       patient.time.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+  );
 
   // Calculate pagination
   const totalPages = Math.ceil(filteredPatients.length / itemsPerPage);
@@ -155,7 +158,7 @@ function DoctorAppoinments() {
   const getPageNumbers = () => {
     const pages = [];
     const maxPagesToShow = 5;
-    
+
     if (totalPages <= maxPagesToShow) {
       for (let i = 1; i <= totalPages; i++) {
         pages.push(i);
@@ -165,25 +168,25 @@ function DoctorAppoinments() {
         for (let i = 1; i <= 4; i++) {
           pages.push(i);
         }
-        pages.push('...');
+        pages.push("...");
         pages.push(totalPages);
       } else if (currentPage >= totalPages - 2) {
         pages.push(1);
-        pages.push('...');
+        pages.push("...");
         for (let i = totalPages - 3; i <= totalPages; i++) {
           pages.push(i);
         }
       } else {
         pages.push(1);
-        pages.push('...');
+        pages.push("...");
         for (let i = currentPage - 1; i <= currentPage + 1; i++) {
           pages.push(i);
         }
-        pages.push('...');
+        pages.push("...");
         pages.push(totalPages);
       }
     }
-    
+
     return pages;
   };
 
@@ -216,7 +219,7 @@ function DoctorAppoinments() {
               paginatedPatients={paginatedPatients}
               onPatientClick={handlePatientClick}
             />
-            
+
             {/* Empty state if no results */}
             {paginatedPatients.length === 0 && (
               <div className="text-center py-12">
@@ -225,51 +228,55 @@ function DoctorAppoinments() {
                 </p>
               </div>
             )}
-            
+
             {/* Pagination */}
             {filteredPatients.length > 0 && (
               <div className="flex justify-between items-center text-sm text-gray-600 mt-6">
                 <p className="text-sm text-gray-600">
-                  Showing {startIndex + 1} to {Math.min(startIndex + itemsPerPage, filteredPatients.length)} of {filteredPatients.length} results
+                  Showing {startIndex + 1} to{" "}
+                  {Math.min(startIndex + itemsPerPage, filteredPatients.length)}{" "}
+                  of {filteredPatients.length} results
                 </p>
-                
+
                 <div className="flex items-center gap-1">
                   <button
                     onClick={() => handlePageChange(currentPage - 1)}
                     disabled={currentPage === 1}
                     className={`p-2 rounded-lg transition-colors ${
-                      currentPage === 1 
-                        ? 'text-gray-300 cursor-not-allowed' 
-                        : 'text-gray-600 hover:text-bimec-green'
+                      currentPage === 1
+                        ? "text-gray-300 cursor-not-allowed"
+                        : "text-gray-600 hover:text-bimec-green"
                     }`}
                   >
                     <ChevronLeftIcon className="w-5 h-5" />
                   </button>
-                  
+
                   {getPageNumbers().map((page, index) => (
                     <button
                       key={index}
-                      onClick={() => typeof page === 'number' && handlePageChange(page)}
-                      disabled={page === '...'}
+                      onClick={() =>
+                        typeof page === "number" && handlePageChange(page)
+                      }
+                      disabled={page === "..."}
                       className={`px-3 py-1 rounded-lg text-sm font-medium transition-colors ${
                         page === currentPage
-                          ? 'bg-bimec-green text-white'
-                          : page === '...'
-                          ? 'text-gray-400 cursor-default'
-                          : 'text-gray-600 hover:bg-gray-100'
+                          ? "bg-bimec-green text-white"
+                          : page === "..."
+                          ? "text-gray-400 cursor-default"
+                          : "text-gray-600 hover:bg-gray-100"
                       }`}
                     >
                       {page}
                     </button>
                   ))}
-                  
+
                   <button
                     onClick={() => handlePageChange(currentPage + 1)}
                     disabled={currentPage === totalPages || totalPages === 0}
                     className={`p-2 rounded-lg transition-colors ${
                       currentPage === totalPages || totalPages === 0
-                        ? 'text-gray-300 cursor-not-allowed' 
-                        : 'text-gray-600 hover:text-bimec-green'
+                        ? "text-gray-300 cursor-not-allowed"
+                        : "text-gray-600 hover:text-bimec-green"
                     }`}
                   >
                     <ChevronRightIcon className="w-5 h-5" />

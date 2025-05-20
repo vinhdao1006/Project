@@ -132,8 +132,8 @@ const Appointments = () => {
                     {appointments.map((appt) => (
                       <tr key={appt._id}>
                         <td className="px-6 py-4 whitespace-nowrap font-semibold text-bimec-heavy-green">
-                          Dr. {appt.doctorId?.firstname}{" "}
-                          {appt.doctorId?.lastname}
+                          Dr. {appt.doctorInfo?.firstname}{" "}
+                          {appt.doctorInfo?.lastname}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           {appt.specialtyId}

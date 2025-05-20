@@ -6,7 +6,6 @@ const axios = require("axios");
 router.post("/events", async (req, res) => {
   try {
     const event = await createEvent(req.body);
-
     // Create notification
     await axios.post("http://localhost:3001/api/notifications/create-notifications", {
       message: `New appointment: ${req.body.summary}`,

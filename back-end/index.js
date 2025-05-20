@@ -45,6 +45,10 @@ app.use("/api/calendar", googleCalendar);
 const userRoutes = require("./routes/users");
 app.use("/api/users", userRoutes);
 
+// notification routes
+const notificationRoutes = require("./routes/notifications");
+app.use("/api/notifications", notificationRoutes);
+
 // Serve images from /public
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
   
@@ -185,12 +189,30 @@ app.post('/api/appointments', async (req, res) => {
 // Get patient's appointments
 app.get('/api/patient-appointments/:patientId', async (req, res) => {
     try {
-        // console.log("patientId: ", req.params.patientId);
         const appointments = await AppointmentModel.find({ patientId: req.params.patientId })
-            .populate('doctorId')
-            // .populate('specialtyId', 'name')
             .sort({ appointmentDate: 1 });
-        res.json(appointments);
+
+        // Fetch doctor info for each appointment
+        const doctorIds = appointments.map(appt => appt.doctorId);
+        const doctors = await DoctorModel.find({ doctorId: { $in: doctorIds } });
+
+        // Map doctorId to doctor info
+        const doctorMap = {};
+        doctors.forEach(doc => {
+            doctorMap[doc.doctorId] = {
+                firstname: doc.firstname,
+                lastname: doc.lastname,
+                // add more fields if needed
+            };
+        });
+
+        // Attach doctor info to each appointment
+        const appointmentsWithDoctor = appointments.map(appt => ({
+            ...appt.toObject(),
+            doctorInfo: doctorMap[appt.doctorId] || null
+        }));
+
+        res.json(appointmentsWithDoctor);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }

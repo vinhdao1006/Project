@@ -1,13 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
-import { 
-  CalendarDays, 
-  Clock, 
-  User, 
-  FileText, 
-  ChevronDown as ChevronDownIcon, 
+import {
+  CalendarDays,
+  Clock,
+  User,
+  FileText,
+  ChevronDown as ChevronDownIcon,
   ChevronLeft as ChevronLeftIcon,
-  ChevronRight as ChevronRightIcon
+  ChevronRight as ChevronRightIcon,
 } from "lucide-react";
 
 // Calendar helper functions
@@ -173,7 +173,9 @@ function Calendar({ selectedDate, onChange, label, dateError }) {
 
     // Format date as YYYY-MM-DD for input value - FIXED VERSION to prevent timezone issues
     const date = day.date;
-    const dateString = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+    const dateString = `${date.getFullYear()}-${String(
+      date.getMonth() + 1
+    ).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
 
     onChange(dateString);
     setCalendarOpen(false);
@@ -185,7 +187,7 @@ function Calendar({ selectedDate, onChange, label, dateError }) {
         <CalendarDays size={14} className="mr-1 inline-block" />
         {label || "Date"}
       </label>
-      
+
       <div className="relative" ref={calendarRef}>
         {/* Date display button */}
         <button
@@ -195,9 +197,7 @@ function Calendar({ selectedDate, onChange, label, dateError }) {
                    input bg-white transition-all duration-200
                    ${dateError ? "border-red-400" : ""}`}
         >
-          <span
-            className={!selectedDate ? "text-gray-500" : "text-gray-700"}
-          >
+          <span className={!selectedDate ? "text-gray-500" : "text-gray-700"}>
             {formatDisplayDate()}
           </span>
           <ChevronDownIcon
@@ -275,7 +275,7 @@ function Calendar({ selectedDate, onChange, label, dateError }) {
           </div>
         )}
       </div>
-      
+
       {dateError && <p className="text-red-500 text-xs mt-1">{dateError}</p>}
     </div>
   );
@@ -345,7 +345,7 @@ function TimeSlot({ selectedTime, onChange, label, timeError }) {
         <Clock size={14} className="mr-1 inline-block" />
         {label || "Time"}
       </label>
-      
+
       <div className="relative" ref={timeSlotRef}>
         {/* Time selector button */}
         <button
@@ -355,9 +355,7 @@ function TimeSlot({ selectedTime, onChange, label, timeError }) {
                    input bg-white transition-all duration-200
                    ${timeError ? "border-red-400" : ""}`}
         >
-          <span
-            className={!selectedTime ? "text-gray-500" : "text-gray-700"}
-          >
+          <span className={!selectedTime ? "text-gray-500" : "text-gray-700"}>
             {formatDisplayTime()}
           </span>
           <ChevronDownIcon
@@ -393,7 +391,7 @@ function TimeSlot({ selectedTime, onChange, label, timeError }) {
           </div>
         )}
       </div>
-      
+
       {timeError && <p className="text-red-500 text-xs mt-1">{timeError}</p>}
     </div>
   );
@@ -416,7 +414,7 @@ const AddScheduleForm = ({ onEventCreated, submitRef }) => {
       const startDateTime = `${startDate}T${startTime}`;
       setStart(startDateTime);
     }
-    
+
     if (endDate && endTime) {
       const endDateTime = `${endDate}T${endTime}`;
       setEnd(endDateTime);
@@ -429,30 +427,30 @@ const AddScheduleForm = ({ onEventCreated, submitRef }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
-    
+
     // Validate dates and times
     const errors = {};
     if (!startDate) errors.startDate = "Start date is required";
     if (!startTime) errors.startTime = "Start time is required";
     if (!endDate) errors.endDate = "End date is required";
     if (!endTime) errors.endTime = "End time is required";
-    
+
     if (Object.keys(errors).length > 0) {
       setDateErrors(errors);
       return;
     }
-    
+
     // Compare dates
     const startDateTime = new Date(`${startDate}T${startTime}`);
     const endDateTime = new Date(`${endDate}T${endTime}`);
-    
+
     if (endDateTime <= startDateTime) {
       setDateErrors({
-        endDate: "End date/time must be after start date/time"
+        endDate: "End date/time must be after start date/time",
       });
       return;
     }
-    
+
     setLoading(true);
 
     try {
@@ -537,14 +535,14 @@ const AddScheduleForm = ({ onEventCreated, submitRef }) => {
         </div>
 
         {/* Date and Time pickers for start */}
-        <Calendar 
+        <Calendar
           selectedDate={startDate}
           onChange={setStartDate}
           label="Start Date"
           dateError={dateErrors.startDate}
         />
-        
-        <TimeSlot 
+
+        <TimeSlot
           selectedTime={startTime}
           onChange={setStartTime}
           label="Start Time"
@@ -552,20 +550,20 @@ const AddScheduleForm = ({ onEventCreated, submitRef }) => {
         />
 
         {/* Date and Time pickers for end */}
-        <Calendar 
+        <Calendar
           selectedDate={endDate}
           onChange={setEndDate}
           label="End Date"
           dateError={dateErrors.endDate}
         />
-        
-        <TimeSlot 
+
+        <TimeSlot
           selectedTime={endTime}
           onChange={setEndTime}
           label="End Time"
           timeError={dateErrors.endTime}
         />
-        
+
         <button type="submit" className="hidden" ref={submitRef} />
       </div>
 

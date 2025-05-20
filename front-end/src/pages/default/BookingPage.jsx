@@ -954,12 +954,11 @@ function BookingPage() {
       if (error.response && error.response.status === 401) {
         alert("Session expired. Please login again.");
         navigate("/login");
-      }
-      else if (error.response && error.response.status == 400)
-      {
-        alert("This time slot is already booked. Please book a different time range.")
-      }
-      else {
+      } else if (error.response && error.response.status == 400) {
+        alert(
+          "This time slot is already booked. Please book a different time range."
+        );
+      } else {
         console.error("Error booking appointment:", error);
         alert("Failed to book appointment. Please try again.");
       }
@@ -1101,13 +1100,15 @@ function BookingPage() {
                             : doctors.length === 0
                             ? "No doctors available for this specialty"
                             : selectedDoctor
-                            ? doctors.find((d) => d._id === selectedDoctor)
+                            ? doctors.find((d) => d.doctorId === selectedDoctor)
                               ? `Dr. ${
-                                  doctors.find((d) => d._id === selectedDoctor)
-                                    .firstname
+                                  doctors.find(
+                                    (d) => d.doctorId === selectedDoctor
+                                  ).firstname
                                 } ${
-                                  doctors.find((d) => d._id === selectedDoctor)
-                                    .lastname
+                                  doctors.find(
+                                    (d) => d.doctorId === selectedDoctor
+                                  ).lastname
                                 }`
                               : "Select Doctor"
                             : "Select Doctor"}
@@ -1125,12 +1126,14 @@ function BookingPage() {
                           <div className="py-1">
                             {doctors.map((doctor) => (
                               <button
-                                key={doctor._id}
+                                key={doctor.doctorId}
                                 type="button"
-                                onClick={() => handleDoctorChange(doctor._id)}
+                                onClick={() =>
+                                  handleDoctorChange(doctor.doctorId)
+                                }
                                 className={`block w-full text-left px-4 py-2.5 text-sm hover:bg-bimec-light-green transition-colors
                                         ${
-                                          selectedDoctor === doctor._id
+                                          selectedDoctor === doctor.doctorId
                                             ? "bg-bimec-light-green text-bimec-heavy-green font-medium"
                                             : "text-gray-700"
                                         }`}
