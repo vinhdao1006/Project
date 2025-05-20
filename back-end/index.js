@@ -45,6 +45,10 @@ app.use("/api/calendar", googleCalendar);
 const userRoutes = require("./routes/users");
 app.use("/api/users", userRoutes);
 
+// notification routes
+const notificationRoutes = require("./routes/notifications");
+app.use("/api/notifications", notificationRoutes);
+
 // Serve images from /public
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
   

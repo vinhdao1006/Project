@@ -17,7 +17,7 @@ function Home() {
   const navigate = useNavigate();
   const [isVisible, setIsVisible] = useState(false);
   const [sectionsVisible, setSectionsVisible] = useState(new Set());
-  
+
   axios.defaults.withCredentials = true;
 
   useEffect(() => {
@@ -29,18 +29,20 @@ function Home() {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setSectionsVisible(prev => new Set(prev).add(entry.target.dataset.section));
+            setSectionsVisible((prev) =>
+              new Set(prev).add(entry.target.dataset.section)
+            );
           }
         });
       },
-      { 
+      {
         threshold: 0.1,
-        rootMargin: '50px' // Start animation earlier for smoother experience
+        rootMargin: "50px", // Start animation earlier for smoother experience
       }
     );
 
     // Observe all sections
-    const sections = document.querySelectorAll('[data-section]');
+    const sections = document.querySelectorAll("[data-section]");
     sections.forEach((section) => observer.observe(section));
 
     return () => {
@@ -55,37 +57,57 @@ function Home() {
 
       {/* Hero Section */}
       <section className="relative h-screen overflow-hidden">
-        <div className={`transform transition-all duration-1000 ${
-          isVisible ? 'scale-100' : 'scale-105'
-        }`}>
-          <img src={Home_physician} className="w-full h-full object-cover" alt="Hero" />
+        <div
+          className={`transform transition-all duration-1000 ${
+            isVisible ? "scale-100" : "scale-105"
+          }`}
+        >
+          <img
+            src={Home_physician}
+            className="w-full h-full object-cover"
+            alt="Hero"
+          />
         </div>
         <div className="absolute inset-0 bg-gradient-to-r from-white/60 to-transparent"></div>
-        
+
         <div className="absolute inset-0 flex items-center px-4 md:px-8 lg:px-16">
           <div className="max-w-6xl mx-auto w-full">
             <div className="max-w-xl">
-              <p className={`text-bimec-green font-medium text-sm tracking-wider uppercase mb-3 transform transition-all duration-700 delay-300 ${
-                isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
-              }`}>
+              <p
+                className={`text-bimec-green font-medium text-sm tracking-wider uppercase mb-3 transform transition-all duration-700 delay-300 ${
+                  isVisible
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-10 opacity-0"
+                }`}
+              >
                 Caring for Life
               </p>
-              <h1 className={`text-4xl md:text-5xl lg:text-6xl font-light text-bimec-heavy-green leading-tight transform transition-all duration-700 delay-500 ${
-                isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
-              }`}>
-                Leading The Way <br /> 
+              <h1
+                className={`text-4xl md:text-5xl lg:text-6xl font-light text-bimec-heavy-green leading-tight transform transition-all duration-700 delay-500 ${
+                  isVisible
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-10 opacity-0"
+                }`}
+              >
+                Leading The Way <br />
                 in Medical Excellence
               </h1>
-              
+
               {/* Action Buttons */}
-              <div className={`mt-10 space-y-4 transform transition-all duration-700 delay-700 ${
-                isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
-              }`}>
+              <div
+                className={`mt-10 space-y-4 transform transition-all duration-700 delay-700 ${
+                  isVisible
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-10 opacity-0"
+                }`}
+              >
                 <button
                   onClick={() => navigate("/default/booking")}
                   className="group flex items-center justify-between w-full md:w-auto px-6 py-4 bg-bimec-heavy-green text-white rounded-lg hover:bg-bimec-green transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
                 >
-                  <span className="text-sm md:text-base font-medium mr-8">Book an Appointment</span>
+                  <span className="text-sm md:text-base font-medium mr-8">
+                    Book an Appointment
+                  </span>
                   <svg
                     className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-200"
                     fill="none"
@@ -100,13 +122,15 @@ function Home() {
                     />
                   </svg>
                 </button>
-                
+
                 <div className="flex gap-4">
                   <button
                     onClick={() => navigate("/default/services")}
                     className="group flex items-center px-6 py-3 bg-white/90 backdrop-blur-sm text-bimec-green border border-bimec-green rounded-lg hover:bg-bimec-light-green transition-all duration-300 transform hover:scale-105"
                   >
-                    <span className="text-sm font-medium mr-3">Our Services</span>
+                    <span className="text-sm font-medium mr-3">
+                      Our Services
+                    </span>
                     <svg
                       className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200"
                       fill="none"
@@ -121,12 +145,14 @@ function Home() {
                       />
                     </svg>
                   </button>
-                  
+
                   <button
                     onClick={() => navigate("/default/doctors")}
                     className="group flex items-center px-6 py-3 bg-white/90 backdrop-blur-sm text-bimec-green border border-bimec-green rounded-lg hover:bg-bimec-light-green transition-all duration-300 transform hover:scale-105"
                   >
-                    <span className="text-sm font-medium mr-3">Find Doctors</span>
+                    <span className="text-sm font-medium mr-3">
+                      Find Doctors
+                    </span>
                     <svg
                       className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200"
                       fill="none"
@@ -149,17 +175,19 @@ function Home() {
       </section>
 
       {/* Welcome Section */}
-      <section 
+      <section
         data-section="welcome"
         className={`py-20 px-4 transform transition-all duration-700 ${
-          sectionsVisible.has('welcome') ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
+          sectionsVisible.has("welcome")
+            ? "translate-y-0 opacity-100"
+            : "translate-y-20 opacity-0"
         }`}
       >
         <div className="max-w-4xl mx-auto text-center">
           <p className="text-bimec-green font-medium text-sm tracking-wider uppercase mb-4 animate-fade-in">
             Welcome to BIMEC
           </p>
-          
+
           <div className="h-20 mb-8">
             <ReactTyped
               className="text-3xl md:text-4xl lg:text-5xl font-light text-bimec-heavy-green"
@@ -173,17 +201,17 @@ function Home() {
               loop
             />
           </div>
-          
+
           <p className="text-gray-600 leading-relaxed max-w-3xl mx-auto mb-8">
             At BIMEC, we are dedicated to providing compassionate, high-quality
-            care to every patient. With a team of experienced doctors, nurses, and
-            healthcare professionals, we focus on your health and well-being every
-            step of the way. Whether you're seeking preventive care, specialized
-            treatment, or emergency services, we prioritize your comfort and
-            trust. Our commitment is to treat you like family, ensuring that your
-            health is in the best hands possible.
+            care to every patient. With a team of experienced doctors, nurses,
+            and healthcare professionals, we focus on your health and well-being
+            every step of the way. Whether you're seeking preventive care,
+            specialized treatment, or emergency services, we prioritize your
+            comfort and trust. Our commitment is to treat you like family,
+            ensuring that your health is in the best hands possible.
           </p>
-          
+
           <a
             href="/default/about-us"
             className="inline-flex items-center text-bimec-green font-medium hover:text-bimec-heavy-green transition-colors duration-200 group"
@@ -207,10 +235,12 @@ function Home() {
       </section>
 
       {/* Doctors Image Section */}
-      <section 
+      <section
         data-section="doctors-image"
         className={`py-16 px-4 transform transition-all duration-700 ${
-          sectionsVisible.has('doctors-image') ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
+          sectionsVisible.has("doctors-image")
+            ? "translate-y-0 opacity-100"
+            : "translate-y-20 opacity-0"
         }`}
       >
         <div className="max-w-5xl mx-auto">
@@ -223,10 +253,12 @@ function Home() {
       </section>
 
       {/* Services Section */}
-      <section 
+      <section
         data-section="services"
         className={`py-16 px-4 bg-gray-50 transform transition-all duration-700 ${
-          sectionsVisible.has('services') ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
+          sectionsVisible.has("services")
+            ? "translate-y-0 opacity-100"
+            : "translate-y-20 opacity-0"
         }`}
       >
         <div className="max-w-6xl mx-auto">
@@ -235,10 +267,12 @@ function Home() {
       </section>
 
       {/* Specialties Section */}
-      <section 
+      <section
         data-section="specialties"
         className={`py-16 px-4 transform transition-all duration-700 ${
-          sectionsVisible.has('specialties') ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
+          sectionsVisible.has("specialties")
+            ? "translate-y-0 opacity-100"
+            : "translate-y-20 opacity-0"
         }`}
       >
         <div className="max-w-6xl mx-auto">
@@ -247,10 +281,12 @@ function Home() {
       </section>
 
       {/* Doctors Slider Section */}
-      <section 
+      <section
         data-section="doctors-slider"
         className={`py-16 px-4 bg-gray-50 transform transition-all duration-700 ${
-          sectionsVisible.has('doctors-slider') ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
+          sectionsVisible.has("doctors-slider")
+            ? "translate-y-0 opacity-100"
+            : "translate-y-20 opacity-0"
         }`}
       >
         <div className="max-w-6xl mx-auto">
@@ -259,10 +295,12 @@ function Home() {
       </section>
 
       {/* News Section */}
-      <section 
+      <section
         data-section="news"
         className={`py-16 px-4 transform transition-all duration-700 ${
-          sectionsVisible.has('news') ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
+          sectionsVisible.has("news")
+            ? "translate-y-0 opacity-100"
+            : "translate-y-20 opacity-0"
         }`}
       >
         <div className="max-w-6xl mx-auto">
@@ -271,10 +309,12 @@ function Home() {
       </section>
 
       {/* Contact Section */}
-      <section 
+      <section
         data-section="contact"
         className={`py-16 px-4 bg-gray-50 transform transition-all duration-700 ${
-          sectionsVisible.has('contact') ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
+          sectionsVisible.has("contact")
+            ? "translate-y-0 opacity-100"
+            : "translate-y-20 opacity-0"
         }`}
       >
         <div className="max-w-6xl mx-auto">
@@ -286,7 +326,7 @@ function Home() {
       <Footer />
 
       {/* Floating Button Group */}
-      <FloatButtonGroup />
+      {/* <FloatButtonGroup /> */}
 
       {/* Custom Animation Styles */}
       <style jsx>{`

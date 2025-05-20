@@ -1,12 +1,12 @@
-import React from 'react';
-import { QuestionCircleOutlined, SyncOutlined } from '@ant-design/icons';
-import { FloatButton } from 'antd';
+import React from "react";
+import { QuestionCircleOutlined, SyncOutlined } from "@ant-design/icons";
+import { FloatButton } from "antd";
 
 const App = () => (
   <>
     <FloatButton.Group
       shape="circle"
-      className='hidden md:flex'
+      className="hidden md:flex"
       style={{
         insetInlineEnd: 24,
       }}
@@ -17,7 +17,7 @@ const App = () => (
     </FloatButton.Group>
     <FloatButton.Group
       shape="square"
-      className='hidden md:flex'
+      className="hidden md:flex"
       style={{
         insetInlineEnd: 94,
       }}

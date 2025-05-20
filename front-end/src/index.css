@@ -68,3 +68,18 @@
     @apply bg-background text-foreground;
   }
 }
+
+body {
+  font-family: "Open Sans", sans-serif; 
+}
+
+html, body {
+  overflow: auto;
+  -ms-overflow-style: none;  
+  scrollbar-width: none;    
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;             
+}
