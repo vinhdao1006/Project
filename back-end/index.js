@@ -32,7 +32,10 @@ const AppointmentModel = require('./models/appointment')
 
 app.use(express.json())
 app.use(cors({
-    origin: ["http://localhost:5173"],
+    origin: [
+        "http://localhost:5173",
+        "https://doantotnghiep-46d1uh2dh-khiem-truongs-projects.vercel.app"
+    ],
     methods: ["GET", "POST", "PUT"],
     credentials: true
 }))
