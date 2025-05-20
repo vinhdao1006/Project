@@ -328,7 +328,7 @@ const Appointments = () => {
       >
         <Footer />
       </div>
-      <FloatButtonGroup />
+      {/* <FloatButtonGroup /> */}
     </div>
   );
 };
