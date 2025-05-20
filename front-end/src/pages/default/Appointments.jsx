@@ -126,7 +126,7 @@ const Appointments = () => {
                 You have not booked any appointments. Schedule your first appointment to start your healthcare journey.
               </p>
               <a
-                href="/booking"
+                href="/default/booking"
                 className="inline-block bg-bimec-green text-white px-6 py-3 rounded-lg hover:bg-bimec-heavy-green font-medium transition-colors duration-150"
               >
                 Book Your First Appointment
