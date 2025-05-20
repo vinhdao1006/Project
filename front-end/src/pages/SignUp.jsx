@@ -4,8 +4,6 @@ import Google_icon from "../assets/icon/icon_google.png";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import BimecHeader from "../components/Header/BimecHeader";
-import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/react";
-import { ChevronDownIcon } from "@heroicons/react/20/solid";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({

@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+} from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -29,25 +34,14 @@ import PatientDetail from "./pages/doctor/PatientDetail";
 import DoctorAppointment from "./pages/doctor/Appointments";
 import DoctorSchedule from "./pages/doctor/DoctorSchedule";
 
-import AIAssistant from './components/utils/AIAssistant'
+import AIAssistant from "./components/utils/AIAssistant";
 
-function App() {
+function AppContent() {
+  const location = useLocation();
+  const isPatientRoute = location.pathname.startsWith("/default/");
+
   return (
-    <Router>
-      {/* Toast container */}
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
-
+    <>
       <Routes>
         <Route path="/register" element={<SignUp />}></Route>
         <Route path="/login" element={<SignIn />}></Route>
@@ -82,13 +76,32 @@ function App() {
         {/* Doctor routes */}
         <Route path="/doctor/patients" element={<Patients />}></Route>
         <Route path="/doctor/patient-detail" element={<PatientDetail />} />
-        <Route
-          path="/doctor/appointments"
-          element={<DoctorAppointment />}
-        ></Route>
-        <Route path="/doctor/schedule" element={<DoctorSchedule />}></Route>
+        <Route path="/doctor/appointments" element={<DoctorAppointment />} />
+        <Route path="/doctor/schedule" element={<DoctorSchedule />} />
       </Routes>
-      <AIAssistant />
+      {isPatientRoute && <AIAssistant />}
+    </>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      {/* Toast container */}
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+      {/* Main content */}
+      <AppContent />
     </Router>
   );
 }

@@ -95,12 +95,12 @@ const Appointments = () => {
                 You have not booked any appointments. Book your first
                 appointment now!
               </p>
-              <a
-                href="/booking"
+              <button
+                onClick={() => navigate("/default/booking")}
                 className="inline-block bg-bimec-green text-white px-6 py-2 rounded hover:bg-bimec-heavy-green font-semibold transition"
               >
                 Book Appointment
-              </a>
+              </button>
             </div>
           ) : (
             <>

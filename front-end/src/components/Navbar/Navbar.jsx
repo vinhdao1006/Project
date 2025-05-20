@@ -379,6 +379,13 @@ const Navbar = () => {
                         <span>Profile</span>
                       </button>
                       <button
+                        onClick={() => handleNavClick("/default/appointments")}
+                        className="flex items-center space-x-3 px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 w-full text-left"
+                      >
+                        <CalendarDateRangeIcon className="w-5 h-5" />
+                        <span>My Appointments</span>
+                      </button>
+                      <button
                         onClick={() => handleNavClick("/settings")}
                         className="flex items-center space-x-3 px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 w-full text-left"
                       >
