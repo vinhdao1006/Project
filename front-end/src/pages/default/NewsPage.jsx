@@ -28,47 +28,51 @@ const NewsPage = () => {
   const posts = [
     {
       title: "A passion to putting patients first",
-      date: "Monday 05, September 2021",
-      author: "Dr. John Doe",
-      views: "120",
-      likes: "50",
+      date: "May 20, 2025",
+      author: "Dr. Emily Carter",
+      views: "200",
+      likes: "90",
       image: new_img_1,
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
+      description:
+        "Patient-centered care models prioritize empathy and empowerment, driving better health outcomes.",
       content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque placerat scelerisque tortor ornare ornare. Quisque placerat scelerisque tortor ornare ornare Convallis felis vitae tortor augue. Velit nascetur proin massa in. Consequat faucibus porttitor enim Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque placerat scelerisque tortor ornare ornare. Quisque placerat scelerisque tortor ornare ornare Convallis felis vitae tortor augue. Velit nascetur proin massa in. Consequat faucibus porttitor enim Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque placerat scelerisque tortor ornare ornare. Quisque placerat scelerisque tortor ornare ornare Convallis felis vitae tortor augue. Velit nascetur proin massa in. Consequat faucibus porttitor enim Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque placerat scelerisque tortor ornare ornare. Quisque placerat scelerisque tortor ornare ornare Convallis felis vitae tortor augue. Velit nascetur proin massa in. Consequat faucibus porttitor enim Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque placerat scelerisque tortor ornare ornare. Quisque placerat scelerisque tortor ornare ornare Convallis felis vitae tortor augue. Velit nascetur proin massa in. Consequat faucibus porttitor enim Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque placerat scelerisque tortor ornare ornare. Quisque placerat scelerisque tortor ornare ornare Convallis felis vitae tortor augue. Velit nascetur proin massa in. Consequat faucibus porttitor enim et.",
+        "As healthcare systems navigate rising costs and administrative challenges, patient-centered care is emerging as a cornerstone of reform. Dr. Emily Carter, a senior consultant at Metro Health Institute, advocates for empowering patients through active involvement in treatment decisions. Her clinic’s 2024 initiative, which incorporates patient feedback into care plans, reduced readmissions by 20%. Technologies like AI diagnostics and telehealth are improving access, particularly in underserved regions. However, a 2025 *Journal of Medicine* study highlights that 70% of patients prioritize empathetic interactions, warning against overreliance on technology. While implementing these models requires cultural and financial investment, the data is clear: patient-first approaches enhance trust and recovery rates, potentially redefining healthcare delivery.",
     },
     {
       title: "Doctors lead with empathy and care",
-      date: "Monday 05, September 2021",
-      author: "Dr. John Doe",
-      views: "120",
-      likes: "60",
+      date: "May 20, 2025",
+      author: "Dr. Michael Nguyen",
+      views: "180",
+      likes: "85",
       image: new_img_2,
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
+      description:
+        "Physicians are integrating empathy into practice to improve patient trust and treatment adherence.",
       content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque placerat scelerisque tortor ornare ornare. Quisque placerat scelerisque tortor ornare ornare Convallis felis vitae tortor augue. Velit nascetur proin massa in. Consequat faucibus porttitor enim Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque placerat scelerisque tortor ornare ornare. Quisque placerat scelerisque tortor ornare ornare Convallis felis vitae tortor augue. Velit nascetur proin massa in. Consequat faucibus porttitor enim Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque placerat scelerisque tortor ornare ornare. Quisque placerat scelerisque tortor ornare ornare Convallis felis vitae tortor augue. Velit nascetur proin massa in. Consequat faucibus porttitor enim Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque placerat scelerisque tortor ornare ornare. Quisque placerat scelerisque tortor ornare ornare Convallis felis vitae tortor augue. Velit nascetur proin massa in. Consequat faucibus porttitor enim Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque placerat scelerisque tortor ornare ornare. Quisque placerat scelerisque tortor ornare ornare Convallis felis vitae tortor augue. Velit nascetur proin massa in. Consequat faucibus porttitor enim Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque placerat scelerisque tortor ornare ornare. Quisque placerat scelerisque tortor ornare ornare Convallis felis vitae tortor augue. Velit nascetur proin massa in. Consequat faucibus porttitor enim et.",
+        "Empathy in medical practice is proving to be more than a soft skill—it’s a critical driver of health outcomes. Dr. Michael Nguyen, a cardiologist at Urban Medical Center, has trained his team to prioritize emotional intelligence in patient interactions. A 2024 trial showed that patients receiving empathetic care were 30% more likely to adhere to medication regimens. Techniques like active listening and personalized communication are central to this approach. Critics note that time constraints in busy clinics can hinder such practices, with 40% of physicians reporting insufficient consultation time in a 2025 *Health Policy Review*. Still, hospitals adopting empathy-focused training report higher patient satisfaction scores, suggesting that fostering emotional connections is a viable path to better care.",
     },
     {
       title: "Our mission to revolutionize health",
-      date: "Monday 05, September 2021",
-      author: "Dr. John Doe",
-      views: "120",
-      likes: "70",
+      date: "May 20, 2025",
+      author: "Dr. Laura Bennett",
+      views: "170",
+      likes: "80",
       image: new_img_3,
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
+      description:
+        "Innovative healthcare initiatives aim to transform delivery through technology and collaboration.",
       content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque placerat scelerisque tortor ornare ornare. Quisque placerat scelerisque tortor ornare ornare Convallis felis vitae tortor augue. Velit nascetur proin massa in. Consequat faucibus porttitor enim Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque placerat scelerisque tortor ornare ornare. Quisque placerat scelerisque tortor ornare ornare Convallis felis vitae tortor augue. Velit nascetur proin massa in. Consequat faucibus porttitor enim Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque placerat scelerisque tortor ornare ornare. Quisque placerat scelerisque tortor ornare ornare Convallis felis vitae tortor augue. Velit nascetur proin massa in. Consequat faucibus porttitor enim Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque placerat scelerisque tortor ornare ornare. Quisque placerat scelerisque tortor ornare ornare Convallis felis vitae tortor augue. Velit nascetur proin massa in. Consequat faucibus porttitor enim Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque placerat scelerisque tortor ornare ornare. Quisque placerat scelerisque tortor ornare ornare Convallis felis vitae tortor augue. Velit nascetur proin massa in. Consequat faucibus porttitor enim Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque placerat scelerisque tortor ornare ornare. Quisque placerat scelerisque tortor ornare ornare Convallis felis vitae tortor augue. Velit nascetur proin massa in. Consequat faucibus porttitor enim et.",
+        "The healthcare sector is undergoing a transformation driven by innovation and interdisciplinary collaboration. Dr. Laura Bennett, director of Horizon Health Network, leads a program integrating AI-driven diagnostics with community-based care models. In 2024, her initiative reduced diagnostic errors by 15% in pilot regions. Partnerships between tech firms, hospitals, and local governments are key, enabling real-time data sharing and preventive care strategies. However, a 2025 *Global Health Journal* analysis warns that equitable access remains a challenge, with 25% of low-income patients unable to access digital health tools. Scaling these innovations requires addressing disparities and regulatory hurdles, but early results suggest a potential revolution in how health services are delivered.",
     },
     {
       title: "Take care of your health",
-      date: "Monday 05, September 2021",
-      author: "Dr. John Doe",
-      views: "120",
-      likes: "80",
+      date: "May 20, 2025",
+      author: "Dr. Priya Sharma",
+      views: "160",
+      likes: "75",
       image: new_img_4,
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
+      description:
+        "Preventive care and patient education are key to promoting long-term health and wellness.",
       content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque placerat scelerisque tortor ornare ornare. Quisque placerat scelerisque tortor ornare ornare Convallis felis vitae tortor augue. Velit nascetur proin massa in. Consequat faucibus porttitor enim Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque placerat scelerisque tortor ornare ornare. Quisque placerat scelerisque tortor ornare ornare Convallis felis vitae tortor augue. Velit nascetur proin massa in. Consequat faucibus porttitor enim Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque placerat scelerisque tortor ornare ornare. Quisque placerat scelerisque tortor ornare ornare Convallis felis vitae tortor augue. Velit nascetur proin massa in. Consequat faucibus porttitor enim Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque placerat scelerisque tortor ornare ornare. Quisque placerat scelerisque tortor ornare ornare Convallis felis vitae tortor augue. Velit nascetur proin massa in. Consequat faucibus porttitor enim Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque placerat scelerisque tortor ornare ornare. Quisque placerat scelerisque tortor ornare ornare Convallis felis vitae tortor augue. Velit nascetur proin massa in. Consequat faucibus porttitor enim Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque placerat scelerisque tortor ornare ornare. Quisque placerat scelerisque tortor ornare ornare Convallis felis vitae tortor augue. Velit nascetur proin massa in. Consequat faucibus porttitor enim et.",
+        "Preventive care is gaining recognition as a cornerstone of sustainable healthcare. Dr. Priya Sharma, a public health expert at City Wellness Clinic, emphasizes patient education to encourage proactive health management. Her 2024 campaign, offering free screenings and workshops, increased early detection of chronic conditions by 22% in urban communities. Tools like wearable health monitors and mobile apps are empowering individuals to track their wellness. Yet, a 2025 *Public Health Review* study notes that misinformation online can undermine these efforts, with 30% of patients citing conflicting advice. Effective preventive care demands clear communication and accessible resources, but its impact on reducing healthcare costs and improving quality of life is undeniable.",
     },
   ];
 
