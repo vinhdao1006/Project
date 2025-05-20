@@ -45,10 +45,6 @@ app.use("/api/calendar", googleCalendar);
 const userRoutes = require("./routes/users");
 app.use("/api/users", userRoutes);
 
-// notification routes
-const notificationRoutes = require("./routes/notifications");
-app.use("/api/notifications", notificationRoutes);
-
 // Serve images from /public
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
   
@@ -201,7 +197,7 @@ app.get('/api/patient-appointments/:patientId', async (req, res) => {
 
 // OpenAI configuration
 const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
+    apiKey: process.env.OPENAI_API_KEY, 
 });
 
 // AI Assistant chat endpoint
