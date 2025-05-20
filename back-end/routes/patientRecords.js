@@ -6,36 +6,35 @@ const PatientRecordModel = require('../models/patientRecords');
 router.post('/', async (req, res) => {
     const { patientId, appointments } = req.body;
     try {
-        const existingRecord = await PatientRecordModel.find({ patientId });
-        if (existingRecord.length > 0) {
-            return res.status(400).json({ message: 'Patient record already exists' });
-        }
-        else
-        {
-            // Extract gender and dayOfBirth from the first appointment
-            const gender = appointments[0]?.gender;
-            const dayOfBirth = appointments[0]?.dayOfBirth;
-            const newRecord = new PatientRecordModel({
-                patientId,
-                gender,
-                dayOfBirth,
-                appointmentsHistory: appointments.map(appointment => ({
-                    appointmentId: appointment._id,
-                    date: appointment.appointmentDate,
-                    time: appointment.appointmentTime,
-                    doctorId: appointment.doctorId,
-                    reason: appointment.reason,
-                }))
-            });
-            await newRecord.save();
-            res.status(201).json(newRecord);}
-        }
-    catch (error) {
-        console.error('Error creating patient record:', error);
+        // Extract gender and dayOfBirth from the first appointment
+        const gender = appointments[0]?.gender;
+        const dayOfBirth = appointments[0]?.dayOfBirth;
+
+        const update = {
+            gender,
+            dayOfBirth,
+            appointmentsHistory: appointments.map(appointment => ({
+                appointmentId: appointment._id,
+                date: appointment.appointmentDate,
+                time: appointment.appointmentTime,
+                doctorId: appointment.doctorId,
+                reason: appointment.reason,
+            }))
+        };
+
+        // Upsert: update if exists, otherwise create new
+        const updatedRecord = await PatientRecordModel.findOneAndUpdate(
+            { patientId },
+            { $set: update },
+            { new: true, upsert: true }
+        );
+
+        res.status(200).json(updatedRecord);
+    } catch (error) {
+        console.error('Error creating/updating patient record:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
-}
-);
+});
 
 // get all appointments history for a patient
 router.get('/:patientId/appointments-history', async (req, res) => {
