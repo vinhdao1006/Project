@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
-import { 
-  UserIcon, 
+import {
+  UserIcon,
   CalendarDaysIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
-  MagnifyingGlassIcon
-} from '@heroicons/react/24/outline';
+  MagnifyingGlassIcon,
+} from "@heroicons/react/24/outline";
 
 // Updated patient data with new columns
 const patientsData = [
@@ -17,56 +17,56 @@ const patientsData = [
     dateOfBirth: "15 Apr, 1985",
     gender: "Female",
     lastVisit: "27 Dec, 2024",
-    avatar: "DR"
+    avatar: "DR",
   },
   {
     patient: "Bessie Cooper",
     dateOfBirth: "03 Jun, 1992",
     gender: "Female",
     lastVisit: "03 Feb, 2023",
-    avatar: "BC"
+    avatar: "BC",
   },
   {
     patient: "Marvin McKinney",
     dateOfBirth: "12 Nov, 1978",
     gender: "Male",
     lastVisit: "02 Mar, 2023",
-    avatar: "MM"
+    avatar: "MM",
   },
   {
     patient: "Esther Howard",
     dateOfBirth: "22 Sep, 1990",
     gender: "Female",
     lastVisit: "02 Mar, 2023",
-    avatar: "EH"
+    avatar: "EH",
   },
   {
     patient: "Marvin McKinney",
     dateOfBirth: "12 Nov, 1978",
     gender: "Male",
     lastVisit: "15 Jan, 2023",
-    avatar: "MM"
+    avatar: "MM",
   },
   {
     patient: "Annette Black",
     dateOfBirth: "19 Jul, 1995",
     gender: "Female",
     lastVisit: "02 Mar, 2023",
-    avatar: "AB"
+    avatar: "AB",
   },
   {
     patient: "Cameron Williamson",
     dateOfBirth: "05 May, 1988",
     gender: "Male",
     lastVisit: "14 Feb, 2023",
-    avatar: "CW"
+    avatar: "CW",
   },
   {
     patient: "Guy Hawkins",
     dateOfBirth: "23 Dec, 1983",
     gender: "Male",
     lastVisit: "02 Mar, 2023",
-    avatar: "GH"
+    avatar: "GH",
   },
 ];
 
@@ -75,11 +75,15 @@ function GenderBadge({ gender }) {
   const styles = {
     Male: "bg-blue-50 text-blue-700",
     Female: "bg-pink-50 text-pink-700",
-    Other: "bg-purple-50 text-purple-700"
+    Other: "bg-purple-50 text-purple-700",
   };
-  
+
   return (
-    <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${styles[gender] || styles.Other}`}>
+    <span
+      className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${
+        styles[gender] || styles.Other
+      }`}
+    >
       {gender}
     </span>
   );
@@ -109,7 +113,9 @@ function PatientsTable({ paginatedPatients, onPatientClick }) {
                   <div className="w-9 h-9 rounded-full bg-gradient-to-br from-bimec-green to-bimec-heavy-green flex items-center justify-center text-white text-xs font-medium">
                     {patient.avatar}
                   </div>
-                  <span className="font-medium text-gray-900">{patient.patient}</span>
+                  <span className="font-medium text-gray-900">
+                    {patient.patient}
+                  </span>
                 </div>
               </td>
               <td className="py-4 px-6 text-gray-500">{patient.dateOfBirth}</td>
@@ -131,26 +137,64 @@ function PatientsTable({ paginatedPatients, onPatientClick }) {
 }
 
 function Patients() {
+  const [patientsData, setPatientsData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterGender, setFilterGender] = useState("all");
   const itemsPerPage = 5;
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const fetchPatients = async () => {
+      try {
+        const doctorId = localStorage.getItem("userId");
+        const response = await axios.get(
+          `http://localhost:3001/api/doctors/get-patients/${doctorId}`
+        );
+        console.log("Fetched patients:", response.data); // For debugging
+        // Map appointments to patient info
+        const mappedPatients = response.data.map((appt) => ({
+          patient: appt.fullname || "Unknown",
+          dateOfBirth: appt.dayOfBirth
+            ? new Date(appt.dayOfBirth).toLocaleDateString()
+            : "",
+          gender: appt.gender || "",
+          lastVisit: appt.appointmentDate
+            ? new Date(appt.appointmentDate).toLocaleDateString()
+            : "",
+          avatar: appt.patientInfo?.fullname
+            ? appt.patientInfo.fullname
+                .split(" ")
+                .map((n) => n[0])
+                .join("")
+                .toUpperCase()
+            : "PT",
+        }));
+        setPatientsData(mappedPatients);
+      } catch (error) {
+        console.error("Error fetching patients:", error);
+      }
+    };
+    fetchPatients();
+  }, []);
+
   // Count by gender for filter counts
-  const maleCount = patientsData.filter(p => p.gender === "Male").length;
-  const femaleCount = patientsData.filter(p => p.gender === "Female").length;
-  const otherCount = patientsData.filter(p => p.gender !== "Male" && p.gender !== "Female").length;
+  const maleCount = patientsData.filter((p) => p.gender === "Male").length;
+  const femaleCount = patientsData.filter((p) => p.gender === "Female").length;
+  const otherCount = patientsData.filter(
+    (p) => p.gender !== "Male" && p.gender !== "Female"
+  ).length;
 
   // Filter patients based on gender and search term
   const filteredPatients = patientsData
-    .filter(patient => 
+    .filter((patient) =>
       filterGender === "all" ? true : patient.gender === filterGender
     )
-    .filter(patient => 
-      patient.patient.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      patient.dateOfBirth.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      patient.lastVisit.toLowerCase().includes(searchTerm.toLowerCase())
+    .filter(
+      (patient) =>
+        patient.patient.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        patient.dateOfBirth.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        patient.lastVisit.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
   const totalPages = Math.ceil(filteredPatients.length / itemsPerPage);
@@ -184,7 +228,7 @@ function Patients() {
   const getPageNumbers = () => {
     const pages = [];
     const maxPagesToShow = 5;
-    
+
     if (totalPages <= maxPagesToShow) {
       for (let i = 1; i <= totalPages; i++) {
         pages.push(i);
@@ -194,25 +238,25 @@ function Patients() {
         for (let i = 1; i <= 4; i++) {
           pages.push(i);
         }
-        pages.push('...');
+        pages.push("...");
         pages.push(totalPages);
       } else if (currentPage >= totalPages - 2) {
         pages.push(1);
-        pages.push('...');
+        pages.push("...");
         for (let i = totalPages - 3; i <= totalPages; i++) {
           pages.push(i);
         }
       } else {
         pages.push(1);
-        pages.push('...');
+        pages.push("...");
         for (let i = currentPage - 1; i <= currentPage + 1; i++) {
           pages.push(i);
         }
-        pages.push('...');
+        pages.push("...");
         pages.push(totalPages);
       }
     }
-    
+
     return pages;
   };
 
@@ -241,7 +285,11 @@ function Patients() {
             <div className="flex flex-wrap gap-3 mt-4 md:mt-0">
               <button
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 
-                ${filterGender === "all" ? "bg-gray-900 text-white" : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-50"}`}
+                ${
+                  filterGender === "all"
+                    ? "bg-gray-900 text-white"
+                    : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-50"
+                }`}
                 onClick={() => handleFilterChange("all")}
               >
                 All
@@ -249,7 +297,11 @@ function Patients() {
 
               <button
                 className={`flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 
-                ${filterGender === "Male" ? "bg-blue-50 text-blue-700 border border-blue-300" : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-50"}`}
+                ${
+                  filterGender === "Male"
+                    ? "bg-blue-50 text-blue-700 border border-blue-300"
+                    : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-50"
+                }`}
                 onClick={() => handleFilterChange("Male")}
               >
                 <div className="w-2 h-2 rounded-full bg-blue-500 mr-1.5"></div>
@@ -258,7 +310,11 @@ function Patients() {
 
               <button
                 className={`flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 
-                ${filterGender === "Female" ? "bg-pink-50 text-pink-700 border border-pink-300" : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-50"}`}
+                ${
+                  filterGender === "Female"
+                    ? "bg-pink-50 text-pink-700 border border-pink-300"
+                    : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-50"
+                }`}
                 onClick={() => handleFilterChange("Female")}
               >
                 <div className="w-2 h-2 rounded-full bg-pink-500 mr-1.5"></div>
@@ -268,7 +324,11 @@ function Patients() {
               {otherCount > 0 && (
                 <button
                   className={`flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 
-                  ${filterGender === "Other" ? "bg-purple-50 text-purple-700 border border-purple-300" : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-50"}`}
+                  ${
+                    filterGender === "Other"
+                      ? "bg-purple-50 text-purple-700 border border-purple-300"
+                      : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-50"
+                  }`}
                   onClick={() => handleFilterChange("Other")}
                 >
                   <div className="w-2 h-2 rounded-full bg-purple-500 mr-1.5"></div>
@@ -284,7 +344,7 @@ function Patients() {
               paginatedPatients={paginatedPatients}
               onPatientClick={handlePatientClick}
             />
-            
+
             {/* Empty state if no results */}
             {paginatedPatients.length === 0 && (
               <div className="text-center py-12">
@@ -293,46 +353,62 @@ function Patients() {
                 </p>
               </div>
             )}
-            
+
             {/* Pagination */}
             {filteredPatients.length > 0 && (
               <div className="flex justify-between items-center text-sm text-gray-600 mt-6">
                 <p className="text-sm text-gray-600">
-                  Showing {startIndex + 1} to {Math.min(startIndex + itemsPerPage, filteredPatients.length)} of {filteredPatients.length} results
+                  Showing {startIndex + 1} to{" "}
+                  {Math.min(startIndex + itemsPerPage, filteredPatients.length)}{" "}
+                  of {filteredPatients.length} results
                 </p>
-                
+
                 <div className="flex items-center gap-1">
                   <button
                     className="p-2 rounded-lg transition-colors"
                     onClick={() => handlePageChange(currentPage - 1)}
                     disabled={currentPage === 1}
                   >
-                    <ChevronLeftIcon className={`w-5 h-5 ${currentPage === 1 ? 'text-gray-300' : 'text-gray-600 hover:text-bimec-green'}`} />
+                    <ChevronLeftIcon
+                      className={`w-5 h-5 ${
+                        currentPage === 1
+                          ? "text-gray-300"
+                          : "text-gray-600 hover:text-bimec-green"
+                      }`}
+                    />
                   </button>
-                  
+
                   {getPageNumbers().map((page, index) => (
                     <button
                       key={index}
-                      onClick={() => typeof page === 'number' && handlePageChange(page)}
-                      disabled={page === '...'}
+                      onClick={() =>
+                        typeof page === "number" && handlePageChange(page)
+                      }
+                      disabled={page === "..."}
                       className={`px-3 py-1 rounded-lg text-sm font-medium transition-colors ${
                         page === currentPage
-                          ? 'bg-bimec-green text-white'
-                          : page === '...'
-                          ? 'text-gray-400 cursor-default'
-                          : 'text-gray-600 hover:bg-gray-100'
+                          ? "bg-bimec-green text-white"
+                          : page === "..."
+                          ? "text-gray-400 cursor-default"
+                          : "text-gray-600 hover:bg-gray-100"
                       }`}
                     >
                       {page}
                     </button>
                   ))}
-                  
+
                   <button
                     className="p-2 rounded-lg transition-colors"
                     onClick={() => handlePageChange(currentPage + 1)}
                     disabled={currentPage === totalPages || totalPages === 0}
                   >
-                    <ChevronRightIcon className={`w-5 h-5 ${currentPage === totalPages || totalPages === 0 ? 'text-gray-300' : 'text-gray-600 hover:text-bimec-green'}`} />
+                    <ChevronRightIcon
+                      className={`w-5 h-5 ${
+                        currentPage === totalPages || totalPages === 0
+                          ? "text-gray-300"
+                          : "text-gray-600 hover:text-bimec-green"
+                      }`}
+                    />
                   </button>
                 </div>
               </div>

@@ -5,6 +5,7 @@ import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/BimecFooter";
 import Contact from "../../components/utils/Contact";
 import FloatButtonGroup from "../../components/utils/FloatButtonGroup";
+import { jwtDecode } from "jwt-decode";
 
 const Appointments = () => {
   const [appointments, setAppointments] = useState([]);
@@ -31,7 +32,29 @@ const Appointments = () => {
             },
           }
         );
-        console.log("Appointments data:", response.data);
+        console.log("Appointments fetched:", response.data);
+
+        // create a patient record
+        try {
+          const patientRecordResponse = await axios.post(
+            "http://localhost:3001/api/patient-records",
+            {
+              patientId: userId,
+              gender: response.data.gender,
+              dayOfBirth: response.data.dayOfBirth,
+              appointments: response.data,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          console.log("Patient record created:", patientRecordResponse.data);
+        } catch (error) {
+          console.error("Error creating patient record:", error);
+        }
+
         setAppointments(response.data);
         setLoading(false);
       } catch (err) {

@@ -85,4 +85,18 @@ router.get('/availability/:doctorId', async (req, res) => {
     }
 });
 
+// get patients by doctor
+router.get('/get-patients/:doctorId', async (req, res) => {
+    try {
+        const doctor = await DoctorModel.findOne({ doctorId: req.params.doctorId });
+        if (!doctor) {
+            return res.status(404).json({ error: 'Doctor not found' });
+        }
+        const patients = await AppointmentModel.find({ doctorId: req.params.doctorId })
+        res.json(patients);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
 module.exports = router;

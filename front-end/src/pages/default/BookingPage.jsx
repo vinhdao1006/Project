@@ -928,6 +928,9 @@ function BookingPage() {
 
       const appointmentData = {
         patientId: userId,
+        fullname: formData.name,
+        gender: formData.gender,
+        dayOfBirth: formData.dateOfBirth,
         doctorId: selectedDoctor,
         specialtyId: selectedSpecialty,
         appointmentDate: selectedDate,

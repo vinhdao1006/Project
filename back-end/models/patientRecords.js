@@ -6,29 +6,39 @@ const PatientRecordSchema = new moongoose.Schema({
         ref: 'Users',
         required: true
     },
-    doctorId: {
+    gender: {
         type: String,
-        ref: 'Doctors',
-        required: true
+        default: 'Male',
+        required: true,
     },
-    appointmentId: {
-        type: String,
-        ref: 'Appointments',
-        required: true
-    },
-    recordDate: {
+    dayOfBirth: {
         type: Date,
-        default: Date.now
     },
-    symptoms: {
-        type: String,
-        required: true
-    },
-    diagnosis: {
-        type: String,
-        required: true
-    },
-    notes: String,
+    appointmentsHistory: [{
+        appointmentId: {
+            type: String,
+            ref: 'Appointments',
+            required: true
+        },
+        date: {
+            type: Date,
+            default: Date.now
+        }, 
+        time: {
+            type: String,
+            required: true
+        },
+        doctorId: {
+            type: String,
+            ref: 'Doctors',
+            required: true
+        },
+    }],
+    testReports: [{
+        testName: String,
+        testDate: Date,
+        results: String
+    }],
     prescriptions: [{
         medication: String,
         dosage: String,

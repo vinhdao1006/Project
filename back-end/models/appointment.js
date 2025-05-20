@@ -6,6 +6,18 @@ const AppointmentSchema = new mongoose.Schema({
         ref: 'Users',
         required: true
     },
+    fullname: {
+        type: String,
+        required: true
+    },
+    gender: {
+        type: String,
+        required: true
+    },
+    dayOfBirth: {
+        type: Date,
+        required: true
+    },
     doctorId: {
         type: String,
         ref: 'Doctors',

@@ -58,6 +58,10 @@ app.use("/api/appointments", appointmentRoutes);
 const specialtyRoutes = require("./routes/specialties");
 app.use("/api/specialties", specialtyRoutes);
 
+// patient records routes
+const patientRecordsRoutes = require("./routes/patientRecords");
+app.use("/api/patient-records", patientRecordsRoutes);
+
 // Serve images from /public
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 

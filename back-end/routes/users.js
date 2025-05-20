@@ -10,38 +10,6 @@ router.use(cookieParser());
 const {OAuth2Client} = require('google-auth-library');
 const client = new OAuth2Client('151040209139-vfpad4pm3ktv6pmrub9sjoj4ri4qr8dn.apps.googleusercontent.com');
 
-// Register new user
-// router.post('/register', async (req, res) => {
-//     try {
-//         const { firstname, lastname, email, password, phone, role } = req.body;
-
-//         // Check if email already exists
-//         const existingUser = await UserModel.findOne({ email });
-//         if (existingUser) {
-//             return res.status(400).json({ message: 'Email already exists' });
-//         }
-
-//         // Hash password
-//         const hashedPassword = await bcrypt.hash(password, 10);
-
-//         // Create new user
-//         const newUser = new UserModel({
-//             firstname,
-//             lastname,
-//             email,
-//             password: hashedPassword,
-//             phone,
-//             role
-//         });
-
-//         await newUser.save();
-//         res.status(201).json({ message: 'User registered successfully' });
-//     } catch (error) {
-//         console.error('Registration error:', error);
-//         res.status(500).json({ message: 'Error registering user' });
-//     }
-// });
-
 const verifyRole = (roles) => (req, res, next) => {
     const token = req.cookies.token;
     if (!token) {

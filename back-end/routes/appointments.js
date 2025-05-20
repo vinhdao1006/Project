@@ -7,7 +7,7 @@ const router = express.Router();
 // Create new appointment
 router.post('/', async (req, res) => {
     try {
-        const { patientId, doctorId, specialtyId, appointmentDate, appointmentTime, reason } = req.body;
+        const { patientId, fullname, gender, dayOfBirth, doctorId, specialtyId, appointmentDate, appointmentTime, reason } = req.body;
         
         // Check if the time slot is available
         const existingAppointment = await AppointmentModel.findOne({
@@ -23,6 +23,9 @@ router.post('/', async (req, res) => {
 
         const appointment = new AppointmentModel({
             patientId,
+            fullname,
+            gender,
+            dayOfBirth,
             doctorId,
             specialtyId,
             appointmentDate,
