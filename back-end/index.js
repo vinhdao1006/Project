@@ -29,8 +29,11 @@ const cors = require("cors")
 
 app.use(express.json())
 app.use(cors({
-    origin: ["http://localhost:5173"],
-    methods: ["GET", "POST", "PUT"],
+    origin: [
+        "http://localhost:5173",
+        "https://doantotnghiep-46d1uh2dh-khiem-truongs-projects.vercel.app"
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true
 }))
 
