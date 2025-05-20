@@ -5,6 +5,9 @@ const doctors = require('./utils/doctors');
   
 async function initializeDoctors() {
     try {
+        // clear doctors collection
+        await DoctorModel.deleteMany();
+
         // Create doctors
         for (const doctorData of doctors) {
             // Find specialty
@@ -16,40 +19,42 @@ async function initializeDoctors() {
 
             // Check if user already exists
             const existingUser = await UserModel.findOne({ email: doctorData.email });
-            if (existingUser) {
-                // console.log(`User with email ${doctorData.email} already exists, skipping.`);
-                continue;
-            }
+            const existingDoctor = await DoctorModel.findOne({ email: doctorData.email });
 
-            // Create user account
-            const hashedPassword = require('bcrypt').hashSync(doctorData.password, 10);
-            const user = new UserModel({
+            if (existingUser) {
+                if(!existingDoctor) {
+                    // Create doctor profile
+                    const doctor = new DoctorModel({
+                    doctorId: existingUser.userId,
+                    firstname: doctorData.firstname,
+                    lastname: doctorData.lastname,
+                    email: doctorData.email,
+                    specialty: specialty.name,
+                    consultationFee: doctorData.consultationFee,
+                    experience: doctorData.experience,
+                    languages: doctorData.languages,
+                    title: doctorData.title,
+                    degree: doctorData.degree,
+                    availability: doctorData.availability
+                });
+                await doctor.save();
+                }
+            }
+            else 
+            {
+                // Create user account for doctor
+                const hashedPassword = require('bcrypt').hashSync(doctorData.password, 10);
+                const user = new UserModel({
                 firstname: doctorData.firstname,
                 lastname: doctorData.lastname,
                 email: doctorData.email,
                 phone: doctorData.phone,
                 password: hashedPassword,
                 role: doctorData.role
-            });
-            await user.save();
-            // console.log(`Created user account for Dr. ${doctorData.firstname} ${doctorData.lastname}`);
-
-            // Create doctor profile
-            const doctor = new DoctorModel({
-                doctorId: user.userId,
-                firstname: doctorData.firstname,
-                lastname: doctorData.lastname,
-                email: doctorData.email,
-                specialty: specialty.name,
-                consultationFee: doctorData.consultationFee,
-                experience: doctorData.experience,
-                languages: doctorData.languages,
-                title: doctorData.title,
-                degree: doctorData.degree,
-                availability: doctorData.availability
-            });
-            await doctor.save();
-            // console.log(`Created doctor profile for Dr. ${doctorData.firstname} ${doctorData.lastname}`);
+                });
+                await user.save();
+            }
+            
         }
 
         // Verify the insertion
