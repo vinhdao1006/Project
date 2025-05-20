@@ -40,8 +40,6 @@ const Appointments = () => {
             "http://localhost:3001/api/patient-records",
             {
               patientId: userId,
-              gender: response.data.gender,
-              dayOfBirth: response.data.dayOfBirth,
               appointments: response.data,
             },
             {

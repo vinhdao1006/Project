@@ -9,66 +9,7 @@ import {
   ChevronRightIcon,
   MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
-
-// Updated patient data with new columns
-const patientsData = [
-  {
-    patient: "Dianne Russell",
-    dateOfBirth: "15 Apr, 1985",
-    gender: "Female",
-    lastVisit: "27 Dec, 2024",
-    avatar: "DR",
-  },
-  {
-    patient: "Bessie Cooper",
-    dateOfBirth: "03 Jun, 1992",
-    gender: "Female",
-    lastVisit: "03 Feb, 2023",
-    avatar: "BC",
-  },
-  {
-    patient: "Marvin McKinney",
-    dateOfBirth: "12 Nov, 1978",
-    gender: "Male",
-    lastVisit: "02 Mar, 2023",
-    avatar: "MM",
-  },
-  {
-    patient: "Esther Howard",
-    dateOfBirth: "22 Sep, 1990",
-    gender: "Female",
-    lastVisit: "02 Mar, 2023",
-    avatar: "EH",
-  },
-  {
-    patient: "Marvin McKinney",
-    dateOfBirth: "12 Nov, 1978",
-    gender: "Male",
-    lastVisit: "15 Jan, 2023",
-    avatar: "MM",
-  },
-  {
-    patient: "Annette Black",
-    dateOfBirth: "19 Jul, 1995",
-    gender: "Female",
-    lastVisit: "02 Mar, 2023",
-    avatar: "AB",
-  },
-  {
-    patient: "Cameron Williamson",
-    dateOfBirth: "05 May, 1988",
-    gender: "Male",
-    lastVisit: "14 Feb, 2023",
-    avatar: "CW",
-  },
-  {
-    patient: "Guy Hawkins",
-    dateOfBirth: "23 Dec, 1983",
-    gender: "Male",
-    lastVisit: "02 Mar, 2023",
-    avatar: "GH",
-  },
-];
+import axios from "axios";
 
 // Gender badge component
 function GenderBadge({ gender }) {
@@ -154,6 +95,7 @@ function Patients() {
         console.log("Fetched patients:", response.data); // For debugging
         // Map appointments to patient info
         const mappedPatients = response.data.map((appt) => ({
+          patientId: appt.patientId,
           patient: appt.fullname || "Unknown",
           dateOfBirth: appt.dayOfBirth
             ? new Date(appt.dayOfBirth).toLocaleDateString()
@@ -162,8 +104,8 @@ function Patients() {
           lastVisit: appt.appointmentDate
             ? new Date(appt.appointmentDate).toLocaleDateString()
             : "",
-          avatar: appt.patientInfo?.fullname
-            ? appt.patientInfo.fullname
+          avatar: appt.fullname
+            ? appt.fullname
                 .split(" ")
                 .map((n) => n[0])
                 .join("")

@@ -936,6 +936,7 @@ function BookingPage() {
         appointmentDate: selectedDate,
         appointmentTime: formData.appointmentTime,
         reason: formData.reason,
+        email: formData.email,
         ...formData,
       };
 

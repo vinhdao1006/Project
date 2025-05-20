@@ -20,7 +20,7 @@ const transporter = nodemailer.createTransport({
 // Create new appointment
 router.post('/', async (req, res) => {
     try {
-        const { patientId, fullname, gender, dayOfBirth, doctorId, specialtyId, appointmentDate, appointmentTime, reason } = req.body;
+        const { patientId, fullname, gender, dayOfBirth, doctorId, specialtyId, appointmentDate, appointmentTime, reason, email } = req.body;
         
         // Check if the time slot is available
         const existingAppointment = await AppointmentModel.findOne({
@@ -44,7 +44,8 @@ router.post('/', async (req, res) => {
             specialtyId,
             appointmentDate,
             appointmentTime,
-            reason
+            reason,
+            email,
         });
 
         await appointment.save();
@@ -86,7 +87,7 @@ router.post('/', async (req, res) => {
                     </div>
                     
                     <div style="margin-bottom: 20px; padding: 15px; background-color: #f9f9f9; border-radius: 5px;">
-                        <h2 style="color: #285430; font-size: 18px; margin-top: 0;">Dear ${name},</h2>
+                        <h2 style="color: #285430; font-size: 18px; margin-top: 0;">Dear ${fullname},</h2>
                         <p style="color: #444; line-height: 1.5;">
                             Your appointment has been successfully scheduled. Please find your appointment details below:
                         </p>
