@@ -80,7 +80,7 @@ const Appointments = () => {
           <p className="text-bimec-black mb-4">{error}</p>
           <button
             onClick={() => window.location.reload()}
-            className="bg-bimec-green text-white px-5 py-2 rounded-lg hover:bg-bimec-heavy-green transition-colors duration-300 font-medium"
+            className="bg-bimec-green text-white px-5 py-2 rounded-lg hover:bg-bimec-heavy-green transition-colors duration-150 font-medium"
           >
             Try Again
           </button>
@@ -127,7 +127,7 @@ const Appointments = () => {
               </p>
               <a
                 href="/booking"
-                className="inline-block bg-bimec-green text-white px-6 py-3 rounded-lg hover:bg-bimec-heavy-green font-medium transition-colors duration-300"
+                className="inline-block bg-bimec-green text-white px-6 py-3 rounded-lg hover:bg-bimec-heavy-green font-medium transition-colors duration-150"
               >
                 Book Your First Appointment
               </a>
@@ -142,7 +142,7 @@ const Appointments = () => {
                 </h2>
                 <button
                   onClick={() => navigate("/default/booking")}
-                  className="inline-block bg-bimec-green text-white px-4 py-2 rounded-lg hover:bg-bimec-heavy-green font-medium transition-all duration-300 text-sm w-full sm:w-auto"
+                  className="inline-block bg-bimec-green text-white px-4 py-2 rounded-lg hover:bg-bimec-heavy-green font-medium transition-colors duration-150 text-sm w-full sm:w-auto"
                 >
                   + New Appointment
                 </button>
@@ -152,7 +152,7 @@ const Appointments = () => {
                 {appointments.map((appt, index) => (
                   <div 
                     key={appt._id} 
-                    className="p-5 bg-white border border-gray-100 rounded-xl hover:border-bimec-green transition-all duration-300 shadow-sm hover:shadow"
+                    className="p-5 bg-white border border-gray-100 rounded-xl hover:border-bimec-green transition-all duration-150 shadow-sm hover:shadow"
                     style={{ 
                       transform: isVisible ? 'translateX(0)' : 'translateX(10px)',
                       opacity: isVisible ? 1 : 0,
@@ -195,7 +195,7 @@ const Appointments = () => {
                       {/* Right content */}
                       <div className="flex justify-between items-center md:justify-end gap-4">
                         <span
-                          className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium transition-all duration-300 ${
+                          className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium transition-colors duration-150 ${
                             appt.status === "Confirmed"
                               ? "bg-green-100 text-green-700"
                               : "bg-yellow-100 text-yellow-700"
@@ -204,7 +204,7 @@ const Appointments = () => {
                           {appt.status}
                         </span>
                         <button 
-                          className="text-xs text-bimec-red hover:text-red-700 transition-colors duration-300"
+                          className="text-xs text-bimec-red hover:text-red-700 transition-colors duration-150"
                           aria-label="Cancel appointment"
                         >
                           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -226,18 +226,18 @@ const Appointments = () => {
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
           }`}>
             <button 
-              className="w-full p-4 flex justify-between items-center text-left hover:bg-bimec-light-green transition-colors duration-300"
+              className="w-full p-4 flex justify-between items-center text-left hover:bg-bimec-light-green transition-colors duration-150"
               onClick={() => setShowPastAppointments(!showPastAppointments)}
             >
               <h2 className="text-lg font-medium text-bimec-black">Past Appointments</h2>
               <ChevronDownIcon 
-                className={`h-5 w-5 text-bimec-green transition-transform duration-300 ${showPastAppointments ? 'rotate-180' : ''}`}
+                className={`h-5 w-5 text-bimec-green transition-transform duration-150 ${showPastAppointments ? 'rotate-180' : ''}`}
               />
             </button>
             
             {/* Collapsible content */}
             <div 
-              className={`transition-all duration-500 ease-in-out overflow-hidden ${
+              className={`transition-all duration-200 ease-in-out overflow-hidden ${
                 showPastAppointments ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
               }`}
             >
