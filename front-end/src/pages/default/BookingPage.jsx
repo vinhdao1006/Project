@@ -951,11 +951,16 @@ function BookingPage() {
         navigate("/default/appointments");
       }
     } catch (error) {
-      console.error("Error booking appointment:", error);
       if (error.response && error.response.status === 401) {
         alert("Session expired. Please login again.");
         navigate("/login");
-      } else {
+      }
+      else if (error.response && error.response.status == 400)
+      {
+        alert("This time slot is already booked. Please book a different time range.")
+      }
+      else {
+        console.error("Error booking appointment:", error);
         alert("Failed to book appointment. Please try again.");
       }
     }

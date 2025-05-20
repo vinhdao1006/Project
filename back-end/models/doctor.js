@@ -13,11 +13,11 @@ const DoctorSchema = new mongoose.Schema({
         type: String, 
         required: true
     },
-    // userId: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'Users',
-    //     required: true
-    // },
+    doctorId: {
+        type: String,
+        ref: 'Users',
+        required: true
+    },
     specialty: {
         type: String,
         required: true
