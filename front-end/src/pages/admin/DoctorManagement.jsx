@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Search,
   UserPlus,
@@ -13,53 +13,33 @@ import {
 import SideBar from "./SideBar";
 import AddDoctor from "./AddDoctor";
 import Header from "./Header";
-
-const doctors = [
-  {
-    name: "Dr. Petra Winsbury",
-    department: "General Medicine",
-    todayAppointments: 10,
-    status: "Available",
-  },
-  {
-    name: "Dr. Olivia Martinez",
-    department: "Cardiology",
-    todayAppointments: 0,
-    status: "Unavailable",
-  },
-  {
-    name: "Dr. Michael Brown",
-    department: "Orthopedics",
-    todayAppointments: 5,
-    status: "Available",
-  },
-  {
-    name: "Dr. Sarah Johnson",
-    department: "Neurology",
-    todayAppointments: 8,
-    status: "Available",
-  },
-  {
-    name: "Dr. Robert Wilson",
-    department: "Pediatrics",
-    todayAppointments: 12,
-    status: "Available",
-  },
-  {
-    name: "Dr. Emily Davis",
-    department: "Dermatology",
-    todayAppointments: 0,
-    status: "Unavailable",
-  },
-  // Add more rows...
-];
+import axios from "axios";
 
 const DoctorsManagement = () => {
+  const [doctors, setDoctors] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [filterStatus, setFilterStatus] = useState("All"); // State to manage the selected filter
   const [searchTerm, setSearchTerm] = useState(""); // State for search term
   const [currentPage, setCurrentPage] = useState(1); // State to manage the current page
   const itemsPerPage = 5; // Number of items per page
+
+  useEffect(() => {
+    const fetchDoctors = async () => {
+      try {
+        const response = await axios.get("http://localhost:3001/api/doctors");
+        const data = response.data.map((doctor) => ({
+          name: `${doctor.firstname} ${doctor.lastname}`,
+          department: doctor.specialty,
+          todayAppointments: doctor.todayAppointments || 0,
+          status: doctor.availability.map((a) => a.status)[0],
+        }));
+        setDoctors(data);
+      } catch (error) {
+        console.error("Error fetching doctors:", error);
+      }
+    };
+    fetchDoctors();
+  }, []);
 
   const handleAddDoctorClick = () => {
     setIsModalOpen(true);
@@ -76,12 +56,13 @@ const DoctorsManagement = () => {
 
   // Filter doctors based on the selected status and search term
   const filteredDoctors = doctors
-    .filter(doctor => 
+    .filter((doctor) =>
       filterStatus === "All" ? true : doctor.status === filterStatus
     )
-    .filter(doctor =>
-      doctor.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      doctor.department.toLowerCase().includes(searchTerm.toLowerCase())
+    .filter(
+      (doctor) =>
+        doctor.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        doctor.department.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
   // Calculate pagination
@@ -102,7 +83,7 @@ const DoctorsManagement = () => {
   const getPageNumbers = () => {
     const pages = [];
     const maxPagesToShow = 5;
-    
+
     if (totalPages <= maxPagesToShow) {
       for (let i = 1; i <= totalPages; i++) {
         pages.push(i);
@@ -112,25 +93,25 @@ const DoctorsManagement = () => {
         for (let i = 1; i <= 4; i++) {
           pages.push(i);
         }
-        pages.push('...');
+        pages.push("...");
         pages.push(totalPages);
       } else if (currentPage >= totalPages - 2) {
         pages.push(1);
-        pages.push('...');
+        pages.push("...");
         for (let i = totalPages - 3; i <= totalPages; i++) {
           pages.push(i);
         }
       } else {
         pages.push(1);
-        pages.push('...');
+        pages.push("...");
         for (let i = currentPage - 1; i <= currentPage + 1; i++) {
           pages.push(i);
         }
-        pages.push('...');
+        pages.push("...");
         pages.push(totalPages);
       }
     }
-    
+
     return pages;
   };
 
@@ -140,13 +121,13 @@ const DoctorsManagement = () => {
       bg: "bg-green-50",
       text: "text-green-700",
       dot: "bg-green-500",
-      icon: <Check className="w-4 h-4" />
+      icon: <Check className="w-4 h-4" />,
     },
     Unavailable: {
       bg: "bg-red-50",
       text: "text-red-700",
       dot: "bg-red-500",
-      icon: <X className="w-4 h-4" />
+      icon: <X className="w-4 h-4" />,
     },
   };
 
@@ -184,7 +165,11 @@ const DoctorsManagement = () => {
                 <div className="flex gap-3">
                   <button
                     className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 
-                    ${filterStatus === "All" ? "bg-gray-900 text-white" : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-50"}`}
+                    ${
+                      filterStatus === "All"
+                        ? "bg-gray-900 text-white"
+                        : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-50"
+                    }`}
                     onClick={() => setFilterStatus("All")}
                   >
                     All
@@ -192,20 +177,30 @@ const DoctorsManagement = () => {
 
                   <button
                     className={`flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 
-                    ${filterStatus === "Available" ? "bg-green-50 text-green-700 border border-green-300" : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-50"}`}
+                    ${
+                      filterStatus === "Available"
+                        ? "bg-green-50 text-green-700 border border-green-300"
+                        : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-50"
+                    }`}
                     onClick={() => setFilterStatus("Available")}
                   >
                     <div className="w-2 h-2 rounded-full bg-green-500 mr-1.5"></div>
-                    Available ({doctors.filter(d => d.status === "Available").length})
+                    Available (
+                    {doctors.filter((d) => d.status === "Available").length})
                   </button>
 
                   <button
                     className={`flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 
-                    ${filterStatus === "Unavailable" ? "bg-red-50 text-red-700 border border-red-300" : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-50"}`}
+                    ${
+                      filterStatus === "Unavailable"
+                        ? "bg-red-50 text-red-700 border border-red-300"
+                        : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-50"
+                    }`}
                     onClick={() => setFilterStatus("Unavailable")}
                   >
                     <div className="w-2 h-2 rounded-full bg-red-500 mr-1.5"></div>
-                    Unavailable ({doctors.filter(d => d.status === "Unavailable").length})
+                    Unavailable (
+                    {doctors.filter((d) => d.status === "Unavailable").length})
                   </button>
                 </div>
               </div>
@@ -244,9 +239,7 @@ const DoctorsManagement = () => {
                           Today's Appointments
                         </div>
                       </th>
-                      <th className="px-6 py-4">
-                        Status
-                      </th>
+                      <th className="px-6 py-4">Status</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-100">
@@ -274,13 +267,23 @@ const DoctorsManagement = () => {
                           </span>
                         </td>
                         <td className="px-6 py-4 text-gray-600">
-                          <span className={doctor.todayAppointments > 0 ? "font-medium text-gray-900" : ""}>
+                          <span
+                            className={
+                              doctor.todayAppointments > 0
+                                ? "font-medium text-gray-900"
+                                : ""
+                            }
+                          >
                             {doctor.todayAppointments} appointment
                             {doctor.todayAppointments !== 1 ? "s" : ""}
                           </span>
                         </td>
                         <td className="px-6 py-4">
-                          <span className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium ${statusStyles[doctor.status].bg} ${statusStyles[doctor.status].text}`}>
+                          <span
+                            className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium ${
+                              statusStyles[doctor.status].bg
+                            } ${statusStyles[doctor.status].text}`}
+                          >
                             {statusStyles[doctor.status].icon}
                             {doctor.status}
                           </span>
@@ -299,46 +302,65 @@ const DoctorsManagement = () => {
                   </p>
                 </div>
               )}
-              
+
               {/* Pagination */}
               {filteredDoctors.length > 0 && (
                 <div className="flex justify-between items-center text-sm text-gray-600 mt-6">
                   <p className="text-sm text-gray-600">
-                    Showing {startIndex + 1} to {Math.min(startIndex + itemsPerPage, filteredDoctors.length)} of {filteredDoctors.length} results
+                    Showing {startIndex + 1} to{" "}
+                    {Math.min(
+                      startIndex + itemsPerPage,
+                      filteredDoctors.length
+                    )}{" "}
+                    of {filteredDoctors.length} results
                   </p>
-                  
+
                   <div className="flex items-center gap-1">
                     <button
                       className="p-2 rounded-lg transition-colors"
                       onClick={() => handlePageChange(currentPage - 1)}
                       disabled={currentPage === 1}
                     >
-                      <ChevronLeft className={`w-5 h-5 ${currentPage === 1 ? 'text-gray-300' : 'text-gray-600 hover:text-bimec-green'}`} />
+                      <ChevronLeft
+                        className={`w-5 h-5 ${
+                          currentPage === 1
+                            ? "text-gray-300"
+                            : "text-gray-600 hover:text-bimec-green"
+                        }`}
+                      />
                     </button>
-                    
+
                     {getPageNumbers().map((page, index) => (
                       <button
                         key={index}
-                        onClick={() => typeof page === 'number' && handlePageChange(page)}
-                        disabled={page === '...'}
+                        onClick={() =>
+                          typeof page === "number" && handlePageChange(page)
+                        }
+                        disabled={page === "..."}
                         className={`px-3 py-1 rounded-lg text-sm font-medium transition-colors ${
                           page === currentPage
-                            ? 'bg-bimec-green text-white'
-                            : page === '...'
-                            ? 'text-gray-400 cursor-default'
-                            : 'text-gray-600 hover:bg-gray-100'
+                            ? "bg-bimec-green text-white"
+                            : page === "..."
+                            ? "text-gray-400 cursor-default"
+                            : "text-gray-600 hover:bg-gray-100"
                         }`}
                       >
                         {page}
                       </button>
                     ))}
-                    
+
                     <button
                       className="p-2 rounded-lg transition-colors"
                       onClick={() => handlePageChange(currentPage + 1)}
                       disabled={currentPage === totalPages || totalPages === 0}
                     >
-                      <ChevronRight className={`w-5 h-5 ${currentPage === totalPages || totalPages === 0 ? 'text-gray-300' : 'text-gray-600 hover:text-bimec-green'}`} />
+                      <ChevronRight
+                        className={`w-5 h-5 ${
+                          currentPage === totalPages || totalPages === 0
+                            ? "text-gray-300"
+                            : "text-gray-600 hover:text-bimec-green"
+                        }`}
+                      />
                     </button>
                   </div>
                 </div>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Search,
   ChevronLeft,
@@ -11,64 +11,78 @@ import {
 } from "lucide-react";
 import SideBar from "./SideBar";
 import Header from "./Header";
-
-const appointments = [
-  {
-    name: "John Doe",
-    date: "2024-06-10",
-    time: "10:00 AM",
-    treatment: "Routine Check-Ups",
-    doctor: "Dr. Petra Winsbury",
-    status: "Confirmed",
-  },
-  {
-    name: "Jane Smith",
-    date: "2024-06-11",
-    time: "12:00 AM",
-    treatment: "Gynecology",
-    doctor: "Dr. Olivia Martinez",
-    status: "Pending",
-  },
-  {
-    name: "Mark Johnson",
-    date: "2024-06-12",
-    time: "09:00 AM",
-    treatment: "Paediatrics",
-    doctor: "Dr. Michael Brown",
-    status: "Cancelled",
-  },
-  // Add more rows...
-];
+import axios from "axios";
 
 const AppointmentsManagement = () => {
   const [filterStatus, setFilterStatus] = useState("All"); // State to manage the selected filter
   const [searchTerm, setSearchTerm] = useState(""); // State for search term
   const [currentPage, setCurrentPage] = useState(1); // State to manage the current page
+  const [appointments, setAppointments] = useState([]); // State to manage appointments
   const itemsPerPage = 5; // Number of items per page
 
   // Map from our current status names to the doctor/appointment status types
   const mapStatusToType = {
-    "Confirmed": "checked",
-    "Pending": "pending",
-    "Cancelled": "canceled"
+    Confirmed: "checked",
+    Pending: "pending",
+    Cancelled: "canceled",
   };
-  
+
+  useEffect(() => {
+    const fetchAppointments = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:3001/api/appointments"
+        );
+        const data = response.data.map((appointment) => ({
+          name: appointment.patientInfo
+            ? `${appointment.patientInfo.firstname} ${appointment.patientInfo.lastname}`
+            : "Unknown",
+          doctor: appointment.doctorInfo
+            ? `Dr. ${appointment.doctorInfo.firstname} ${appointment.doctorInfo.lastname}`
+            : "Unknown",
+          date: appointment.appointmentDate
+            ? new Date(appointment.appointmentDate).toLocaleDateString()
+            : "",
+          time: appointment.appointmentTime || "",
+          status: appointment.status,
+          treatment: appointment.specialtyId || "",
+        }));
+        setAppointments(data);
+      } catch (error) {
+        console.error("Error fetching appointments:", error);
+      }
+    };
+    fetchAppointments();
+
+    const intervalId = setInterval(fetchAppointments, 5000);
+    return () => clearInterval(intervalId);
+  }, []);
+
   // Count by status type for filter counts
-  const pendingCount = appointments.filter(a => a.status === "Pending").length;
-  const cancelledCount = appointments.filter(a => a.status === "Cancelled").length;
-  const confirmedCount = appointments.filter(a => a.status === "Confirmed").length;
+  const pendingCount = appointments.filter(
+    (a) => a.status === "Pending"
+  ).length;
+  const cancelledCount = appointments.filter(
+    (a) => a.status === "Cancelled"
+  ).length;
+  const confirmedCount = appointments.filter(
+    (a) => a.status === "Confirmed"
+  ).length;
 
   // Filter appointments based on the selected status and search term
   const filteredAppointments = appointments
-    .filter(appointment => 
+    .filter((appointment) =>
       filterStatus === "All" ? true : appointment.status === filterStatus
     )
-    .filter(appointment => 
-      appointment.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      appointment.doctor.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      appointment.treatment.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      appointment.date.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      appointment.time.toLowerCase().includes(searchTerm.toLowerCase())
+    .filter(
+      (appointment) =>
+        appointment.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        appointment.doctor.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        appointment.treatment
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase()) ||
+        appointment.date.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        appointment.time.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
   // Calculate pagination
@@ -99,7 +113,7 @@ const AppointmentsManagement = () => {
   const getPageNumbers = () => {
     const pages = [];
     const maxPagesToShow = 5;
-    
+
     if (totalPages <= maxPagesToShow) {
       for (let i = 1; i <= totalPages; i++) {
         pages.push(i);
@@ -109,25 +123,25 @@ const AppointmentsManagement = () => {
         for (let i = 1; i <= 4; i++) {
           pages.push(i);
         }
-        pages.push('...');
+        pages.push("...");
         pages.push(totalPages);
       } else if (currentPage >= totalPages - 2) {
         pages.push(1);
-        pages.push('...');
+        pages.push("...");
         for (let i = totalPages - 3; i <= totalPages; i++) {
           pages.push(i);
         }
       } else {
         pages.push(1);
-        pages.push('...');
+        pages.push("...");
         for (let i = currentPage - 1; i <= currentPage + 1; i++) {
           pages.push(i);
         }
-        pages.push('...');
+        pages.push("...");
         pages.push(totalPages);
       }
     }
-    
+
     return pages;
   };
 
@@ -137,20 +151,20 @@ const AppointmentsManagement = () => {
       bg: "bg-green-50",
       text: "text-green-700",
       dot: "bg-green-500",
-      icon: CheckCircle
+      icon: CheckCircle,
     },
     Pending: {
       bg: "bg-yellow-50",
       text: "text-yellow-700",
       dot: "bg-yellow-500",
-      icon: Clock
+      icon: Clock,
     },
     Cancelled: {
       bg: "bg-red-50",
       text: "text-red-700",
       dot: "bg-red-500",
-      icon: XCircle
-    }
+      icon: XCircle,
+    },
   };
 
   return (
@@ -186,7 +200,11 @@ const AppointmentsManagement = () => {
               <div className="flex flex-wrap gap-3 mt-4 md:mt-0">
                 <button
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 
-                  ${filterStatus === "All" ? "bg-gray-900 text-white" : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-50"}`}
+                  ${
+                    filterStatus === "All"
+                      ? "bg-gray-900 text-white"
+                      : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-50"
+                  }`}
                   onClick={() => handleFilterChange("All")}
                 >
                   All
@@ -194,7 +212,11 @@ const AppointmentsManagement = () => {
 
                 <button
                   className={`flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 
-                  ${filterStatus === "Confirmed" ? "bg-green-50 text-green-700 border border-green-300" : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-50"}`}
+                  ${
+                    filterStatus === "Confirmed"
+                      ? "bg-green-50 text-green-700 border border-green-300"
+                      : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-50"
+                  }`}
                   onClick={() => handleFilterChange("Confirmed")}
                 >
                   <div className="w-2 h-2 rounded-full bg-green-500 mr-1.5"></div>
@@ -203,7 +225,11 @@ const AppointmentsManagement = () => {
 
                 <button
                   className={`flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 
-                  ${filterStatus === "Pending" ? "bg-yellow-50 text-yellow-700 border border-yellow-300" : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-50"}`}
+                  ${
+                    filterStatus === "Pending"
+                      ? "bg-yellow-50 text-yellow-700 border border-yellow-300"
+                      : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-50"
+                  }`}
                   onClick={() => handleFilterChange("Pending")}
                 >
                   <div className="w-2 h-2 rounded-full bg-yellow-500 mr-1.5"></div>
@@ -212,7 +238,11 @@ const AppointmentsManagement = () => {
 
                 <button
                   className={`flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 
-                  ${filterStatus === "Cancelled" ? "bg-red-50 text-red-700 border border-red-300" : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-50"}`}
+                  ${
+                    filterStatus === "Cancelled"
+                      ? "bg-red-50 text-red-700 border border-red-300"
+                      : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-50"
+                  }`}
                   onClick={() => handleFilterChange("Cancelled")}
                 >
                   <div className="w-2 h-2 rounded-full bg-red-500 mr-1.5"></div>
@@ -241,7 +271,18 @@ const AppointmentsManagement = () => {
                       </th>
                       <th className="px-6 py-4">
                         <div className="flex items-center gap-2">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            className="w-4 h-4"
+                          >
                             <path d="M3 21h18"></path>
                             <path d="M19 21v-4"></path>
                             <path d="M19 17a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v4"></path>
@@ -261,9 +302,7 @@ const AppointmentsManagement = () => {
                           Doctor
                         </div>
                       </th>
-                      <th className="px-6 py-4">
-                        Status
-                      </th>
+                      <th className="px-6 py-4">Status</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-100">
@@ -302,8 +341,15 @@ const AppointmentsManagement = () => {
                           {appointment.doctor}
                         </td>
                         <td className="px-6 py-4">
-                          <span className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium ${statusStyles[appointment.status].bg} ${statusStyles[appointment.status].text}`}>
-                            {React.createElement(statusStyles[appointment.status].icon, { className: "w-4 h-4" })}
+                          <span
+                            className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium ${
+                              statusStyles[appointment.status].bg
+                            } ${statusStyles[appointment.status].text}`}
+                          >
+                            {React.createElement(
+                              statusStyles[appointment.status].icon,
+                              { className: "w-4 h-4" }
+                            )}
                             {appointment.status}
                           </span>
                         </td>
@@ -321,7 +367,7 @@ const AppointmentsManagement = () => {
                   </p>
                 </div>
               )}
-              
+
               {/* Pagination */}
               {filteredAppointments.length > 0 && (
                 <div className="flex flex-wrap justify-between items-center mt-6">
@@ -350,12 +396,14 @@ const AppointmentsManagement = () => {
                     {getPageNumbers().map((page, index) => (
                       <button
                         key={index}
-                        onClick={() => typeof page === 'number' && handlePageChange(page)}
-                        disabled={page === '...'}
+                        onClick={() =>
+                          typeof page === "number" && handlePageChange(page)
+                        }
+                        disabled={page === "..."}
                         className={`px-3 py-1 rounded-lg text-sm font-medium transition-colors ${
                           page === currentPage
                             ? "bg-bimec-green text-white"
-                            : page === '...'
+                            : page === "..."
                             ? "text-gray-400 cursor-default"
                             : "text-gray-600 hover:bg-gray-100"
                         }`}

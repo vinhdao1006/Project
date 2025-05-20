@@ -24,7 +24,7 @@ const Appointments = () => {
         }
 
         const response = await axios.get(
-          `http://localhost:3001/api/patient-appointments/${userId}`,
+          `http://localhost:3001/api/appointments/${userId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

@@ -26,9 +26,6 @@ const port = process.env.PORT || 3001;
 app.listen(port, console.log(`Server is running on port ${port}...`));
 
 const cors = require("cors")
-const SpecialtyModel = require('./models/specialty')
-const DoctorModel = require('./models/doctor')
-const AppointmentModel = require('./models/appointment')
 
 app.use(express.json())
 app.use(cors({
@@ -49,174 +46,20 @@ app.use("/api/users", userRoutes);
 const notificationRoutes = require("./routes/notifications");
 app.use("/api/notifications", notificationRoutes);
 
+// doctor routes
+const doctorRoutes = require("./routes/doctors");
+app.use("/api/doctors", doctorRoutes);
+
+// appointment routes
+const appointmentRoutes = require("./routes/appointments");
+app.use("/api/appointments", appointmentRoutes);
+
+// specialty routes
+const specialtyRoutes = require("./routes/specialties");
+app.use("/api/specialties", specialtyRoutes);
+
 // Serve images from /public
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
-  
-// Get all specialties
-app.get('/api/specialties', async (req, res) => {
-    try {
-        const specialties = await SpecialtyModel.find();
-        const baseUrl = `${req.protocol}://${req.get("host")}`;
-        const result = specialties.map(s => ({
-            ...s._doc,
-            image: baseUrl + s.image, // prepend full URL
-        }));
-        res.json(result); 
-    } catch (error) {
-        console.error('Error fetching specialties:', error);
-        res.status(500).json({ error: 'Failed to fetch specialties' });
-    }
-});
-
-// get doctors
-app.get('/api/doctors', async (req, res) => {
-    try 
-    {
-        const doctors = await DoctorModel.find()
-        res.json(doctors)
-    } catch (error)
-    {
-        res.status(500).json({ error: error.message})
-    }
-})
-
-// Search doctors with multiple filters
-app.get('/api/doctors/search', async (req, res) => {
-    try {
-        console.log("api search doctors")
-        const { specialty, occupation, title, language, degree } = req.query;
-        
-        // Build the query object based on provided filters
-        const query = {};
-        
-        if (specialty) {
-            query.specialty = specialty;
-        }
-        if (occupation) {
-            query.role = occupation;
-        }
-        
-        if (title) {
-            query.title = title;
-        }
-        
-        if (language) {
-            query.languages = { $in: [language] };
-        }
-        
-        if (degree) {
-            query.degree = degree;
-        }
-        
-        console.log('Search query:', query); // For debugging
-        
-        const doctors = await DoctorModel.find(query)
-            .populate('firstname lastname')
-            .populate('specialty', 'name');
-            
-        console.log('Found doctors:', doctors.length); // For debugging
-        res.json(doctors);
-    } catch (error) {
-        console.error('Search error:', error); // For debugging
-        res.status(500).json({ error: error.message });
-    }
-});
-
-// Get doctors by specialty
-app.get('/api/doctors/:specialty', async (req, res) => {
-    try {
-        //use this code to print list of specialties when trying to debug  
-        const a = await SpecialtyModel.find()
-        // console.log("api doctors specialy: ")
-        // for (var i = 0; i < a.length; ++i)
-        //     console.log(a[i])
-
-        const doctors = await DoctorModel.find({ specialty: req.params.specialty })
-            .populate('firstname lastname')
-            .populate('specialty', 'name');
-        res.json(doctors);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-});
-
-// Get doctor's availability
-app.get('/api/doctor-availability/:doctorId', async (req, res) => {
-    try {
-        const doctor = await DoctorModel.findById(req.params.doctorId);
-        if (!doctor) {
-            return res.status(404).json({ error: 'Doctor not found' });
-        }
-        res.json(doctor.availability);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-});
-
-// Create new appointment
-app.post('/api/appointments', async (req, res) => {
-    try {
-        const { patientId, doctorId, specialtyId, appointmentDate, appointmentTime, reason } = req.body;
-        
-        // Check if the time slot is available
-        const existingAppointment = await AppointmentModel.findOne({
-            doctorId,
-            appointmentDate,
-            appointmentTime,
-            status: { $in: ['Pending', 'Confirmed'] }
-        });
-
-        if (existingAppointment) {
-            return res.status(400).json({ error: 'This time slot is already booked' });
-        }
-
-        const appointment = new AppointmentModel({
-            patientId,
-            doctorId,
-            specialtyId,
-            appointmentDate,
-            appointmentTime,
-            reason
-        });
-
-        await appointment.save();
-        res.status(201).json(appointment);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-});
-
-// Get patient's appointments
-app.get('/api/patient-appointments/:patientId', async (req, res) => {
-    try {
-        const appointments = await AppointmentModel.find({ patientId: req.params.patientId })
-            .sort({ appointmentDate: 1 });
-
-        // Fetch doctor info for each appointment
-        const doctorIds = appointments.map(appt => appt.doctorId);
-        const doctors = await DoctorModel.find({ doctorId: { $in: doctorIds } });
-
-        // Map doctorId to doctor info
-        const doctorMap = {};
-        doctors.forEach(doc => {
-            doctorMap[doc.doctorId] = {
-                firstname: doc.firstname,
-                lastname: doc.lastname,
-                // add more fields if needed
-            };
-        });
-
-        // Attach doctor info to each appointment
-        const appointmentsWithDoctor = appointments.map(appt => ({
-            ...appt.toObject(),
-            doctorInfo: doctorMap[appt.doctorId] || null
-        }));
-
-        res.json(appointmentsWithDoctor);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-});
 
 // OpenAI configuration
 const openai = new OpenAI({

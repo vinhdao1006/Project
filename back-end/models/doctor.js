@@ -35,6 +35,11 @@ const DoctorSchema = new mongoose.Schema({
         endTime: {
             type: String,
             required: true
+        },
+        status: {
+            type: String,
+            enum: ['Available', 'Unavailable'],
+            default: 'Available'
         }
     }],
     consultationFee: {
