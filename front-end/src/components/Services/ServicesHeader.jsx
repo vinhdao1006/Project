@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import img_PatientDoctor from "../../assets/image/Patient-Doctor.png";
-import img_BlackDoctors2 from "../../assets/image/BlackDoctors2.png";
+import img_BlackDoctors2 from "../../assets/image/Blackdoctors2.png";
 
 function ServicesSection() {
   const [activeService, setActiveService] = useState('cardiogram');
