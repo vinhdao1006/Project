@@ -110,7 +110,7 @@ const Appointments = () => {
       </div>
       
       {/* Content Section */}
-      <div className="max-w-4xl mx-auto px-4 py-8 animate-slideInUp animation-delay-300 -mt-4 md:-mt-8">
+      <div className="max-w-4xl mx-auto px-4 py-8 animate-slideInUp animation-delay-300 lg:-mt-4 md:-mt-8">
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
           {appointments.length === 0 ? (
             <div className={`text-center py-16 px-4 transform transition-all duration-1000 delay-400 ${
