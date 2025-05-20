@@ -36,7 +36,7 @@ app.use(cors({
         "http://localhost:5173",
         "https://doantotnghiep-46d1uh2dh-khiem-truongs-projects.vercel.app"
     ],
-    methods: ["GET", "POST", "PUT"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true
 }))
 
