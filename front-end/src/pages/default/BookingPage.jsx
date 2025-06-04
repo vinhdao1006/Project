@@ -2,7 +2,8 @@ import react, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar/Navbar";
-import slider_booking from "../../assets/image/slider_booking.png";
+import { jwtDecode } from "jwt-decode";
+// import slider_booking from "../../assets/image/slider_booking.png";
 import icon_phone from "../../assets/icon/icon_phone.png";
 import Contact from "../../components/utils/Contact";
 import BimecFooter from "../../components/Footer/BimecFooter";
@@ -12,6 +13,7 @@ import {
   ChevronDownIcon,
   ClockIcon,
   CalendarIcon,
+  LockClosedIcon,
   CheckIcon,
 } from "@heroicons/react/24/outline";
 
@@ -737,6 +739,8 @@ function BookingPage() {
   const [selectedDoctor, setSelectedDoctor] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
   const [errors, setErrors] = useState({});
+  const [userData, setUserData] = useState(null);
+  const [loadingUserData, setLoadingUserData] = useState(true);
   const [dropdownOpen, setDropdownOpen] = useState({
     specialty: false,
     doctor: false,
@@ -776,6 +780,54 @@ function BookingPage() {
     };
 
     fetchSpecialties();
+  }, [navigate]);
+
+  //Form autofill
+  // Fetch user data and auto-fill form
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const token = localStorage.getItem("token");
+      const userId = localStorage.getItem("userId"); // This is already stored when user logs in
+
+      if (!token || !userId) return;
+
+      try {
+        // Decode token to get email
+        const decodedToken = jwtDecode(token);
+
+        // Fetch user data using email
+        const response = await axios.get(
+          `http://localhost:3001/api/users/${decodedToken.email}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        const user = response.data;
+        setUserData(user);
+
+        // Auto-fill the form data
+        setFormData((prev) => ({
+          ...prev,
+          name: `${user.firstname} ${user.lastname}`.trim(),
+          email: user.email || "",
+          phone: user.phone || "",
+          // Keep other fields as they are
+          dateOfBirth: prev.dateOfBirth,
+          gender: prev.gender,
+          reason: prev.reason,
+          appointmentTime: prev.appointmentTime,
+        }));
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      } finally {
+        setLoadingUserData(false);
+      }
+    };
+
+    fetchUserData();
   }, [navigate]);
 
   useEffect(() => {
@@ -968,6 +1020,19 @@ function BookingPage() {
       }
     }
   };
+
+  if (loadingUserData) {
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <Navbar />
+        <div className="flex items-center justify-center h-96">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-bimec-green"></div>
+          <p className="ml-3 text-gray-600">Loading your information...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Navbar />
@@ -1203,14 +1268,16 @@ function BookingPage() {
                         value={formData.name}
                         onChange={handleInputChange}
                         placeholder="Enter your name"
-                        className={`w-full px-4 py-2.5 pl-10 text-sm border-[1px] rounded-md bg-white 
-                                                         focus:outline-none transition-colors duration-200
-                                                         ${
-                                                           errors.name
-                                                             ? "border-red-400 focus:border-red-500"
-                                                             : "border-gray-400 focus:border-gray-500"
-                                                         }`}
+                        readOnly={true}
+                        className={`w-full px-4 py-2.5 pl-10 pr-10 text-sm border-[1px] rounded-md bg-gray-50 
+                   focus:outline-none transition-colors duration-200
+                   ${
+                     errors.name
+                       ? "border-red-400 focus:border-red-500"
+                       : "border-gray-400 focus:border-gray-500"
+                   }`}
                       />
+                      {/* User icon on the left */}
                       <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                         <svg
                           className="w-5 h-5 text-gray-400"
@@ -1225,6 +1292,10 @@ function BookingPage() {
                             d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
                           />
                         </svg>
+                      </div>
+                      {/* Lock icon on the right */}
+                      <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                        <LockClosedIcon className="w-4 h-4 text-gray-500" />
                       </div>
                     </div>
                     {errors.name && (
@@ -1289,35 +1360,51 @@ function BookingPage() {
                       Phone Number*
                     </label>
                     <div className="relative">
-                      <input
-                        type="tel"
-                        name="phone"
-                        value={formData.phone}
-                        onChange={handleInputChange}
-                        placeholder="Enter phone number"
-                        className={`w-full px-4 py-2.5 pl-10 text-sm border-[1px] rounded-md bg-white 
-                                 focus:outline-none transition-colors duration-200
-                                 ${
-                                   errors.phone
-                                     ? "border-red-400 focus:border-red-500"
-                                     : "border-gray-400 focus:border-gray-500"
-                                 }`}
-                      />
-                      <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                        <svg
-                          className="w-5 h-5 text-gray-400"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                          />
-                        </svg>
+                      <label className="absolute -top-2 left-3 px-1 text-xs font-medium text-gray-500 bg-white z-10">
+                        Phone Number*
+                      </label>
+                      <div className="relative">
+                        <input
+                          type="tel"
+                          name="phone"
+                          value={formData.phone}
+                          onChange={handleInputChange}
+                          placeholder="Enter phone number"
+                          readOnly={true}
+                          className={`w-full px-4 py-2.5 pl-10 pr-10 text-sm border-[1px] rounded-md bg-gray-50 
+               focus:outline-none transition-colors duration-200
+               ${
+                 errors.phone
+                   ? "border-red-400 focus:border-red-500"
+                   : "border-gray-400 focus:border-gray-500"
+               }`}
+                        />
+                        {/* Phone icon on the left */}
+                        <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                          <svg
+                            className="w-5 h-5 text-gray-400"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                            />
+                          </svg>
+                        </div>
+                        {/* Lock icon on the right */}
+                        <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                          <LockClosedIcon className="w-4 h-4 text-gray-500" />
+                        </div>
                       </div>
+                      {errors.phone && (
+                        <p className="text-red-500 text-xs mt-1">
+                          {errors.phone}
+                        </p>
+                      )}
                     </div>
                     {errors.phone && (
                       <p className="text-red-500 text-xs mt-1">
@@ -1330,36 +1417,52 @@ function BookingPage() {
                     <label className="absolute -top-2 left-3 px-1 text-xs font-medium text-gray-500 bg-white z-10">
                       Email*
                     </label>
-                    <div className="relative">
-                      <input
-                        type="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleInputChange}
-                        placeholder="Enter email"
-                        className={`w-full px-4 py-2.5 pl-10 text-sm border-[1px] rounded-md bg-white 
-                                 focus:outline-none transition-colors duration-200
-                                 ${
-                                   errors.email
-                                     ? "border-red-400 focus:border-red-500"
-                                     : "border-gray-400 focus:border-gray-500"
-                                 }`}
-                      />
-                      <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                        <svg
-                          className="w-5 h-5 text-gray-400"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                          />
-                        </svg>
+                    <div className="relative md:col-span-2">
+                      <label className="absolute -top-2 left-3 px-1 text-xs font-medium text-gray-500 bg-white z-10">
+                        Email*
+                      </label>
+                      <div className="relative">
+                        <input
+                          type="email"
+                          name="email"
+                          value={formData.email}
+                          onChange={handleInputChange}
+                          placeholder="Enter email"
+                          readOnly={true}
+                          className={`w-full px-4 py-2.5 pl-10 pr-10 text-sm border-[1px] rounded-md bg-gray-50 
+               focus:outline-none transition-colors duration-200
+               ${
+                 errors.email
+                   ? "border-red-400 focus:border-red-500"
+                   : "border-gray-400 focus:border-gray-500"
+               }`}
+                        />
+                        {/* Email icon on the left */}
+                        <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                          <svg
+                            className="w-5 h-5 text-gray-400"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                            />
+                          </svg>
+                        </div>
+                        {/* Lock icon on the right */}
+                        <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                          <LockClosedIcon className="w-4 h-4 text-gray-500" />
+                        </div>
                       </div>
+                      {errors.email && (
+                        <p className="text-red-500 text-xs mt-1">
+                          {errors.email}
+                        </p>
+                      )}
                     </div>
                     {errors.email && (
                       <p className="text-red-500 text-xs mt-1">
